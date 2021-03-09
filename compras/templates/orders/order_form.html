@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load thumbnail %}
+
+{% block title %}
+{{listing}}
+{% endblock %}
+{% block content %}
+<h1>{{listing}}</h1>
+
+
+
+<form class="form-horizontal" method="post" action="{% url 'orders:create' %}">
+	{% csrf_token %}
+	{% regroup listing.listingproduct_set.all by product as product_items %}
+	{% for p in product_items %}
+		<div class="col-lg-8 offset-lg-2 mb-3">
+			<div class="card">
+				<div class="card-body">
+					{% thumbnail p.grouper.image "600x200" crop="center" as im %}
+						<img class="img-fluid img-thumbnail d-sm-none d-block mb-2" src="{{im.url}}" alt="{{p.grouper.name}}">
+					{% endthumbnail %}
+					<div class="d-flex">
+						{% thumbnail p.grouper.image "100x100" crop="center" as im %}
+							<img class="img-fluid img-thumbnail d-sm-block d-none" src="{{im.url}}" alt="{{p.grouper.name}}">
+						{% endthumbnail %}
+						<div class="pl-sm-3">
+							<h5 class="card-title">{{p.grouper.name}}</h5>
+							<h6>{{p.grouper.producer.name}} - <a href="{{p.grouper.producer.url}}">{{p.grouper.producer.url}}</a></h6>
+							<p class="card-text">{{p.grouper.description}}</p>
+						</div>
+					</div>
+					<ul class="list-group list-group-flush mt-2">
+						{% for lp in p.list %}
+						<li class="list-group-item">
+							<div class="row">
+								<input id="{{lp.id}}_price" type="hidden" class="price" value="{{lp.price}}" data-id="{{lp.id}}">
+								<div class="col-12 col-md-6 mb-2 mb-md-0">
+									<span>{{lp.presentation}} - ${{lp.price}}</span>
+								</div>
+								<div class="input-group input-group-sm col-8 col-md-4">
+									<div class="input-group-prepend">
+										<button class="btn btn-outline-secondary btn-minus" type="button" data-id="{{lp.id}}">-</button>
+									</div>
+									<input id="{{lp.id}}_cant" name="{{lp.id}}_cant" type="number"  data-id="{{lp.id}}"
+												 class="form-control text-right input-cant" value="0" min="0" step="1">
+									<div class="input-group-append">
+										<button class="btn btn-outline-secondary btn-plus" type="button" data-id="{{lp.id}}">+</button>
+									</div>
+								</div>
+								<div class="d-inline-flex align-items-baseline justify-content-end col-4 col-md-2">
+									<span>$</span>
+									<input id="{{lp.id}}_subtotal" type="text" readonly  data-id="{{lp.id}}"
+												 class="text-right subtotal input_cant form-control-sm form-control-plaintext" value="00,00">
+								</div>
+							</div>
+						</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+
+	<div class="col-lg-8 offset-lg-2 mb-3">
+		<div class="card mb-3">
+			<div class="card-header">
+				Total
+			</div>
+			<div class="card-body">
+				<div class="d-flex justify-content-end mb-3">
+					<span class="text_right" id="total">$0,00</span>
+				</div>
+				<div class="control-group ">
+					<div class="controls text-right">
+						<button type="submit" class="btn btn-primary">Hacer Pedido</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	</form>
+{% endblock %}
+
+
+{% block javascript %}
+	{{block.super}}
+
+	<script type="text/javascript">
+
+		$(function(){
+			$('.btn-minus').on('click', function(evt){
+				let $target = $(evt.target);
+				let id = $target.data('id');
+				let input_cant = $(`.input-cant[data-id='${id}']`);
+				let cant = parseInt(input_cant.val(), 10) || 0;
+				input_cant.val(Math.max(0, cant - 1));
+				input_cant.change();
+			});
+			$('.btn-plus').on('click', function(evt){
+				let $target = $(evt.target);
+				let id = $target.data('id');
+				let input_cant = $(`.input-cant[data-id='${id}']`);
+				let cant = parseInt(input_cant.val(), 10) || 0;
+				input_cant.val(cant + 1);
+				input_cant.change();
+			});
+
+			function fmt_num(num){
+				return num.toFixed(2).replace(".", ",");
+			};
+
+			function calc_total(){
+				let total = 0;
+				$(".subtotal").each(function(idx, el){
+					let val = parseFloat($(el).val())
+					total += val? val : 0;
+				});
+				$("#total").text("$" + fmt_num(total));
+			};
+
+			$(".input-cant").on("change", function(evt){
+				let $target = $(evt.target);
+				let id = $target.data('id');
+				let price = parseFloat($(`.price[data-id='${id}']`).val())
+				let cant = parseInt($(`.input-cant[data-id='${id}']`).val(), 10) || 0;
+				$target.val(cant);
+				$(`.subtotal[data-id='${id}']`).val(fmt_num(cant*price));
+				calc_total();
+			});
+			calc_total();
+		});
+
+	</script>
+{% endblock %}
