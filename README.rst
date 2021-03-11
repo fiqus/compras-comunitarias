@@ -24,6 +24,8 @@ Moved to settings_.
 Basic Commands
 --------------
 
+https://cookiecutter-django.readthedocs.io/en/latest/developing-locally-docker.html
+
 Setting Up Your Users
 ^^^^^^^^^^^^^^^^^^^^^
 
