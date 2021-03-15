@@ -15,17 +15,17 @@ class OrderCreateView(LoginRequiredMixin, CreateView):
     template_name = 'orders/order_form.html'
     form_class = OrderCreateForm
 
-    def get_initial(self):
-        listing = get_object_or_404(Listing, enabled=True)
-        return {'listing': listing, 'user': self.request.user}
-
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        listing = get_object_or_404(Listing, enabled=True)
+        listing = None
+        try:
+            listing = Listing.objects.get(enabled=True)
+        except Listing.DoesNotExist:
+            pass
         context['listing'] = listing
         return context
 

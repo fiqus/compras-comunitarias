@@ -6,10 +6,10 @@
 {{listing}}
 {% endblock %}
 {% block content %}
+  {% if not listing %}
+  <h1>Por el momento no hay compras disponibles</h1>
+  {% else %}
 <h1>{{listing}}</h1>
-
-
-
 <form class="form-horizontal" method="post" action="{% url 'orders:create' %}">
 	{% csrf_token %}
 	{% regroup listing.listingproduct_set.all by product as product_items %}
@@ -81,6 +81,7 @@
 	</div>
 
 	</form>
+  {% endif %}
 {% endblock %}
 
 
