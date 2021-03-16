@@ -1,12 +1,20 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 {% load thumbnail %}
+{% load dict_key %}
 
 {% block title %}
 {{listing}}
 {% endblock %}
 {% block content %}
-<h1>{{listing}}</h1>
+<h1>
+  {% if order %}
+  Modificar Pedido -
+  {% else %}
+  Nuevo Pedido -
+  {% endif %}
+  {{listing}}
+</h1>
 <form class="form-horizontal" method="post" action="{% url 'orders:create' %}">
   {% csrf_token %}
   <input name="listing" type="hidden" value="{{listing.id}}">
@@ -61,7 +69,7 @@
                   <button class="btn btn-outline-secondary btn-minus" type="button" data-id="{{lp.id}}">-</button>
                 </div>
                 <input id="{{lp.id}}_cant" name="orderproduct_set-{{n}}-amount" type="number" data-id="{{lp.id}}"
-                       class="form-control text-right input-cant" value="0" min="0" step="1">
+                       class="form-control text-right input-cant" value="{{amounts | dict_key:lp.id}}" min="0" step="1">
                 <div class="input-group-append">
                   <button class="btn btn-outline-secondary btn-plus" type="button" data-id="{{lp.id}}">+</button>
                 </div>
@@ -128,7 +136,7 @@
 
     function fmt_num(num) {
       return num.toFixed(2).replace(".", ",");
-    };
+    }
 
     function calc_total() {
       let total = 0;
@@ -137,7 +145,7 @@
         total += val ? val : 0;
       });
       $("#total").text("$" + fmt_num(total));
-    };
+    }
 
     $(".input-cant").on("change", function (evt) {
       let $target = $(evt.target);
@@ -149,6 +157,7 @@
       calc_total();
     });
     calc_total();
+    $('.input-cant').change();
   });
 
 </script>
