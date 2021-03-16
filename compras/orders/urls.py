@@ -1,10 +1,10 @@
 from django.urls import path
 
 from compras.orders.views import (
-    order_create_view,
+    create_order,
 )
 
 app_name = "orders"
 urlpatterns = [
-    path("create/", view=order_create_view, name="create"),
+    path("create/", view=create_order, name="create"),
 ]
