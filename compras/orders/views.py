@@ -23,7 +23,10 @@ class OrderForm(ModelForm):
 
 
 def create_order(request):
-    listing = Listing.objects.get(enabled=True)
+    try:
+        listing = Listing.objects.get(enabled=True)
+    except Listing.DoesNotExist:
+        return render(request, 'orders/no_listing.html')
     OrderProductInlineFormset = inlineformset_factory(Order, OrderProduct, fields=('product', 'amount'),
                                                       can_delete=False, extra=listing.listingproduct_set.count())
     if request.method == "POST":
