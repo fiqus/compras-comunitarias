@@ -28,7 +28,7 @@ class Product(models.Model):
 
     def __str__(self):
         return f"{self.name}"
- 
+
 
 class Listing(models.Model):
     class Meta:
@@ -81,3 +81,14 @@ class OrderProduct(models.Model):
 
     def __str__(self):
         return f"{self.product.product.name} {self.product.presentation} - {self.amount}"
+
+
+#-----CREANDO TAGS H-S --------#
+class Tags (models.Model):
+    name = models.CharField(max_length=50)
+    product = models.ManyToManyField(Product)
+
+
+    def __str__(self):
+        return f"{self.name}"
+
