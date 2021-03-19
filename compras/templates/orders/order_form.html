@@ -4,7 +4,7 @@
 {% load dict_key %}
 
 {% block title %}
-{{listing}}
+{{listing}
 {% endblock %}
 {% block content %}
 <h1>
@@ -52,6 +52,8 @@
             <h5 class="card-title">{{p.grouper.name}}</h5>
             <h6>{{p.grouper.producer.name}} - <a href="{{p.grouper.producer.url}}">{{p.grouper.producer.url}}</a></h6>
             <p class="card-text">{{p.grouper.description}}</p>
+            <p class="card-text">Aca deberia ir el tag</p>
+            
           </div>
         </div>
         <ul class="list-group list-group-flush mt-2">
