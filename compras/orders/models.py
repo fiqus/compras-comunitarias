@@ -48,6 +48,7 @@ class Listing(models.Model):
     description = models.TextField()
     products = models.ManyToManyField(Product, through="ListingProduct")
   
+
     
 
     def __str__(self):
@@ -59,9 +60,12 @@ class ListingProduct(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     presentation = models.CharField(max_length=64)
-
+    
+    def tags(self):
+        self.products[0].tags
+    
     def __str__(self):
-        return f"{self.product.name} {self.presentation} ${self.price}"
+        return f"{self.product.name} {self.presentation}${self.price}"
 
 class Order(models.Model):
     class Meta:
@@ -71,7 +75,7 @@ class Order(models.Model):
     user = models.ForeignKey(to="users.User", on_delete=models.CASCADE)
     listing = models.ForeignKey(to=Listing, on_delete=models.CASCADE)
     products = models.ManyToManyField(ListingProduct, through="OrderProduct")
-    
+  
 
     def __str__(self):
         return f"Orden - {self.user.name} - {self.listing.limit_date}"
