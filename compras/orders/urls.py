@@ -5,6 +5,7 @@ from compras.orders.views import (
     view_producer,
 )
 
+
 app_name = "orders"
 urlpatterns = [
     path("create/", view=create_order, name="create"),
