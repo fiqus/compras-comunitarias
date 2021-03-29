@@ -7,8 +7,8 @@ from django.forms.models import BaseModelForm, ModelForm, inlineformset_factory
 from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.views.generic import CreateView
-from .models import Listing, Order, OrderProduct
-
+from .models import Listing, Order, OrderProduct, Producer
+from django.views.generic import DetailView
 import itertools
 
 
@@ -54,4 +54,18 @@ def create_order(request):
                                                       'amounts': amounts, 'order': order,
                                                       'iterator': TemplateCounter()})
 
-class View_producer
+
+
+class View_producer(DetailView):
+    model = Producer
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        context = self.get_context_data(object=self.object)
+        try:
+            listing = Listing.objects.get(enabled=True)
+        except Listing.DoesNotExist:
+            return render(request, 'orders/no_listing.html')
+
+        context["products"] = listing.listingproduct_set.filter(product__producer=self.object.id).all()
+        return self.render_to_response(context)

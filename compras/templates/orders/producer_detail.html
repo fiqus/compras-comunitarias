@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block title %}
+{{object}}
+{% endblock %}
+
+{% block content %}
+<h1>
+    {{object}}
+        {% thumbnail object.logo "100x100" crop="center" as im %}
+        <img class="img-fluid img-thumbnail d-sm-block d-none" src="{{im.url}}" alt="{{p.grouper.name}}">
+        {% endthumbnail %}
+</h1>
+
+{{products}}
+
+{% endblock %}
