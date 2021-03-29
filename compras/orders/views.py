@@ -54,5 +54,4 @@ def create_order(request):
                                                       'amounts': amounts, 'order': order,
                                                       'iterator': TemplateCounter()})
 
-def view_producer(request):
-    return render(request, "producers/producer_listing.html")
+class View_producer

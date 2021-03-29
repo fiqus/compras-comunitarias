@@ -8,5 +8,5 @@ from compras.orders.views import (
 app_name = "orders"
 urlpatterns = [
     path("create/", view=create_order, name="create"),
-    path("producer/", view=view_producer, name="producer"),
+    path("producer/", view=View_producer, name="producer"),
 ]
