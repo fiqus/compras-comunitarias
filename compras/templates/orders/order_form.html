@@ -4,7 +4,7 @@
 {% load dict_key %}
 
 {% block title %}
-Listado de productos
+{{listing}}
 {% endblock %}
 {% block content %}
 <h1>
@@ -50,7 +50,7 @@ Listado de productos
           {% endthumbnail %}
           <div class="pl-sm-3">
             <h5 class="card-title">{{p.grouper.name}}</h5>
-            <h6>{{p.grouper.producer.name}} - <a href="{{p.grouper.producer.url}}">{{p.grouper.producer.url}}</a></h6>
+            <h6><a href="/orders/producer/{{p.grouper.producer.id}}">{{p.grouper.producer.name}}</a> - <a href="{{p.grouper.producer.url}}">{{p.grouper.producer.url}}</a></h6>
             <p class="card-text">{{p.grouper.description}}</p>
             
             {% for tag in p.grouper.tags_set.all %}
