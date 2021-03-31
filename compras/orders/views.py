@@ -53,6 +53,7 @@ def create_order(request):
     return render(request, 'orders/order_form.html', {'form': form, 'formset': formset, 'listing': listing,
                                                       'amounts': amounts, 'order': order,
                                                       'iterator': TemplateCounter()})
+    return {listing}
 
 
 
