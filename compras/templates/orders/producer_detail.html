@@ -15,60 +15,11 @@
 
 
 <ul>
-    {% for p in products %}
-         <div class="col-lg-8 offset-lg-2 mb-3">
-        <div class="card">
-        <div class="card-body">
-            {% thumbnail p.grouper.image "600x200" crop="center" as im %}
-            <img class="img-fluid img-thumbnail d-sm-none d-block mb-2" src="{{im.url}}" alt="{{p.grouper.name}}">
-            {% endthumbnail %}
-            <div class="d-flex">
-            {% thumbnail p.grouper.image "100x100" crop="center" as im %}
-            <img class="img-fluid img-thumbnail d-sm-block d-none" src="{{im.url}}" alt="{{p.grouper.name}}">
-            {% endthumbnail %}
-            <div class="pl-sm-3">
-                <h5 class="card-title">{{p.grouper.name}}</h5>
-                <h6><a href="/orders/producer/{{p.grouper.producer.id}}">{{p.grouper.producer.name}}</a> - <a href="{{p.grouper.producer.url}}">{{p.grouper.producer.url}}</a></h6>
-                <p class="card-text">{{p.grouper.description}}</p>
-                
-                {% for tag in p.grouper.tags_set.all %}
-                <a class="tags">{{tag.name}}</a>
-                {% endfor %}
-            </div>
-            </div>
-            <ul class="list-group list-group-flush mt-2">
-            {% for lp in p.list %}
-            {% with n=iterator.next %}
-            <li class="list-group-item">
-                <div class="row">
-                <input type="hidden" class="price" name="orderproduct_set-{{n}}-product" value="{{lp.id}}">
-                <input id="{{lp.id}}_price" type="hidden" class="price" value="{{lp.price}}" data-id="{{lp.id}}">
-                <div class="col-12 col-md-6 mb-2 mb-md-0">
-                    <span>{{lp.presentation}} - ${{lp.price}}</span>
-                </div>
-                <div class="input-group input-group-sm col-8 col-md-4">
-                    <div class="input-group-prepend">
-                    <button class="btn btn-outline-secondary btn-minus" type="button" data-id="{{lp.id}}">-</button>
-                    </div>
-                    <input id="{{lp.id}}_cant" name="orderproduct_set-{{n}}-amount" type="number" data-id="{{lp.id}}"
-                        class="form-control text-right input-cant" value="{{amounts | dict_key:lp.id}}" min="0" step="1">
-                    <div class="input-group-append">
-                    <button class="btn btn-outline-secondary btn-plus" type="button" data-id="{{lp.id}}">+</button>
-                    </div>
-                </div>
-                <div class="d-inline-flex align-items-baseline justify-content-end col-4 col-md-2">
-                    <span>$</span>
-                    <input id="{{lp.id}}_subtotal" type="text" readonly data-id="{{lp.id}}"
-                        class="text-right subtotal input_cant form-control-sm form-control-plaintext" value="00,00">
-                </div>
-                </div>
-            </li>
-            {% endwith %}
-            {% endfor %}
-            </ul>
-        </div>
-        </div>
-    </div>
+    {% for product in products %}
+        <li>
+                <h4>{{product}} {{name}}</h4>
+        </li>
+                <br>
     {% endfor %}
 </ul>
 

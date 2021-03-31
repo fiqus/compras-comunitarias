@@ -68,5 +68,4 @@ class View_producer(DetailView):
             return render(request, 'orders/no_listing.html')
 
         context["products"] = listing.listingproduct_set.filter(product__producer=self.object.id).all()
-       
         return self.render_to_response(context)
