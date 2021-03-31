@@ -13,6 +13,14 @@
         {% endthumbnail %}
 </h1>
 
-{{products}}
+
+<ul>
+    {% for product in products %}
+        <li>
+                <h4> {{product.id}}.{{product}} </h4>
+        </li>
+                <br>
+    {% endfor %}
+</ul>
 
 {% endblock %}

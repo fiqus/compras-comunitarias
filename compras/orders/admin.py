@@ -26,3 +26,8 @@ admin.site.register(Listing, ListingAdmin)
 admin.site.register(Product)
 admin.site.register(Producer)
 admin.site.register(Tags)
+
+#Cambiando nombre del admin
+admin.site.site_header = "Compras Comunitarias - Administracion"
+admin.site.site_title = "Compras Comunitarias"
+admin.site.index_title = "Panel de gestion"
