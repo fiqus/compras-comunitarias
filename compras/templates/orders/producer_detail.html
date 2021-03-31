@@ -15,9 +15,9 @@
 
 
 <ul>
-    {% for product in products %}
+    {% for lp in products %}
         <li>
-                <h4>{{product}} </h4>
+                <h4>{{lp.product.name}}{{lp.price}} </h4>
         </li>
                 <br>
     {% endfor %}

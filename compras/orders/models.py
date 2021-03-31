@@ -65,7 +65,7 @@ class ListingProduct(models.Model):
         self.products[0].tags
     
     def __str__(self):
-        return f"{self.product.name} {self.presentation}${self.price}"
+        return f"listing product {self.product.name} {self.presentation}${self.price}"
 
 class Order(models.Model):
     class Meta:
