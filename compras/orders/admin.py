@@ -32,7 +32,7 @@ class ListingAdmin(admin.ModelAdmin):
 
     def listing_actions(self, obj):
         return format_html(
-            '<a class="button" href="{}">Summary</a>&nbsp;',
+            '<a class="button" href="{}">Resumen</a>&nbsp;',
             reverse('admin:listing-summary', args=[obj.pk])
         )
 
