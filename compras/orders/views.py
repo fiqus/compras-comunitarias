@@ -27,6 +27,7 @@ class OrderForm(ModelForm):
 
 def create_order(request):
     listing = Business().available_listings()
+    
     if (not listing):
         return render(request, 'orders/no_listing.html')
 
