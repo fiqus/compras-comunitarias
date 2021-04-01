@@ -16,3 +16,6 @@ django-crispy-forms==1.10.0  # https://github.com/django-crispy-forms/django-cri
 django-redis==4.12.1  # https://github.com/jazzband/django-redis
 
 sorl-thumbnail==12.7.0
+pandas
+numpy
+django_pandas

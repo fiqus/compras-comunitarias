@@ -1,5 +1,7 @@
 from django.db import models
 from sorl.thumbnail import ImageField
+import pandas as pd
+from django_pandas.io import read_frame
 
 
 class Producer(models.Model):
@@ -47,9 +49,24 @@ class Listing(models.Model):
     limit_date = models.DateField()
     description = models.TextField()
     products = models.ManyToManyField(Product, through="ListingProduct")
-  
 
-    
+    @property
+    def summary(self):
+        df = pd.DataFrame()
+        for order in self.order_set.all():
+            products = []
+            for product in order.orderproduct_set.all():
+                p = {}
+                p["product"] = str(product.product)
+                p["order"] = str(product.order)
+                p["amount"] = int(product.amount)
+                p["total"] = float(product.total)
+                products.append(p)
+            f = pd.DataFrame(products)
+            df = df.append(f, ignore_index=True)
+        df = df.groupby('product').sum()
+        df.loc['Total']= df.sum()
+        return df
 
     def __str__(self):
         return f"{self.limit_date}"
@@ -65,7 +82,7 @@ class ListingProduct(models.Model):
         self.products[0].tags
     
     def __str__(self):
-        return f"{self.product.name} {self.presentation}${self.price}"
+        return f"{self.product.name} ({self.presentation}) - ${self.price}"
 
 class Order(models.Model):
     class Meta:
