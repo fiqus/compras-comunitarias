@@ -46,7 +46,7 @@ class Listing(models.Model):
         verbose_name_plural = "publicaciones"
 
     enabled = models.BooleanField(default=False)
-    limit_date = models.DateField()
+    limit_date = models.DateTimeField()
     description = models.TextField()
     products = models.ManyToManyField(Product, through="ListingProduct")
 

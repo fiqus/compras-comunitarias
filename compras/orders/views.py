@@ -11,6 +11,8 @@ from .models import Listing, Order, OrderProduct, Producer
 from django.views.generic import DetailView
 import itertools
 
+from compras.business.business import Business
+
 
 class TemplateCounter(itertools.count):
     def next(self):
@@ -24,9 +26,8 @@ class OrderForm(ModelForm):
 
 
 def create_order(request):
-    try:
-        listing = Listing.objects.get(enabled=True)
-    except Listing.DoesNotExist:
+    listing = Business().available_listings()
+    if (not listing):
         return render(request, 'orders/no_listing.html')
 
     order = Order.objects.filter(user=request.user, listing=listing).last()
