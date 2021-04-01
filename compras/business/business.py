@@ -1,10 +1,9 @@
 from compras.orders.models import Listing
-from datetime import date
+from datetime import datetime
 
 class Business:
 
     def available_listings(self):
-        today = date.today()
-        listings = Listing.objects.filter(limit_date__lte=today, enabled=True)
+        listings = Listing.objects.filter(limit_date__gte=datetime.now(), enabled=True)
         return listings
         
