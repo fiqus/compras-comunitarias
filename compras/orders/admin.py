@@ -1,8 +1,9 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from django.conf.urls import url
-from compras.orders.models import Listing, Order, Product, ListingProduct, Producer, OrderProduct, Tags
+from compras.orders.models import Listing, Order, Product, ListingProduct, Producer, OrderProduct, Tag
 from .forms import ListingSummaryForm, ListingRealTimeForm
+
 from django.urls import reverse
 
 from django.template.response import TemplateResponse
@@ -97,15 +98,15 @@ class OrderAdmin(admin.ModelAdmin):
     inlines = [OrderProductAdmin]
 
 
-class TagsAdmin (admin.TabularInline):
-    model = Tags
+class TagAdmin (admin.TabularInline):
+    model= Tag
 
 
 admin.site.register(Order, OrderAdmin)
 admin.site.register(Listing, ListingAdmin)
 admin.site.register(Product)
 admin.site.register(Producer)
-admin.site.register(Tags)
+admin.site.register(Tag)
 
 # Cambiando nombre del admin
 admin.site.site_header = "Compras Comunitarias - Administracion"

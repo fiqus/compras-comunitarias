@@ -32,7 +32,7 @@ class Product(models.Model):
         return f"{self.name}"
 
 #-----CREANDO TAGS H-S --------#
-class Tags (models.Model):
+class Tag (models.Model):
     name = models.CharField(max_length=50)
     product = models.ManyToManyField(Product)
 
@@ -53,19 +53,21 @@ class Listing(models.Model):
     @property
     def summary(self):
         df = pd.DataFrame()
-        for order in self.order_set.all():
-            products = []
-            for product in order.orderproduct_set.all():
-                p = {}
-                p["product"] = str(product.product)
-                p["order"] = str(product.order)
-                p["amount"] = int(product.amount)
-                p["total"] = float(product.total)
-                products.append(p)
-            f = pd.DataFrame(products)
-            df = df.append(f, ignore_index=True)
-        df = df.groupby('product').sum()
-        df.loc['Total']= df.sum()
+        query_set = self.order_set.all()
+        if query_set:
+            for order in query_set:
+                products = []
+                for product in order.orderproduct_set.all():
+                    p = {}
+                    p["product"] = str(product.product)
+                    p["order"] = str(product.order)
+                    p["amount"] = int(product.amount)
+                    p["total"] = float(product.total)
+                    products.append(p)
+                f = pd.DataFrame(products)
+                df = df.append(f, ignore_index=True)
+            df = df.groupby('product').sum()
+            df.loc['Total']= df.sum()
         return df
 
     def __str__(self):
@@ -78,11 +80,12 @@ class ListingProduct(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     presentation = models.CharField(max_length=64)
     
-    def tags(self):
-        self.products[0].tags
+    def tag(self):
+        self.products[0].tag
+
     
     def __str__(self):
-        return f"{self.product.name} ({self.presentation}) - ${self.price}"
+        return f"listing product {self.product.name} {self.presentation}${self.price}"
 
 class Order(models.Model):
     class Meta:
@@ -99,7 +102,8 @@ class Order(models.Model):
 
     @property
     def total(self):
-        return sum(p.total for p in self.orderproduct_set.all())
+        total = sum(p.total for p in self.orderproduct_set.all())
+        return total
 
 
 class OrderProduct(models.Model):

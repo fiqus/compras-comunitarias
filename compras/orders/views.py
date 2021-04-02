@@ -55,6 +55,7 @@ def create_order(request):
     return render(request, 'orders/order_form.html', {'form': form, 'formset': formset, 'listing': listing,
                                                       'amounts': amounts, 'order': order,
                                                       'iterator': TemplateCounter()})
+    return {listing}
 
 
 
@@ -70,4 +71,5 @@ class View_producer(DetailView):
             return render(request, 'orders/no_listing.html')
 
         context["products"] = listing.listingproduct_set.filter(product__producer=self.object.id).all()
+       # print(context["products"].name)
         return self.render_to_response(context)

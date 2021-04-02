@@ -6,8 +6,9 @@
 {% endblock %}
 
 {% block content %}
-<h1>
-    {{object}}
+
+<h1 class="col-lg-8 offset-lg-2 mb-3">
+    <a>{{object}}#{{object.id}}</a>
         {% thumbnail object.logo "100x100" crop="center" as im %}
         <img class="img-fluid img-thumbnail d-sm-block d-none" src="{{im.url}}" alt="{{p.grouper.name}}">
         {% endthumbnail %}
@@ -15,12 +16,11 @@
 
 
 <ul>
-    {% for product in products %}
+    {% for lp in products %}
         <li>
-                <h4>{{product}} </h4>
+                <h4>{{lp.product.name}}{{lp.price}} </h4>
         </li>
                 <br>
     {% endfor %}
 </ul>
-
 {% endblock %}
