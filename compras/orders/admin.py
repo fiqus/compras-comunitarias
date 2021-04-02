@@ -1,5 +1,5 @@
 from django.contrib import admin
-from compras.orders.models import Listing, Order, Product, ListingProduct, Producer, OrderProduct, Tags
+from compras.orders.models import Listing, Order, Product, ListingProduct, Producer, OrderProduct, Tag
 
 
 class ProductAdmin(admin.TabularInline):
@@ -17,15 +17,15 @@ class OrderProductAdmin(admin.TabularInline):
 class OrderAdmin(admin.ModelAdmin):
     inlines = [OrderProductAdmin]
 
-class TagsAdmin (admin.TabularInline):
-    model= Tags
+class TagAdmin (admin.TabularInline):
+    model= Tag
 
 
 admin.site.register(Order, OrderAdmin)
 admin.site.register(Listing, ListingAdmin)
 admin.site.register(Product)
 admin.site.register(Producer)
-admin.site.register(Tags)
+admin.site.register(Tag)
 
 #Cambiando nombre del admin
 admin.site.site_header = "Compras Comunitarias - Administracion"

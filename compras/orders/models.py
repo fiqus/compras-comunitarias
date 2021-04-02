@@ -30,7 +30,7 @@ class Product(models.Model):
         return f"{self.name}"
 
 #-----CREANDO TAGS H-S --------#
-class Tags (models.Model):
+class Tag (models.Model):
     name = models.CharField(max_length=50)
     product = models.ManyToManyField(Product)
 
@@ -61,8 +61,9 @@ class ListingProduct(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     presentation = models.CharField(max_length=64)
     
-    def tags(self):
-        self.products[0].tags
+    def tag(self):
+        self.products[0].tag
+
     
     def __str__(self):
         return f"listing product {self.product.name} {self.presentation}${self.price}"

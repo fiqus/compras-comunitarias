@@ -53,7 +53,7 @@
             <h6><a href="/orders/producer/{{p.grouper.producer.id}}">{{p.grouper.producer.name}}</a> - <a href="{{p.grouper.producer.url}}">{{p.grouper.producer.url}}</a></h6>
             <p class="card-text">{{p.grouper.description}}</p>
             
-            {% for tag in p.grouper.tags_set.all %}
+            {% for tag in p.grouper.tag_set.all %}
               <a class="tags">{{tag.name}}</a>
             {% endfor %}
           </div>
