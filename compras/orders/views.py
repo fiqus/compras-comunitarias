@@ -11,6 +11,8 @@ from .models import Listing, Order, OrderProduct, Producer
 from django.views.generic import DetailView
 import itertools
 
+from compras.business.business import Business
+
 
 class TemplateCounter(itertools.count):
     def next(self):
@@ -24,14 +26,14 @@ class OrderForm(ModelForm):
 
 
 def create_order(request):
-    try:
-        listing = Listing.objects.get(enabled=True)
-    except Listing.DoesNotExist:
+    listing = Business().available_listings()
+    if (not listing):
         return render(request, 'orders/no_listing.html')
-
+    listing = listing.latest('limit_date')
+    
     order = Order.objects.filter(user=request.user, listing=listing).last()
     OrderProductInlineFormset = inlineformset_factory(Order, OrderProduct, fields=('product', 'amount'),
-                                                      can_delete=False, extra=listing.listingproduct_set.count())
+                                                      can_delete=False, extra=listing.products.count())
     if request.method == "POST":
         form = OrderForm(request.POST, request.FILES, initial={'listing': listing}, instance=order)
         formset = OrderProductInlineFormset(request.POST, request.FILES, instance=form.instance)
@@ -69,5 +71,5 @@ class View_producer(DetailView):
             return render(request, 'orders/no_listing.html')
 
         context["products"] = listing.listingproduct_set.filter(product__producer=self.object.id).all()
-
+       # print(context["products"].name)
         return self.render_to_response(context)

@@ -13,11 +13,14 @@
         <img class="img-fluid img-thumbnail d-sm-block d-none" src="{{im.url}}" alt="{{p.grouper.name}}">
         {% endthumbnail %}
 </h1>
-    <ul>
-        {% for product in products %}
-            <li>
-                <a>{{product}}</a>
-            </li>
-        {% endfor %}
-    </ul>
+
+
+<ul>
+    {% for lp in products %}
+        <li>
+                <h4>{{lp.product.name}}{{lp.price}} </h4>
+        </li>
+                <br>
+    {% endfor %}
+</ul>
 {% endblock %}
