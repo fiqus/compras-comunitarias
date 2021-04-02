@@ -53,19 +53,21 @@ class Listing(models.Model):
     @property
     def summary(self):
         df = pd.DataFrame()
-        for order in self.order_set.all():
-            products = []
-            for product in order.orderproduct_set.all():
-                p = {}
-                p["product"] = str(product.product)
-                p["order"] = str(product.order)
-                p["amount"] = int(product.amount)
-                p["total"] = float(product.total)
-                products.append(p)
-            f = pd.DataFrame(products)
-            df = df.append(f, ignore_index=True)
-        df = df.groupby('product').sum()
-        df.loc['Total']= df.sum()
+        query_set = self.order_set.all()
+        if query_set:
+            for order in query_set:
+                products = []
+                for product in order.orderproduct_set.all():
+                    p = {}
+                    p["product"] = str(product.product)
+                    p["order"] = str(product.order)
+                    p["amount"] = int(product.amount)
+                    p["total"] = float(product.total)
+                    products.append(p)
+                f = pd.DataFrame(products)
+                df = df.append(f, ignore_index=True)
+            df = df.groupby('product').sum()
+            df.loc['Total']= df.sum()
         return df
 
     def __str__(self):

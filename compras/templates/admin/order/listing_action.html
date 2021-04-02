@@ -2,8 +2,10 @@
 {% load static %}
 
 {% block content %}
-    
-    {{ summary | safe}}
-
+    {% if not listing.summary.empty %}
+        {{ summary | safe}}
+    {% else %}
+        {{ "Todavia no hay pedidos" }}
+    {% endif %}
 {% endblock %}
 
