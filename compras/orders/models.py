@@ -101,7 +101,8 @@ class Order(models.Model):
 
     @property
     def total(self):
-        return sum(p.total for p in self.orderproduct_set.all())
+        total = sum(p.total for p in self.orderproduct_set.all())
+        return total
 
 
 class OrderProduct(models.Model):

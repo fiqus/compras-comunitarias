@@ -104,7 +104,7 @@
         </div>
         <div class="control-group ">
           <div class="controls text-right">
-            <button type="submit" class="btn btn-primary">Hacer Pedido</button>
+              <button id="order_button" type="submit" class="btn btn-primary">Hacer Pedido</button>
           </div>
         </div>
       </div>
@@ -148,6 +148,8 @@
         let val = parseFloat($(el).val())
         total += val ? val : 0;
       });
+      should_disable_button = total <= 0;
+      $("#order_button").prop('disabled', should_disable_button);
       $("#total").text("$" + fmt_num(total));
     }
 
