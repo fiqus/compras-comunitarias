@@ -45,19 +45,19 @@
           </div>
         </div>
         <ul class="list-group list-group-flush mt-2">
-          {% for lp in products.list %}
+          
           {% with n=iterator.next %}
           <li class="list-group-item">
             <div class="row">
-              <input type="hidden" class="price" name="orderproduct_set-{{n}}-product" value="{{lp.product.id}}">
-              <input id="{{lp.product.id}}_price" type="hidden" class="price" value="{{lp.product.price}}" data-id="{{lp.product.id}}">
+              <input type="hidden" class="price" name="orderproduct_set-{{n}}-product" value="{{lp.id}}">
+              <input id="{{lp.product.id}}_price" type="hidden" class="price" value="{{lp.product.price}}" data-id="{{lp.id}}">
               <div class="col-12 col-md-6 mb-2 mb-md-0">
-                <span>{{lp.product.description}} - ${{lp.product.price}}</span>
+                <span>{{lp.product.description}} - ${{lp.price}}</span>
               </div>
             </div>
           </li>
           {% endwith %}
-          {% endfor %}
+        
         </ul>
       </div>
     </div>
