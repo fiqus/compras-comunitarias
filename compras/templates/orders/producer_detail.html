@@ -42,6 +42,8 @@
             {% for tag in lp.product.tag_set.all %}
               <a class="tags">{{tag.name}}</a>
             {% endfor %}
+            <br>
+            <a>{{lp.product.description}}</a>
           </div>
         </div>
         <ul class="list-group list-group-flush mt-2">
@@ -52,7 +54,7 @@
               <input type="hidden" class="price" name="orderproduct_set-{{n}}-product" value="{{lp.id}}">
               <input id="{{lp.product.id}}_price" type="hidden" class="price" value="{{lp.product.price}}" data-id="{{lp.id}}">
               <div class="col-12 col-md-6 mb-2 mb-md-0">
-                <span>{{lp.product.description}} - ${{lp.price}}</span>
+                <span>${{lp.price}}</span>
               </div>
             </div>
           </li>
