@@ -78,14 +78,9 @@ class OrderProductAdmin(admin.TabularInline):
 class OrderAdmin(admin.ModelAdmin):
     inlines = [OrderProductAdmin]
 
-<<<<<<< HEAD
+
 class TagAdmin (admin.TabularInline):
     model= Tag
-=======
-
-class TagsAdmin (admin.TabularInline):
-    model = Tags
->>>>>>> c864c7c392cdeaf3fa5bdad8d2bb615c879dd23d
 
 
 admin.site.register(Order, OrderAdmin)
