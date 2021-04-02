@@ -1,0 +1,167 @@
+{% extends 'admin/change_form.html' %}
+
+{% load static %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-good-table@2.21.9/dist/vue-good-table.js"></script>
+    <script src="https://kit.fontawesome.com/1de09feced.js" crossorigin="anonymous"></script>
+    
+{% endblock %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-good-table@2.21.9/dist/vue-good-table.min.css" crossorigin="anonymous">
+  <style type="text/css">
+    tr.open {
+        color: #7dad7b !important;
+    }
+
+    tr.closed {
+        color: #e07070 !important;
+    }
+
+    tr.inside {
+        color: #db970f !important;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+    
+    <div id="vue-app">
+        <vue-good-table
+            ref="MyCoolTable"
+            theme="polar-bear"
+            :columns="columns"
+            :rows="rows"
+            :fixed-header="true"
+            :row-style-class="rowStyleClassFn"
+            :search-options="{
+                enabled: true,
+            }"
+            :group-options="{
+                enabled: true,
+                collapsable: true
+            }">
+            <template slot="table-row" slot-scope="props">
+                <span v-if="props.column.field == 'name'">
+                    <span class="d-none">[[props.row.name]]</span> 
+                </span>
+                <span v-else-if="props.column.field == 'price'">
+                    $ [[ props.formattedRow[props.column.field] ]]
+                </span>
+                <span v-else-if="props.column.field == 'actions'">
+                    <button class="btn btn-secondary btn-sm" @click="ok"><i class="fas fa-check"></i></button>
+                </span>
+                <span v-else>
+                    [[ props.formattedRow[props.column.field] ]]
+                </span>
+            </template>
+            <template slot="table-header-row" slot-scope="props">
+                <span v-if="props.column.field == 'price'">
+                    <span>$ [[ props.formattedRow[props.column.field] ]]</span>
+                </span>
+                <span v-else-if="props.column.field == 'actions'">
+                    <span>
+                        <button class="btn btn-dark" @click="inside(props.row.id)"><i class="fas fa-sign-in-alt"></i></button>
+                        <button class="btn btn-dark" @click="pay(props.row.id)"><i class="fas fa-money-bill"></i></button>
+                        <button class="btn btn-dark" @click="close(props.row.id)"><i class="fas fa-window-close"></i></button>
+                    </span>
+                </span>
+                <span v-else>
+                    <span>[[ props.formattedRow[props.column.field] ]]</span>
+                </span>
+            </template>
+        <vue-good-table>
+    </div>
+
+    <script type="text/javascript">
+        $('i').on('click', function(e){
+            e.stopPropagation();
+            // other stuff here
+        })
+        let app = new Vue({
+            el: "#vue-app",
+            components: {
+                VueGoodTable: window['vue-good-table'].VueGoodTable
+            },
+            delimiters: ['[[', ']]'],
+            methods: {
+                inside: function (id) {
+                    var foundIndex = this.rows.findIndex(x => x.id == id);
+                    this.rows[foundIndex].estado = "inside";
+                },
+                pay: function (id) {
+                    var foundIndex = this.rows.findIndex(x => x.id == id);
+                    this.rows[foundIndex].estado = "open";
+                },
+                close: function (id) {
+                    var foundIndex = this.rows.findIndex(x => x.id == id);
+                    this.rows[foundIndex].estado = "closed";
+                },
+                ok: function (e) {
+                    let target = e.target;
+                    if(e.target.tagName == "I"){
+                        target = target.parentNode;
+                    }
+                    target.classList.toggle('btn-success');
+                },
+                rowStyleClassFn: function (row) {
+                    return row.estado;
+                },
+            },
+            data: function () {
+                return {
+                    columns: [
+                        {
+                            label: 'Nombre',
+                            field: 'name',
+                        },
+                        {
+                            label: 'DNI',
+                            field: 'dni',
+                        },
+                        {
+                            label: 'Producto',
+                            field: 'product',
+                        },
+                        {
+                            label: 'Cantidad',
+                            field: 'quantity',
+                            type: 'number',
+                        },
+                        {
+                            label: '$',
+                            field: 'price',
+                            type: 'decimal',
+                        },
+                        {
+                            label: 'Acciones',
+                            field: 'actions',
+                            sortable: false,
+                        } 
+                    ],
+                    rows: [
+                        { id: 0, name: 'Joaquin Mansilla', dni: "40.183.360", price: 160, estado: "initial", children: [
+                            { id: 1, name: 'Joaquin Mansilla', product: 'Papas',  quantity: 20, price: 50, estado: "initial" },
+                            { id: 2, name: 'Joaquin Mansilla', product: 'Arroz (1kg)',  quantity: 2, price: 80, estado: "initial" },
+                            { id: 3, name: 'Joaquin Mansilla', product: 'Lentejas (1kg)',  quantity: 1, price: 30, estado: "initial" },
+                        ]},
+                        { id: 4, name: 'Hernan Gigena', dni: "32.042.172", price: 155,  estado: "initial", children: [
+                            { id: 5, name: 'Hernan Gigena', product: 'Papas',  quantity: 10, price: 25, estado: "initial" },
+                            { id: 6, name: 'Hernan Gigena', product: 'Arroz (1kg)',  quantity: 1, price: 40, estado: "initial" },
+                            { id: 7, name: 'Hernan Gigena', product: 'Lentejas (1kg)',  quantity: 3, price: 90, estado: "initial" }
+                        ]}
+                    ],
+                };
+            },
+        });
+    </script>
+
+{% endblock %}

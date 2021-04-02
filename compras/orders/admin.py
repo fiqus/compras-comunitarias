@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.html import format_html
 from django.conf.urls import url
 from compras.orders.models import Listing, Order, Product, ListingProduct, Producer, OrderProduct, Tags
-from .forms import ListingSummaryForm
+from .forms import ListingSummaryForm, ListingRealTimeForm
 from django.urls import reverse
 
 from django.template.response import TemplateResponse
@@ -26,25 +26,43 @@ class ListingAdmin(admin.ModelAdmin):
                 r'^(?P<listing_id>.+)/summary/$',
                 self.admin_site.admin_view(self.get_summary),
                 name='listing-summary',
-            )
+            ),
+            url(
+                r'^(?P<listing_id>.+)/realtime/$',
+                self.admin_site.admin_view(self.real_time),
+                name='listing-realtime',
+            ),
         ]
         return custom_urls + urls
 
     def listing_actions(self, obj):
         return format_html(
-            '<a class="button" href="{}">Resumen</a>&nbsp;',
-            reverse('admin:listing-summary', args=[obj.pk])
+            '<a class="button" href="{}">Detalle de Pedido</a>&nbsp;'
+            '<a class="button" href="{}">Entregas en tiempo real</a>',
+            reverse('admin:listing-summary', args=[obj.pk]),
+            reverse('admin:listing-realtime', args=[obj.pk])
         )
 
     listing_actions.short_description = 'Acciones'
     listing_actions.allow_tags = True
 
     def get_summary(self, request, listing_id, *args, **kwargs):
+
         return self.process_action(
             request=request,
             listing_id=listing_id,
             action_form=ListingSummaryForm,
+            template='admin/order/listing_summary.html',
             action_title='Resumen de Pedido',
+        )
+
+    def real_time(self, request, listing_id, *args, **kwargs):
+        return self.process_action(
+            request=request,
+            listing_id=listing_id,
+            action_form=ListingRealTimeForm,
+            template='admin/order/vue_app/listing_realtime.html',
+            action_title='Entrega de pedidos en tiempo real',
         )
 
     def process_action(
@@ -52,6 +70,7 @@ class ListingAdmin(admin.ModelAdmin):
         request,
         listing_id,
         action_form,
+        template,
         action_title
     ):
         listing = self.get_object(request, listing_id)
@@ -62,12 +81,11 @@ class ListingAdmin(admin.ModelAdmin):
         context['opts'] = self.model._meta
         context['form'] = form
         context['listing'] = listing
-
-        context['summary'] = listing.summary.to_html()
+        context["summary"] = listing.summary.to_html(classes=["table-bordered", "table-striped", "table-hover"])
         context['title'] = action_title
         return TemplateResponse(
             request,
-            'admin/order/listing_action.html',
+            template,
             context,
         )
 
