@@ -33,15 +33,22 @@ class ListingAdmin(admin.ModelAdmin):
                 self.admin_site.admin_view(self.real_time),
                 name='listing-realtime',
             ),
+            url(
+                r'^(?P<listing_id>.+)/report-orders/$',
+                self.admin_site.admin_view(self.report_orders),
+                name='report-orders',
+            ),
         ]
         return custom_urls + urls
 
     def listing_actions(self, obj):
         return format_html(
             '<a class="button" href="{}">Detalle de Pedido</a>&nbsp;'
-            '<a class="button" href="{}">Entregas en tiempo real</a>',
+            '<a class="button" href="{}">Entregas en tiempo real</a>&nbsp;'
+            '<a class="button" href="{}">Informar Pedidos</a>',
             reverse('admin:listing-summary', args=[obj.pk]),
-            reverse('admin:listing-realtime', args=[obj.pk])
+            reverse('admin:listing-realtime', args=[obj.pk]),
+            reverse('admin:report-orders', args=[obj.pk])
         )
 
     listing_actions.short_description = 'Acciones'
@@ -64,6 +71,15 @@ class ListingAdmin(admin.ModelAdmin):
             action_form=ListingRealTimeForm,
             template='admin/order/vue_app/listing_realtime.html',
             action_title='Entrega de pedidos en tiempo real',
+        )
+
+    def report_orders(self, request, listing_id, *args, **kwargs):
+        return self.process_action(
+            request=request,
+            listing_id=listing_id,
+            action_form=ListingRealTimeForm,
+            template='admin/order/report_orders.html',
+            action_title='Informar Pedidos',
         )
 
     def process_action(
