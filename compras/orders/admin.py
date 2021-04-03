@@ -99,6 +99,7 @@ class ListingAdmin(admin.ModelAdmin):
         context['form'] = form
         context['listing'] = listing
         context["summary"] = listing.summary.to_html(classes=["table-bordered", "table-striped", "table-hover"])
+        context["products"] = listing.products_list
         context['title'] = action_title
         return TemplateResponse(
             request,
