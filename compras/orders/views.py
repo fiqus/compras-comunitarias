@@ -26,10 +26,9 @@ class OrderForm(ModelForm):
 
 
 def create_order(request):
-    listing = Business().available_listings()
+    listing = Business().first_available_listing()
     if (not listing):
         return render(request, 'orders/no_listing.html')
-
     order = Order.objects.filter(user=request.user, listing=listing).last()
     OrderProductInlineFormset = inlineformset_factory(Order, OrderProduct, fields=('product', 'amount'),
                                                       can_delete=False, extra=listing.listingproduct_set.count())
