@@ -97,7 +97,7 @@ class Listing(models.Model):
                 "name": order.user.name,
                 "dni": order.user.dni,
                 "price": order.total,
-                "status": "await",
+                "status": order.status,
                 "children": []
             }
             i += 1
@@ -106,7 +106,7 @@ class Listing(models.Model):
                     "id": i,
                     "name": order.user.name,
                     "product": str(product.product),
-                    "price": product.total,
+                    "price": float(product.total),
                     "quantity": product.amount,
                     "status": "unchecked"
                 }
@@ -141,6 +141,7 @@ class Order(models.Model):
     user = models.ForeignKey(to="users.User", on_delete=models.CASCADE)
     listing = models.ForeignKey(to=Listing, on_delete=models.CASCADE)
     products = models.ManyToManyField(ListingProduct, through="OrderProduct")
+    status = models.CharField(max_length=64, default="await")
   
 
     def __str__(self):

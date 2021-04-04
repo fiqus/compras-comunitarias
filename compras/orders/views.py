@@ -58,7 +58,6 @@ def create_order(request):
     return {listing}
 
 
-
 class View_producer(DetailView):
     model = Producer
 

@@ -10,6 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue-good-table@2.21.9/dist/vue-good-table.js"></script>
     <script src="https://kit.fontawesome.com/1de09feced.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     
 {% endblock %}
 
@@ -79,7 +80,6 @@
 {% block content %}
     <br/>
     <div id="vue-app">
-
         <div class="row grouped-multiple-statistics-card">
             <div class="col-12">
                 <div class="card">
@@ -209,19 +209,23 @@
             methods: {
                 await: function (id) {
                     var foundIndex = this.rows.findIndex(x => x.id == id);
-                    this.rows[foundIndex].status = "await";
+                    order = this.rows[foundIndex];
+                    this.changeStatus(order.pk, "await", () => { this.rows[foundIndex].status = "await" });
                 },
                 inside: function (id) {
                     var foundIndex = this.rows.findIndex(x => x.id == id);
-                    this.rows[foundIndex].status = "inside";
+                    order = this.rows[foundIndex];
+                    this.changeStatus(order.pk, "inside", () => { this.rows[foundIndex].status = "inside" });
                 },
                 pay: function (id) {
                     var foundIndex = this.rows.findIndex(x => x.id == id);
-                    this.rows[foundIndex].status = "paid";
+                    order = this.rows[foundIndex];
+                    this.changeStatus(order.pk, "paid", () => { this.rows[foundIndex].status = "paid" });
                 },
                 cancel: function (id) {
                     var foundIndex = this.rows.findIndex(x => x.id == id);
-                    this.rows[foundIndex].status = "cancel";
+                    order = this.rows[foundIndex];
+                    this.changeStatus(order.pk, "cancel", () => { this.rows[foundIndex].status = "cancel" });
                 },
                 edit: function (pk) {
                     window.open(
@@ -239,6 +243,32 @@
                 rowStyleClassFn: function (row) {
                     return row.status;
                 },
+                changeStatus: function(id, status, fn) {
+                    axios({
+                        method: 'post',
+                        url: 'change_status/' + id + "/",
+                        data: {
+                            "order_id": id,
+                            "status": status, 
+
+                        },
+                        responseType: 'json', 
+                        headers: {
+                            "X-CSRFToken": "{{ csrf_token }}", 
+                            "content-type": "application/json"
+                        }
+                    })
+
+                    .then ( function (response){ //success function
+                        console.log('axios ajax success. data returned ==' + response.data); //if returned data format is like {[ {'id':1,'id':2} ]} we may have to do response.data['output_dict'][0]['id']
+                        fn();
+                    }.bind(this)) //bind(this) is required when accessing Vue variable inside Axios success function (.then)
+
+                    .catch ( function (error){ //error function
+                        console.log('Axios ajax error');
+                    });
+
+                }
             },
             computed: {
                 delivered: function(id) {
@@ -267,13 +297,13 @@
                 },
                 cash: function(id) {
                     let numInside= this.rows.reduce(function (n, r) {
-                        return n + ((r.status == 'paid')?r.price:0);
+                        return n + ((r.status == 'paid') ? parseFloat(r.price) : 0);
                     }, 0);
                     return numInside.toLocaleString("es-ar");
                 },
                 cash_cancel: function(id) {
                     let numInside= this.rows.reduce(function (n, r) {
-                        return n + ((r.status == 'cancel')?r.price:0);
+                        return n + ((r.status == 'cancel')? parseFloat(r.price) : 0);
                     }, 0);
                     return numInside.toLocaleString("es-ar");
                 },
@@ -289,6 +319,7 @@
             },
             data: function () {
                 return {
+                    loading: false,
                     columns: [
                         {
                             label: 'Nombre',

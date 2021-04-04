@@ -3,12 +3,17 @@ from django.utils.html import format_html
 from django.conf.urls import url
 from compras.orders.models import Listing, Order, Product, ListingProduct, Producer, OrderProduct, Tag
 from .forms import ListingSummaryForm, ListingRealTimeForm
+from django.http import JsonResponse
 
 from django.urls import reverse
 
 from django.template.response import TemplateResponse
 from django.core.serializers.json import DjangoJSONEncoder
 import json
+from django.views.decorators.csrf import csrf_protect
+from django.utils.decorators import method_decorator
+
+csrf_protected_method = method_decorator(csrf_protect)
 
 
 class ProductAdmin(admin.TabularInline):
@@ -39,6 +44,10 @@ class ListingAdmin(admin.ModelAdmin):
                 r'^(?P<listing_id>.+)/report-orders/$',
                 self.admin_site.admin_view(self.report_orders),
                 name='report-orders',
+            ),
+            url(
+                r'^(?P<listing_id>.+)/realtime/change_status/',
+                self.change_order_status,
             ),
         ]
         return custom_urls + urls
@@ -77,7 +86,8 @@ class ListingAdmin(admin.ModelAdmin):
         listing = self.get_object(request, listing_id)
         print(dir(listing))
         data = {
-            "products_by_order": json.dumps(listing.products_by_order, cls=DjangoJSONEncoder)
+            "products_by_order": json.dumps(listing.products_by_order, cls=DjangoJSONEncoder),
+            "listing": listing
         }
         return self.process_action(
             request=request,
@@ -97,6 +107,16 @@ class ListingAdmin(admin.ModelAdmin):
             action_title='Informar Pedidos',
             data={}
         )
+
+    @csrf_protected_method 
+    def change_order_status(self, request, listing_id):
+        print("AAAAAAAAAAAAAAAAA")
+        body = json.loads(request.body)
+        order = Order.objects.get(pk=body["order_id"])
+        order.status = body["status"]
+        order.save()
+        return JsonResponse({"status": order.status})
+        
 
     def process_action(
         self,
