@@ -42,6 +42,7 @@ def create_order(request):
             form.save()
             formset.save()
             order = Order.objects.get(pk=form.instance.pk)
+            Business().update_stock_products(order)
             return render(request, 'orders/order_success.html', {'order': order})
     else:
         form = OrderForm()

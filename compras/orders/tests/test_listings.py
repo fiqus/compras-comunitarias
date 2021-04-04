@@ -1,26 +1,10 @@
 import pytest
 from compras.business.business import Business
-from compras.orders.models import Listing, ListingProduct, Producer, Product
 from datetime import datetime
 from freezegun import freeze_time
+from .factory import create_listing
 
 pytestmark = pytest.mark.django_db
-
-def create_listing(enabled, limit_date):
-    # TODO: convert this into object factories
-    producer = Producer(name='Pagblo', url='adf@sdf.com', description='asdfasdf')
-    producer.save()
-    product = Product(name='Faina', producer_id=producer.id, description='rellena')
-    product.save()
-    listing = Listing(enabled=enabled, limit_date=limit_date, description="Compa importante")
-    listing.save()
-    listing_product = ListingProduct(listing_id=listing.id, product_id=product.id, price=10)
-    listing_product.save()
-    
-    # Adds listing product
-    listing.products.add(product)
-    listing.save()
-    return listing
 
 def test_business_returns_nothing_when_there_are_no_listings():
     business = Business()
