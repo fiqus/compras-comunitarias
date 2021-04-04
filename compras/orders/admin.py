@@ -7,6 +7,8 @@ from .forms import ListingSummaryForm, ListingRealTimeForm
 from django.urls import reverse
 
 from django.template.response import TemplateResponse
+from django.core.serializers.json import DjangoJSONEncoder
+import json
 
 
 class ProductAdmin(admin.TabularInline):
@@ -55,22 +57,35 @@ class ListingAdmin(admin.ModelAdmin):
     listing_actions.allow_tags = True
 
     def get_summary(self, request, listing_id, *args, **kwargs):
-
+        listing = self.get_object(request, listing_id)
+        summary = listing.summary.to_html(classes=["table-bordered", "table-striped", "table-hover"])
+        products = listing.products_list
+        data = {
+            summary,
+            products
+        }
         return self.process_action(
             request=request,
             listing_id=listing_id,
             action_form=ListingSummaryForm,
             template='admin/order/listing_summary.html',
             action_title='Resumen de Pedido',
+            data=data
         )
 
     def real_time(self, request, listing_id, *args, **kwargs):
+        listing = self.get_object(request, listing_id)
+        print(dir(listing))
+        data = {
+            "products_by_order": json.dumps(listing.products_by_order, cls=DjangoJSONEncoder)
+        }
         return self.process_action(
             request=request,
             listing_id=listing_id,
             action_form=ListingRealTimeForm,
             template='admin/order/vue_app/listing_realtime.html',
             action_title='Entrega de pedidos en tiempo real',
+            data=data
         )
 
     def report_orders(self, request, listing_id, *args, **kwargs):
@@ -88,18 +103,16 @@ class ListingAdmin(admin.ModelAdmin):
         listing_id,
         action_form,
         template,
-        action_title
+        action_title,
+        data
     ):
-        listing = self.get_object(request, listing_id)
         if request.method != 'POST':
             form = action_form()
 
         context = self.admin_site.each_context(request)
         context['opts'] = self.model._meta
         context['form'] = form
-        context['listing'] = listing
-        context["summary"] = listing.summary.to_html(classes=["table-bordered", "table-striped", "table-hover"])
-        context["products"] = listing.products_list
+        context["data"] = data
         context['title'] = action_title
         return TemplateResponse(
             request,
@@ -126,6 +139,6 @@ admin.site.register(Producer)
 admin.site.register(Tag)
 
 # Cambiando nombre del admin
-admin.site.site_header = "Compras Comunitarias - Administracion"
+admin.site.site_header = "Compras Comunitarias - Administración"
 admin.site.site_title = "Compras Comunitarias"
-admin.site.index_title = "Panel de gestion"
+admin.site.index_title = "Panel de Gestión"

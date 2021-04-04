@@ -85,6 +85,37 @@ class Listing(models.Model):
                 
         return products
 
+    @property
+    def products_by_order(self):
+        products_by_order = []
+        i = 0
+
+        for order in self.order_set.all():
+            o = {
+                "id": i,
+                "pk": order.pk,
+                "name": order.user.name,
+                "dni": "xx.xxx.xxx",
+                "price": order.total,
+                "status": "await",
+                "children": []
+            }
+            i += 1
+            for product in order.orderproduct_set.all():
+                p = {
+                    "id": i,
+                    "name": order.user.name,
+                    "product": str(product.product),
+                    "price": product.total,
+                    "quantity": product.amount,
+                    "status": "unchecked"
+                }
+                i += 1
+                o["children"].append(p)
+            products_by_order.append(o)
+
+        return products_by_order
+
     def __str__(self):
         return f"{self.limit_date}"
 
@@ -100,7 +131,7 @@ class ListingProduct(models.Model):
 
     
     def __str__(self):
-        return f"listing product {self.product.name} {self.presentation}${self.price}"
+        return f"{self.product.name} ({self.presentation})"
 
 class Order(models.Model):
     class Meta:
