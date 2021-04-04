@@ -73,16 +73,29 @@ class Listing(models.Model):
     @property
     def products_list(self):
         products = []
+        grand_total = 0
         for order in self.order_set.all():
             for product in order.orderproduct_set.all():
                 p = {}
-                p["product"] = product.product
-                p["price"] = product.total
+                check_groupby_product = False
+                p["product"] = str(product.product).split('$')[0]
+                p["product"] = str(product.product).split('listing product ')[1]
+                p["price"] = float(str(product.product).split('$')[1])
+
+                for product_check in products:
+                    if(p["product"] == product_check['product']):
+                        product_check['amount'] += int(product.amount) 
+                        product_check['total'] += float(product.total)
+                        check_groupby_product = True
+
                 p["order"] = product.order
-                p["amount"] = int(product.amount)
-                p["total"] = float(product.total)
-                products.append(p)
-                
+                grand_total += float(product.total)
+
+                if not check_groupby_product:
+                    p["amount"] = int(product.amount)
+                    p["total"] = float(product.total)
+                    products.append(p)
+        products.append(grand_total)
         return products
 
     @property
@@ -131,7 +144,7 @@ class ListingProduct(models.Model):
 
     
     def __str__(self):
-        return f"{self.product.name} ({self.presentation})"
+        return f"listing product {self.product.name} {self.presentation}${self.price}"
 
 class Order(models.Model):
     class Meta:

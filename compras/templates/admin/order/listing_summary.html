@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <style>
     h1 { font-size: 24px; font-weight: bold }
+    th.total {text-align: center}
   </style>
 {% endblock %}
 
@@ -32,12 +33,20 @@
                       </thead>
                       <tbody>
                           {% for product in data.products %}
-                              <tr>
-                                  <td>{{product.product}}</th>
-                                  <td>{{product.amount}}</th>
-                                  <td>${{product.price}}</th>
-                                  <td>${{product.total}}</th>
-                              </tr>
+                            {% if product.product %}
+                                <tr>
+                                    <td>{{product.product}}</td>
+                                    <td>{{product.amount}}</td>
+                                    <td>${{product.price}}</td>
+                                    <td>${{product.total}}</td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <th colspan="3" class="total">TOTAL</th>
+                                    <td>${{product}}</th>
+                                </tr>
+                            {% endif %}
+                            
                           {% endfor %}
                       </tbody>
                   </table>
