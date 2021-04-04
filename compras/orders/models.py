@@ -95,7 +95,7 @@ class Listing(models.Model):
                 "id": i,
                 "pk": order.pk,
                 "name": order.user.name,
-                "dni": "xx.xxx.xxx",
+                "dni": order.user.dni,
                 "price": order.total,
                 "status": "await",
                 "children": []
