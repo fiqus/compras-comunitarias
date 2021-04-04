@@ -70,6 +70,21 @@ class Listing(models.Model):
             df.loc['Total']= df.sum()
         return df
 
+    @property
+    def products_list(self):
+        products = []
+        for order in self.order_set.all():
+            for product in order.orderproduct_set.all():
+                p = {}
+                p["product"] = str(product.product).split('$')[0]
+                p["price"] = float(str(product.product).split('$')[1])
+                p["order"] = str(product.order)
+                p["amount"] = int(product.amount)
+                p["total"] = float(product.total)
+                products.append(p)
+                
+        return products
+
     def __str__(self):
         return f"{self.limit_date}"
 
