@@ -59,6 +59,7 @@ class ListingProduct(models.Model):
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    stock = models.PositiveIntegerField(null=True)
     presentation = models.CharField(max_length=64)
     
     def tags(self):
