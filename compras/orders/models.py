@@ -70,6 +70,52 @@ class Listing(models.Model):
             df.loc['Total']= df.sum()
         return df
 
+    @property
+    def products_list(self):
+        products = []
+        for order in self.order_set.all():
+            for product in order.orderproduct_set.all():
+                p = {}
+                p["product"] = product.product
+                p["price"] = product.total
+                p["order"] = product.order
+                p["amount"] = int(product.amount)
+                p["total"] = float(product.total)
+                products.append(p)
+                
+        return products
+
+    @property
+    def products_by_order(self):
+        products_by_order = []
+        i = 0
+
+        for order in self.order_set.all():
+            o = {
+                "id": i,
+                "pk": order.pk,
+                "name": order.user.name,
+                "dni": order.user.dni,
+                "price": order.total,
+                "status": order.status,
+                "children": []
+            }
+            i += 1
+            for product in order.orderproduct_set.all():
+                p = {
+                    "id": i,
+                    "name": order.user.name,
+                    "product": str(product.product),
+                    "price": float(product.total),
+                    "quantity": product.amount,
+                    "status": "unchecked"
+                }
+                i += 1
+                o["children"].append(p)
+            products_by_order.append(o)
+
+        return products_by_order
+
     def __str__(self):
         return f"{self.limit_date}"
 
@@ -85,7 +131,7 @@ class ListingProduct(models.Model):
 
     
     def __str__(self):
-        return f"listing product {self.product.name} {self.presentation}${self.price}"
+        return f"{self.product.name} ({self.presentation})"
 
 class Order(models.Model):
     class Meta:
@@ -95,6 +141,7 @@ class Order(models.Model):
     user = models.ForeignKey(to="users.User", on_delete=models.CASCADE)
     listing = models.ForeignKey(to=Listing, on_delete=models.CASCADE)
     products = models.ManyToManyField(ListingProduct, through="OrderProduct")
+    status = models.CharField(max_length=64, default="await")
   
 
     def __str__(self):

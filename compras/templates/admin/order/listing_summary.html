@@ -11,11 +11,43 @@
 {% block extrastyle %}
   {{ block.super }}
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <style>
+    h1 { font-size: 24px; font-weight: bold }
+  </style>
 {% endblock %}
 
 {% block content %}
-    
-    {{ summary | safe}}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                {% if data.products %}
+                  <table class="table table-bordered table-hover">
+                      <thead>
+                          <tr>
+                              <th>Product</th>
+                              <th>Amount</th>
+                              <th>Price</th>
+                              <th>Total</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          {% for product in data.products %}
+                              <tr>
+                                  <td>{{product.product}}</th>
+                                  <td>{{product.amount}}</th>
+                                  <td>${{product.price}}</th>
+                                  <td>${{product.total}}</th>
+                              </tr>
+                          {% endfor %}
+                      </tbody>
+                  </table>
+                {% else %}
+                  <div>Todavia no hay pedidos</div>
+                {% endif %}
 
+
+            </div>
+        </div>
+    </div>
 {% endblock %}
 

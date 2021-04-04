@@ -10,31 +10,141 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue-good-table@2.21.9/dist/vue-good-table.js"></script>
     <script src="https://kit.fontawesome.com/1de09feced.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     
 {% endblock %}
 
 {% block extrastyle %}
   {{ block.super }}
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-good-table@2.21.9/dist/vue-good-table.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap-extended.min.css">
+    <link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/fonts/simple-line-icons/style.min.css">
+    <link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/colors.min.css">
+    <link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-good-table@2.21.9/dist/vue-good-table.min.css" crossorigin="anonymous">
   <style type="text/css">
-    tr.open {
-        color: #7dad7b !important;
+    
+    tr.await {
+        color: #404E67 !important;
     }
 
-    tr.closed {
-        color: #e07070 !important;
+    tr.paid {
+        color: #5ED39A !important;
+    }
+
+    tr.cancel {
+        color: #FF7588 !important;
     }
 
     tr.inside {
-        color: #db970f !important;
+        color: #FFA87D !important;
+    }
+    .qty .count {
+        color: #000;
+        display: inline-block;
+        vertical-align: top;
+        font-size: 25px;
+        font-weight: 700;
+        line-height: 30px;
+        padding: 0 2px
+        ;min-width: 35px;
+        text-align: center;
+    }
+    .qty .plus {
+        cursor: pointer;
+        display: inline-block;
+        vertical-align: top;
+        color: white;
+        width: 30px;
+        height: 30px;
+        font: 30px/1 Arial,sans-serif;
+        text-align: center;
+        border-radius: 50%;
+        }
+    .qty .minus {
+        cursor: pointer;
+        display: inline-block;
+        vertical-align: top;
+        color: white;
+        width: 30px;
+        height: 30px;
+        font: 30px/1 Arial,sans-serif;
+        text-align: center;
+        border-radius: 50%;
+        background-clip: padding-box;
     }
   </style>
 {% endblock %}
 
 {% block content %}
-    
+    <br/>
     <div id="vue-app">
+        <div class="row grouped-multiple-statistics-card">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6 col-xl-3 col-sm-6 col-12">
+                                <div class="d-flex align-items-start border-right-blue-grey border-right-lighten-5">
+                                <span class="card-icon secondary d-flex justify-content-center mr-3">
+                                    <i class="icon p-1 icon-clock customize-icon font-large-2 p-1"></i>
+                                </span>
+                                <div class="stats-amount mr-3">
+                                    <h3 class="heading-text text-bold-600">[[ awaiting ]]</h3>
+                                    <p class="sub-heading">Esperando</p>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-xl-3 col-sm-6 col-12">
+                                <div class="d-flex align-items-start mb-sm-1 mb-xl-0 border-right-blue-grey border-right-lighten-5">
+                                <span class="card-icon warning d-flex justify-content-center mr-3">
+                                    <i class="icon p-1 icon-handbag customize-icon font-large-2 p-1"></i>
+                                </span>
+                                <div class="stats-amount mr-3">
+                                    <h3 class="heading-text text-bold-600">[[ buying ]]</h3>
+                                    <p class="sub-heading">Retirando</p>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-xl-3 col-sm-6 col-12">
+                                <div class="d-flex align-items-start mb-sm-1 mb-xl-0 border-right-blue-grey border-right-lighten-5">
+                                    <span class="card-icon success d-flex justify-content-center mr-3">
+                                        <i class="icon p-1 icon-like customize-icon font-large-2 p-1"></i>
+                                    </span>
+                                    <div class="stats-amount mr-3">
+                                        <h3 class="heading-text text-bold-600">[[ delivered ]] </h3>
+                                        <p class="sub-heading">Entregados</p>
+                                    </div>
+                                    <span class="inc-dec-percentage">
+                                        <small class="success"><i class="icon-wallet"></i> $[[ cash ]]</small>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-xl-3 col-sm-6 col-12">
+                                <div class="d-flex align-items-start">
+                                    <span class="card-icon danger d-flex justify-content-center mr-3">
+                                        <i class="icon p-1 icon-dislike customize-icon font-large-2 p-1"></i>
+                                    </span>
+                                    <div class="stats-amount mr-3">
+                                        <h3 class="heading-text text-bold-600">[[ canceled ]]</h3>
+                                        <p class="sub-heading">Cancelados</p>
+                                    </div>
+                                    <span class="inc-dec-percentage">
+                                        <small class="danger"><i class="icon-wallet"></i> $[[ cash_cancel ]]</small>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="progress">
+            <div class="progress-bar bg-success" role="progressbar" :style="{'width': `${progress_ok}%`}" :aria-valuenow="progress_ok" aria-valuemin="0" aria-valuemax="100">[[ progress_ok ]]%</div>
+            <div class="progress-bar bg-danger" role="progressbar" :style="{'width': `${progress_cancel}%`}" :aria-valuenow="progress_cancel" aria-valuemin="0" aria-valuemax="100">[[ progress_cancel ]]%</div>
+        </div>
+        <br/>
         <vue-good-table
             ref="MyCoolTable"
             theme="polar-bear"
@@ -69,9 +179,13 @@
                 </span>
                 <span v-else-if="props.column.field == 'actions'">
                     <span>
-                        <button class="btn btn-dark" @click="inside(props.row.id)"><i class="fas fa-sign-in-alt"></i></button>
-                        <button class="btn btn-dark" @click="pay(props.row.id)"><i class="fas fa-money-bill"></i></button>
-                        <button class="btn btn-dark" @click="close(props.row.id)"><i class="fas fa-window-close"></i></button>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button class="btn btn-dark" @click="await(props.row.id)"><i class="icon-clock"></i></button>
+                            <button class="btn btn-dark" @click="inside(props.row.id)"><i class="icon-handbag"></i></button>
+                            <button class="btn btn-dark" @click="pay(props.row.id)"><i class="icon-like"></i></button>
+                            <button class="btn btn-dark" @click="cancel(props.row.id)"><i class="icon-dislike "></i></button>
+                        </div>
+                        <button class="btn btn-dark" @click="edit(props.row.pk)"><i class="icon-pencil"></i></i></button>
                     </span>
                 </span>
                 <span v-else>
@@ -93,17 +207,31 @@
             },
             delimiters: ['[[', ']]'],
             methods: {
+                await: function (id) {
+                    var foundIndex = this.rows.findIndex(x => x.id == id);
+                    order = this.rows[foundIndex];
+                    this.changeStatus(order.pk, "await", () => { this.rows[foundIndex].status = "await" });
+                },
                 inside: function (id) {
                     var foundIndex = this.rows.findIndex(x => x.id == id);
-                    this.rows[foundIndex].estado = "inside";
+                    order = this.rows[foundIndex];
+                    this.changeStatus(order.pk, "inside", () => { this.rows[foundIndex].status = "inside" });
                 },
                 pay: function (id) {
                     var foundIndex = this.rows.findIndex(x => x.id == id);
-                    this.rows[foundIndex].estado = "open";
+                    order = this.rows[foundIndex];
+                    this.changeStatus(order.pk, "paid", () => { this.rows[foundIndex].status = "paid" });
                 },
-                close: function (id) {
+                cancel: function (id) {
                     var foundIndex = this.rows.findIndex(x => x.id == id);
-                    this.rows[foundIndex].estado = "closed";
+                    order = this.rows[foundIndex];
+                    this.changeStatus(order.pk, "cancel", () => { this.rows[foundIndex].status = "cancel" });
+                },
+                edit: function (pk) {
+                    window.open(
+                        '/admin/orders/order/' + pk + '/change' ,
+                        '_blank' // <- This is what makes it open in a new window.
+                    );
                 },
                 ok: function (e) {
                     let target = e.target;
@@ -113,19 +241,85 @@
                     target.classList.toggle('btn-success');
                 },
                 rowStyleClassFn: function (row) {
-                    return row.estado;
+                    return row.status;
                 },
-            },
-            computed: {
-                delivered: function(id) {
+                changeStatus: function(id, status, fn) {
+                    axios({
+                        method: 'post',
+                        url: 'change_status/' + id + "/",
+                        data: {
+                            "order_id": id,
+                            "status": status, 
 
-                },
-                awaiting: function(id) {
+                        },
+                        responseType: 'json', 
+                        headers: {
+                            "X-CSRFToken": "{{ csrf_token }}", 
+                            "content-type": "application/json"
+                        }
+                    })
+
+                    .then ( function (response){ //success function
+                        console.log('axios ajax success. data returned ==' + response.data); //if returned data format is like {[ {'id':1,'id':2} ]} we may have to do response.data['output_dict'][0]['id']
+                        fn();
+                    }.bind(this)) //bind(this) is required when accessing Vue variable inside Axios success function (.then)
+
+                    .catch ( function (error){ //error function
+                        console.log('Axios ajax error');
+                    });
 
                 }
             },
+            computed: {
+                delivered: function(id) {
+                    let numDelivered = this.rows.reduce(function (n, r) {
+                        return n + (r.status == 'paid');
+                    }, 0);
+                    return numDelivered;
+                },
+                awaiting: function(id) {
+                    let numAwaiting = this.rows.reduce(function (n, r) {
+                        return n + (r.status == 'await' );
+                    }, 0);
+                    return numAwaiting;
+                },
+                canceled: function(id) {
+                    let numCancel= this.rows.reduce(function (n, r) {
+                        return n + (r.status == 'cancel');
+                    }, 0);
+                    return numCancel;
+                },
+                buying: function(id) {
+                    let numInside= this.rows.reduce(function (n, r) {
+                        return n + (r.status == 'inside');
+                    }, 0);
+                    return numInside;
+                },
+                cash: function(id) {
+                    let numInside= this.rows.reduce(function (n, r) {
+                        return n + ((r.status == 'paid') ? parseFloat(r.price) : 0);
+                    }, 0);
+                    return numInside.toLocaleString("es-ar");
+                },
+                cash_cancel: function(id) {
+                    let numInside= this.rows.reduce(function (n, r) {
+                        return n + ((r.status == 'cancel')? parseFloat(r.price) : 0);
+                    }, 0);
+                    return numInside.toLocaleString("es-ar");
+                },
+                total: function(id) {
+                    return this.rows.length;
+                },
+                progress_ok: function(id) {
+                    return (this.delivered/this.total).toFixed(2) * 100;
+                },
+                progress_cancel: function(id) {
+                    return (this.canceled/this.total).toFixed(2) * 100;
+                },
+            },
             data: function () {
                 return {
+                    loading: false,
                     columns: [
                         {
                             label: 'Nombre',
@@ -155,18 +349,7 @@
                             sortable: false,
                         } 
                     ],
-                    rows: [
-                        { id: 0, name: 'Joaquin Mansilla', dni: "40.183.360", price: 160, estado: "initial", children: [
-                            { id: 1, name: 'Joaquin Mansilla', product: 'Papas',  quantity: 20, price: 50, estado: "initial" },
-                            { id: 2, name: 'Joaquin Mansilla', product: 'Arroz (1kg)',  quantity: 2, price: 80, estado: "initial" },
-                            { id: 3, name: 'Joaquin Mansilla', product: 'Lentejas (1kg)',  quantity: 1, price: 30, estado: "initial" },
-                        ]},
-                        { id: 4, name: 'Hernan Gigena', dni: "32.042.172", price: 155,  estado: "initial", children: [
-                            { id: 5, name: 'Hernan Gigena', product: 'Papas',  quantity: 10, price: 25, estado: "initial" },
-                            { id: 6, name: 'Hernan Gigena', product: 'Arroz (1kg)',  quantity: 1, price: 40, estado: "initial" },
-                            { id: 7, name: 'Hernan Gigena', product: 'Lentejas (1kg)',  quantity: 3, price: 90, estado: "initial" }
-                        ]}
-                    ],
+                    rows: {{ data.products_by_order | safe}},
                 };
             },
         });
