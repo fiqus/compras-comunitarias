@@ -61,8 +61,8 @@ class ListingAdmin(admin.ModelAdmin):
         summary = listing.summary.to_html(classes=["table-bordered", "table-striped", "table-hover"])
         products = listing.products_list
         data = {
-            summary,
-            products
+            "summary": summary,
+            "products":products
         }
         return self.process_action(
             request=request,
@@ -92,9 +92,10 @@ class ListingAdmin(admin.ModelAdmin):
         return self.process_action(
             request=request,
             listing_id=listing_id,
-            action_form=ListingRealTimeForm,
+            action_form=ListingSummaryForm,
             template='admin/order/report_orders.html',
             action_title='Informar Pedidos',
+            data={}
         )
 
     def process_action(
