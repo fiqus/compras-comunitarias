@@ -55,6 +55,9 @@
             
             {% for tag in p.grouper.tag_set.all %}
               <a class="tags">{{tag.name}}</a>
+                {% thumbnail tag.image "20x20" crop="20%" as im %} 
+                <img class="img-fluid img-thumbnail d-sm-inline-block d-none" src="{{im.url}}">
+                {% endthumbnail %} 
             {% endfor %}
           </div>
         </div>

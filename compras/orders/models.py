@@ -35,6 +35,7 @@ class Product(models.Model):
 class Tag (models.Model):
     name = models.CharField(max_length=50)
     product = models.ManyToManyField(Product)
+    image = ImageField(default="null", verbose_name="Tag Image",upload_to="tag_image", blank="True")
 
 
     def __str__(self):
