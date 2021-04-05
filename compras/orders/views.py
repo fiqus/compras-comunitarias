@@ -7,7 +7,7 @@ from django.forms.models import BaseModelForm, ModelForm, inlineformset_factory
 from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.views.generic import CreateView
-from .models import Listing, Order, OrderProduct, Producer
+from .models import Listing, Order, OrderProduct, Producer, Category
 from django.views.generic import DetailView
 import itertools
 

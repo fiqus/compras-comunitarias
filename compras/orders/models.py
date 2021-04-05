@@ -18,17 +18,17 @@ class Producer(models.Model):
     def __str__(self):
         return f"{self.name}"
 
-# class Category(models.Model):
-#     name = models.CharField(max_length=100, verbose_name="Name")
-#     description = models.CharField(max_length=255, verbose_name="Description")
-#     created_at= models.DateTimeField(auto_now_add=True)
+class Category(models.Model):
+    name = models.CharField(max_length=100, verbose_name="Name")
+    description = models.CharField(max_length=255, verbose_name="Description")
+    created_at= models.DateTimeField(auto_now_add=True)
     
-#     class Meta:
-#         verbose_name = "Category"
-#         verbose_name_plural = "Categories"
+    class Meta:
+         verbose_name = "categoria"
+         verbose_name_plural = "categorias"
 
-#     def __str__(self):
-#         return self.name
+    def __str__(self):
+        return self.name
 
 class Product(models.Model):
     class Meta:
@@ -39,7 +39,7 @@ class Product(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     image = ImageField(upload_to="product_images")
-    #category = models.ForeignKey(Category, verbose_name="Category",on_delete=models.CASCADE,default=)
+    category = models.ForeignKey(Category, verbose_name="Category",on_delete=models.CASCADE,blank=True, null=True)
 
 
     def __str__(self):

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from django.conf.urls import url
-from compras.orders.models import Listing, Order, Product, ListingProduct, Producer, OrderProduct, Tag
+from compras.orders.models import Listing, Order, Product, ListingProduct, Producer, OrderProduct, Tag, Category
 from .forms import ListingSummaryForm, ListingRealTimeForm
 from django.http import JsonResponse
 
@@ -153,11 +153,14 @@ class TagAdmin (admin.TabularInline):
     model= Tag
 
 
+
+
 admin.site.register(Order, OrderAdmin)
 admin.site.register(Listing, ListingAdmin)
 admin.site.register(Product)
 admin.site.register(Producer)
 admin.site.register(Tag)
+admin.site.register(Category)
 
 # Cambiando nombre del admin
 admin.site.site_header = "Compras Comunitarias - Administración"
