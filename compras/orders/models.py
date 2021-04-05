@@ -4,6 +4,7 @@ import pandas as pd
 from django_pandas.io import read_frame
 
 
+
 class Producer(models.Model):
     class Meta:
         verbose_name = "productor"
@@ -17,6 +18,17 @@ class Producer(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+# class Category(models.Model):
+#     name = models.CharField(max_length=100, verbose_name="Name")
+#     description = models.CharField(max_length=255, verbose_name="Description")
+#     created_at= models.DateTimeField(auto_now_add=True)
+    
+#     class Meta:
+#         verbose_name = "Category"
+#         verbose_name_plural = "Categories"
+
+#     def __str__(self):
+#         return self.name
 
 class Product(models.Model):
     class Meta:
@@ -27,6 +39,8 @@ class Product(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     image = ImageField(upload_to="product_images")
+    #category = models.ForeignKey(Category, verbose_name="Category",on_delete=models.CASCADE,default=)
+
 
     def __str__(self):
         return f"{self.name}"

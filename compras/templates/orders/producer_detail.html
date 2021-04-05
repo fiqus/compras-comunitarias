@@ -40,7 +40,12 @@
           <div class="pl-sm-3">
             <h5 class="card-title">{{lp.product.name}}</h5>
             {% for tag in lp.product.tag_set.all %}
+        
               <a class="tags">{{tag.name}}</a>
+                {% thumbnail tag.image "20x20" crop="20%" as im %} 
+                <img class="img-fluid img-thumbnail d-sm-inline-block d-none" src="{{im.url}}">
+                {% endthumbnail %} 
+           
             {% endfor %}
           <br>
            {{lp.product.description}}
