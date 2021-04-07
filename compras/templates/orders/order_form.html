@@ -15,6 +15,7 @@
   {% endif %}
   {{listing}}
 </h1>
+
 <form class="form-horizontal" method="post" action="{% url 'orders:create' %}">
   {% csrf_token %}
   <input name="listing" type="hidden" value="{{listing.id}}">
@@ -38,6 +39,7 @@
   </ul>
   {% regroup listing.listingproduct_set.all by product as product_items %}
   {% for p in product_items %}
+  {% comment %} {%if p.grouper.category != %} {% endcomment %}
   <div class="col-lg-8 offset-lg-2 mb-3">
     <div class="card">
       <div class="card-body">
@@ -52,13 +54,13 @@
             <h5 class="card-title">{{p.grouper.name}}</h5>
             <h6><a href="/orders/producer/{{p.grouper.producer.id}}">{{p.grouper.producer.name}}</a> - <a href="{{p.grouper.producer.url}}">{{p.grouper.producer.url}}</a></h6>
             <p class="card-text">{{p.grouper.description}}</p>
-            
             {% for tag in p.grouper.tag_set.all %}
               <a class="tags">{{tag.name}}</a>
                 {% thumbnail tag.image "20x20" crop="20%" as im %} 
                 <img class="img-fluid img-thumbnail d-sm-inline-block d-none" src="{{im.url}}">
                 {% endthumbnail %} 
             {% endfor %}
+            
           </div>
         </div>
         <ul class="list-group list-group-flush mt-2">
@@ -90,6 +92,7 @@
           </li>
           {% endwith %}
           {% endfor %}
+          
         </ul>
       </div>
     </div>
