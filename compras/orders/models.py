@@ -70,6 +70,16 @@ class Listing(models.Model):
             df.loc['Total']= df.sum()
         return df
 
+    @property
+    def users(self):
+        query_set = self.order_set.all()
+        if query_set:
+            users = []
+            for order in query_set:
+                users.append(order.user)
+                
+        return users
+
     def __str__(self):
         return f"{self.limit_date}"
 

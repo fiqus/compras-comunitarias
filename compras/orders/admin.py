@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.html import format_html
 from django.conf.urls import url
 from compras.orders.models import Listing, Order, Product, ListingProduct, Producer, OrderProduct, Tag
-from .forms import ListingSummaryForm, ListingRealTimeForm
+from .forms import ListingSummaryForm, ListingRealTimeForm, ListingReportOrdersForm
 
 from django.urls import reverse
 
@@ -77,7 +77,7 @@ class ListingAdmin(admin.ModelAdmin):
         return self.process_action(
             request=request,
             listing_id=listing_id,
-            action_form=ListingRealTimeForm,
+            action_form=ListingReportOrdersForm,
             template='admin/order/report_orders.html',
             action_title='Informar Pedidos',
         )
@@ -98,6 +98,7 @@ class ListingAdmin(admin.ModelAdmin):
         context['opts'] = self.model._meta
         context['form'] = form
         context['listing'] = listing
+        print(listing.users)
         context["summary"] = listing.summary.to_html(classes=["table-bordered", "table-striped", "table-hover"])
         context['title'] = action_title
         return TemplateResponse(
