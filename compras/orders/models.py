@@ -123,7 +123,13 @@ class Listing(models.Model):
         if query_set:
             users = []
             for order in query_set:
-                users.append(order.user)
+                user = order.user
+                object_user = {
+                    "name": user.name,
+                    "dni": user.dni,
+                    "email": user.email,
+                }
+                users.append(object_user)
 
         return users
 

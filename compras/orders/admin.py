@@ -99,18 +99,21 @@ class ListingAdmin(admin.ModelAdmin):
         )
 
     def report_orders(self, request, listing_id, *args, **kwargs):
+        listing = self.get_object(request, listing_id)
+        data = {
+            "users": listing.users
+        }
         return self.process_action(
             request=request,
             listing_id=listing_id,
             action_form=ListingRealTimeForm,
             template='admin/order/report_orders.html',
             action_title='Informar Pedidos',
-            data={}
+            data=data
         )
 
     @csrf_protected_method
     def change_order_status(self, request, listing_id):
-        print("AAAAAAAAAAAAAAAAA")
         body = json.loads(request.body)
         order = Order.objects.get(pk=body["order_id"])
         order.status = body["status"]
