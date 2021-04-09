@@ -50,10 +50,17 @@ def create_order(request):
         formset = OrderProductInlineFormset(instance=form.instance)
     amounts = defaultdict(int)
     if order:
+        categories = {}
         for p in order.orderproduct_set.all():
+            category = str(p.product.product.category)
             amounts[p.product.id] = p.amount
+            if category not in categories:
+                categories[category] = []
+            
+            categories[category].append(p)
+        print(categories)
     return render(request, 'orders/order_form.html', {'form': form, 'formset': formset, 'listing': listing,
-                                                      'amounts': amounts, 'order': order,
+                                                      'amounts': amounts, 'order': order, 'categories':categories,
                                                       'iterator': TemplateCounter()})
     return {listing}
 
@@ -73,13 +80,16 @@ class View_producer(DetailView):
        # print(context["products"].name)
         return self.render_to_response(context)
 
-def Category(request, category_id):
-    products = Product.objects.all()
-    categories = {}
-    for p in products:
-        if p.category not in categories:
-            categories[p.category] = []
-        categories[p.category].append[p]
-    return render(request, 'orders/order_form.html',{
-        'categories':categories
-    })
+# def Category(request):
+#     products = Product.objects.all()
+#     print(products)
+#     print("AAAAAAAAAAAAAA")
+#     categories = {}
+#     for p in products:
+#         if p.category not in categories:
+#             categories[p.category] = []
+#         categories = categories[p.category].append[p]
+#     print(categories)
+#     return render(request, 'orders/order_form.html',{
+#         'categories':categories.items()
+#     })
