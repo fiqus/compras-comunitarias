@@ -35,6 +35,7 @@ class Product(models.Model):
 class Tag (models.Model):
     name = models.CharField(max_length=50)
     product = models.ManyToManyField(Product)
+    image = ImageField(default="null", verbose_name="Tag Image",upload_to="tag_image", blank="True")
 
 
     def __str__(self):
@@ -71,13 +72,59 @@ class Listing(models.Model):
         return df
 
     @property
+    def products_list(self):
+        products = []
+        for order in self.order_set.all():
+            for product in order.orderproduct_set.all():
+                p = {}
+                p["product"] = product.product
+                p["price"] = product.total
+                p["order"] = product.order
+                p["amount"] = int(product.amount)
+                p["total"] = float(product.total)
+                products.append(p)
+
+        return products
+
+    @property
+    def products_by_order(self):
+        products_by_order = []
+        i = 0
+
+        for order in self.order_set.all():
+            o = {
+                "id": i,
+                "pk": order.pk,
+                "name": order.user.name,
+                "dni": order.user.dni,
+                "price": order.total,
+                "status": order.status,
+                "children": []
+            }
+            i += 1
+            for product in order.orderproduct_set.all():
+                p = {
+                    "id": i,
+                    "name": order.user.name,
+                    "product": str(product.product),
+                    "price": float(product.total),
+                    "quantity": product.amount,
+                    "status": "unchecked"
+                }
+                i += 1
+                o["children"].append(p)
+            products_by_order.append(o)
+
+        return products_by_order
+
+    @property
     def users(self):
         query_set = self.order_set.all()
         if query_set:
             users = []
             for order in query_set:
                 users.append(order.user)
-                
+
         return users
 
     def __str__(self):
@@ -89,13 +136,13 @@ class ListingProduct(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     presentation = models.CharField(max_length=64)
-    
+
     def tag(self):
         self.products[0].tag
 
-    
+
     def __str__(self):
-        return f"listing product {self.product.name} {self.presentation}${self.price}"
+        return f"{self.product.name} ({self.presentation})"
 
 class Order(models.Model):
     class Meta:
@@ -105,7 +152,8 @@ class Order(models.Model):
     user = models.ForeignKey(to="users.User", on_delete=models.CASCADE)
     listing = models.ForeignKey(to=Listing, on_delete=models.CASCADE)
     products = models.ManyToManyField(ListingProduct, through="OrderProduct")
-  
+    status = models.CharField(max_length=64, default="await")
+
 
     def __str__(self):
         return f"Orden - {self.user.name} - {self.listing.limit_date}"
