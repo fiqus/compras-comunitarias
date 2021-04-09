@@ -7,7 +7,7 @@ from django.forms.models import BaseModelForm, ModelForm, inlineformset_factory
 from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.views.generic import CreateView
-from .models import Listing, Order, OrderProduct, Producer, Category
+from .models import Listing, Order, OrderProduct, Producer, Category, Product
 from django.views.generic import DetailView
 import itertools
 
@@ -72,3 +72,14 @@ class View_producer(DetailView):
         context["products"] = listing.listingproduct_set.filter(product__producer=self.object.id).all()
        # print(context["products"].name)
         return self.render_to_response(context)
+
+def Category(request, category_id):
+    products = Product.objects.all()
+    categories = {}
+    for p in products:
+        if p.category not in categories:
+            categories[p.category] = []
+        categories[p.category].append[p]
+    return render(request, 'orders/order_form.html',{
+        'categories':categories
+    })
