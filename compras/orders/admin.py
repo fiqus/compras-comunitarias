@@ -107,7 +107,7 @@ class ListingAdmin(admin.ModelAdmin):
             request=request,
             listing_id=listing_id,
             action_form=ListingRealTimeForm,
-            template='admin/order/report_orders.html',
+            template='admin/order/vue_app/report_orders.html',
             action_title='Informar Pedidos',
             data=data
         )
