@@ -97,7 +97,7 @@ class Listing(models.Model):
                 p["amount"] = int(product.amount)
                 p["total"] = float(product.total)
                 products.append(p)
-                
+
         return products
 
     @property
@@ -131,6 +131,22 @@ class Listing(models.Model):
 
         return products_by_order
 
+    @property
+    def users(self):
+        query_set = self.order_set.all()
+        if query_set:
+            users = []
+            for order in query_set:
+                user = order.user
+                object_user = {
+                    "name": user.name,
+                    "dni": user.dni,
+                    "email": user.email,
+                }
+                users.append(object_user)
+
+        return users
+
     def __str__(self):
         return f"{self.limit_date}"
 
@@ -140,11 +156,11 @@ class ListingProduct(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     presentation = models.CharField(max_length=64)
-    
+
     def tag(self):
         self.products[0].tag
 
-    
+
     def __str__(self):
         return f"{self.product.name} ({self.presentation})"
 
@@ -157,7 +173,7 @@ class Order(models.Model):
     listing = models.ForeignKey(to=Listing, on_delete=models.CASCADE)
     products = models.ManyToManyField(ListingProduct, through="OrderProduct")
     status = models.CharField(max_length=64, default="await")
-  
+
 
     def __str__(self):
         return f"Orden - {self.user.name} - {self.listing.limit_date}"

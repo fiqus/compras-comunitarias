@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.html import format_html
 from django.conf.urls import url
 from compras.orders.models import Listing, Order, Product, ListingProduct, Producer, OrderProduct, Tag, Category
-from .forms import ListingSummaryForm, ListingRealTimeForm
+from .forms import ListingSummaryForm, ListingRealTimeForm,ListingReportOrdersForm
 from django.http import JsonResponse
 
 from django.urls import reverse
@@ -24,7 +24,7 @@ class ListingAdmin(admin.ModelAdmin):
     inlines = [ProductAdmin]
     list_display = (
         'limit_date',
-        'listing_actions', 
+        'listing_actions',
     )
 
     def get_urls(self):
@@ -99,24 +99,27 @@ class ListingAdmin(admin.ModelAdmin):
         )
 
     def report_orders(self, request, listing_id, *args, **kwargs):
+        listing = self.get_object(request, listing_id)
+        data = {
+            "users": listing.users
+        }
         return self.process_action(
             request=request,
             listing_id=listing_id,
-            action_form=ListingSummaryForm,
-            template='admin/order/report_orders.html',
+            action_form=ListingRealTimeForm,
+            template='admin/order/vue_app/report_orders.html',
             action_title='Informar Pedidos',
-            data={}
+            data=data
         )
 
-    @csrf_protected_method 
+    @csrf_protected_method
     def change_order_status(self, request, listing_id):
-        print("AAAAAAAAAAAAAAAAA")
         body = json.loads(request.body)
         order = Order.objects.get(pk=body["order_id"])
         order.status = body["status"]
         order.save()
         return JsonResponse({"status": order.status})
-        
+
 
     def process_action(
         self,
