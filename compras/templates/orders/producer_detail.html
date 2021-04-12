@@ -14,18 +14,6 @@
         {% endthumbnail %}
 </h1>
 
-{% comment %} 
-<ul>
-    {% for lp in products %}
-        <li>
-                <h4>{{lp.product.name}}{{lp.price}} </h4>
-        </li>
-                <br>
-    {% endfor %}
-    
-</ul> {% endcomment %}
-
-
   {% for lp in products %}
   <div class="col-lg-8 offset-lg-2 mb-3">
     <div class="card">
@@ -40,10 +28,15 @@
           <div class="pl-sm-3">
             <h5 class="card-title">{{lp.product.name}}</h5>
             {% for tag in lp.product.tag_set.all %}
+        
               <a class="tags">{{tag.name}}</a>
+                {% thumbnail tag.image "20x20" crop="20%" as im %} 
+                <img class="img-fluid img-thumbnail d-sm-inline-block d-none" src="{{im.url}}">
+                {% endthumbnail %} 
+           
             {% endfor %}
-            <br>
-            <a>{{lp.product.description}}</a>
+          <br>
+           {{lp.product.description}}
           </div>
         </div>
         <ul class="list-group list-group-flush mt-2">
@@ -54,7 +47,7 @@
               <input type="hidden" class="price" name="orderproduct_set-{{n}}-product" value="{{lp.id}}">
               <input id="{{lp.product.id}}_price" type="hidden" class="price" value="{{lp.product.price}}" data-id="{{lp.id}}">
               <div class="col-12 col-md-6 mb-2 mb-md-0">
-                <span>${{lp.price}}</span>
+                <span>  ${{lp.price}}</span>
               </div>
             </div>
           </li>
