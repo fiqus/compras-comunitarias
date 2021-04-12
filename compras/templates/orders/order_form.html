@@ -40,71 +40,82 @@
   {% regroup listing.listingproduct_set.all by product as product_items %}
   
 {%for c, products in categories.items%}
-  <h1> {{c}}</h1>
-    {% for p in products%}
-
-    <div class="col-lg-8 offset-lg-2 mb-3">
+    <div id="accordion">
       <div class="card">
-        <div class="card-body">
-          {% thumbnail p.product.product.image "600x200" crop="center" as im %}
-          <img class="img-fluid img-thumbnail d-sm-none d-block mb-2" src="{{im.url}}" alt="{{p.product.product.name}}">
-          {% endthumbnail %}
-          <div class="d-flex">
-            {% thumbnail p.product.product.image "100x100" crop="center" as im %}
-            <img class="img-fluid img-thumbnail d-sm-block d-none" src="{{im.url}}" alt="{{p.product.product.name}}">
-            {% endthumbnail %}
-            <div class="pl-sm-3">
-              <h5 class="card-title">{{p.product.product.name}}</h5>
-              <h6><a href="/orders/producer/{{p.product.product.producer.id}}">{{p.product.product.producer.name}}</a> - <a href="{{p.product.product.producer.url}}">{{p.product.product.producer.url}}</a></h6>
-              <p class="card-text">{{p.product.product.description}}</p>
-              {% for tag in p.product.product.tag_set.all %}
-                <a class="tags">{{tag.name}}</a>
-                  {% thumbnail tag.image "20x20" crop="20%" as im %} 
-                  <img class="img-fluid img-thumbnail d-sm-inline-block d-none" src="{{im.url}}">
-                  {% endthumbnail %} 
-          
-              {% endfor %}
-              
-            </div>
-          </div>
-          <ul class="list-group list-group-flush mt-2">
-            {% for lp in p.product.list %}
-            {% with n=iterator.next %}
-            <li class="list-group-item">
-              <div class="row">
-                <input type="hidden" class="price" name="orderproduct_set-{{n}}-product" value="{{lp.id}}">
-                <input id="{{lp.id}}_price" type="hidden" class="price" value="{{lp.price}}" data-id="{{lp.id}}">
-                <div class="col-12 col-md-6 mb-2 mb-md-0">
-                  <span>{{lp.presentation}} - ${{lp.price}}</span>
-                </div>
-                <div class="input-group input-group-sm col-8 col-md-4">
-                  <div class="input-group-prepend">
-                    <button class="btn btn-outline-secondary btn-minus" type="button" data-id="{{lp.id}}">-</button>
+        <div class="card-header" id="headingOne">
+          <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              {{c}}
+            </button>
+          </h5>
+        </div>
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+          <div class="card-body">
+            {% for p in products%}
+            <div class="col-lg-8 offset-lg-2 mb-3">
+              <div class="card">
+                  {% thumbnail p.product.product.image "600x200" crop="center" as im %}
+                  <img class="img-fluid img-thumbnail d-sm-none d-block mb-2" src="{{im.url}}" alt="{{p.product.product.name}}">
+                  {% endthumbnail %}
+                  <div class="d-flex">
+                    {% thumbnail p.product.product.image "100x100" crop="center" as im %}
+                    <img class="img-fluid img-thumbnail d-sm-block d-none" src="{{im.url}}" alt="{{p.product.product.name}}">
+                    {% endthumbnail %}
+                    <div class="pl-sm-3">
+                      <h5 class="card-title">{{p.product.product.name}}</h5>
+                      <h6><a href="/orders/producer/{{p.product.product.producer.id}}">{{p.product.product.producer.name}}</a> - <a href="{{p.product.product.producer.url}}">{{p.product.product.producer.url}}</a></h6>
+                      <p class="card-text">{{p.product.product.description}}</p>
+                      {% for tag in p.product.product.tag_set.all %}
+                        <a class="tags">{{tag.name}}</a>
+                          {% thumbnail tag.image "20x20" crop="20%" as im %} 
+                          <img class="img-fluid img-thumbnail d-sm-inline-block d-none" src="{{im.url}}">
+                          {% endthumbnail %} 
+                  
+                      {% endfor %}
+                      
+                    </div>
                   </div>
-                  <input id="{{lp.id}}_cant" name="orderproduct_set-{{n}}-amount" type="number" data-id="{{lp.id}}"
-                        class="form-control text-right input-cant" value="{{amounts | dict_key:lp.id}}" min="0" step="1">
-                  <div class="input-group-append">
-                    <button class="btn btn-outline-secondary btn-plus" type="button" data-id="{{lp.id}}">+</button>
-                  </div>
-                </div>
-                <div class="d-inline-flex align-items-baseline justify-content-end col-4 col-md-2">
-                  <span>$</span>
-                  <input id="{{lp.id}}_subtotal" type="text" readonly data-id="{{lp.id}}"
-                        class="text-right subtotal input_cant form-control-sm form-control-plaintext" value="00,00">
+                  <ul class="list-group list-group-flush mt-2">
+                    {% for lp in p.product.list %}
+                    {% with n=iterator.next %}
+                    <li class="list-group-item">
+                      <div class="row">
+                        <input type="hidden" class="price" name="orderproduct_set-{{n}}-product" value="{{lp.id}}">
+                        <input id="{{lp.id}}_price" type="hidden" class="price" value="{{lp.price}}" data-id="{{lp.id}}">
+                        <div class="col-12 col-md-6 mb-2 mb-md-0">
+                          <span>{{lp.presentation}} - ${{lp.price}}</span>
+                        </div>
+                        <div class="input-group input-group-sm col-8 col-md-4">
+                          <div class="input-group-prepend">
+                            <button class="btn btn-outline-secondary btn-minus" type="button" data-id="{{lp.id}}">-</button>
+                          </div>
+                          <input id="{{lp.id}}_cant" name="orderproduct_set-{{n}}-amount" type="number" data-id="{{lp.id}}"
+                                class="form-control text-right input-cant" value="{{amounts | dict_key:lp.id}}" min="0" step="1">
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-secondary btn-plus" type="button" data-id="{{lp.id}}">+</button>
+                          </div>
+                        </div>
+                        <div class="d-inline-flex align-items-baseline justify-content-end col-4 col-md-2">
+                          <span>$</span>
+                          <input id="{{lp.id}}_subtotal" type="text" readonly data-id="{{lp.id}}"
+                                class="text-right subtotal input_cant form-control-sm form-control-plaintext" value="00,00">
+                        </div>
+                      </div>
+                    </li>
+                    {% endwith %}
+                    {% endfor %}
+                    
+                  </ul>
                 </div>
               </div>
-            </li>
-            {% endwith %}
+            </div>
+            {%endfor%}
             {% endfor %}
-            
-          </ul>
+          </div>
         </div>
       </div>
     </div>
-  {%endfor%}
-  {% endfor %}
-
-
+  </div>
   <div class="col-lg-8 offset-lg-2 mb-3">
     <div class="card mb-3">
       <div class="card-header">
@@ -116,15 +127,15 @@
         </div>
         <div class="control-group ">
           <div class="controls text-right">
-              <button id="order_button" type="submit" class="btn btn-primary">Hacer Pedido</button>
+            <button id="order_button" type="submit" class="btn btn-primary">Hacer Pedido</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-
 </form>
 {% endblock %}
+
 
 
 {% block javascript %}
