@@ -26,12 +26,24 @@ class OrderForm(ModelForm):
 
 
 def create_order(request):
+    
     listing = Business().available_listings()
     if (not listing):
         return render(request, 'orders/no_listing.html')
     listing = listing.latest('limit_date')
     
     order = Order.objects.filter(user=request.user, listing=listing).last()
+    products =listing.listingproduct_set.all()
+    categories = {}
+    if listing:
+        for p in products:
+            category = str(p.product.category)
+            if category not in categories:
+                categories[category] = []
+            
+            categories[category].append(p)
+    print(order)
+
     OrderProductInlineFormset = inlineformset_factory(Order, OrderProduct, fields=('product', 'amount'),
                                                       can_delete=False, extra=listing.products.count())
     if request.method == "POST":
@@ -50,15 +62,9 @@ def create_order(request):
         formset = OrderProductInlineFormset(instance=form.instance)
     amounts = defaultdict(int)
     if order:
-        categories = {}
         for p in order.orderproduct_set.all():
-            category = str(p.product.product.category)
             amounts[p.product.id] = p.amount
-            if category not in categories:
-                categories[category] = []
-            
-            categories[category].append(p)
-        print(categories)
+
     return render(request, 'orders/order_form.html', {'form': form, 'formset': formset, 'listing': listing,
                                                       'amounts': amounts, 'order': order, 'categories':categories,
                                                       'iterator': TemplateCounter()})
@@ -80,16 +86,3 @@ class View_producer(DetailView):
        # print(context["products"].name)
         return self.render_to_response(context)
 
-# def Category(request):
-#     products = Product.objects.all()
-#     print(products)
-#     print("AAAAAAAAAAAAAA")
-#     categories = {}
-#     for p in products:
-#         if p.category not in categories:
-#             categories[p.category] = []
-#         categories = categories[p.category].append[p]
-#     print(categories)
-#     return render(request, 'orders/order_form.html',{
-#         'categories':categories.items()
-#     })
