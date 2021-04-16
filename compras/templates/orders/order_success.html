@@ -16,7 +16,11 @@ Pedido realizado
     <th scope="col" class="text-right">Cantidad</th>
     <th scope="col" class="text-right">Precio Unitario</th>
     <th scope="col" class="text-right">Precio Total</th>
+    
   </tr>
+  {% comment %} {%for c, listing_products in categories.items%}
+    <td> {{c}}</td>
+  {%endfor%} {% endcomment %}
   </thead>
   <tbody>
   {% for op in order.orderproduct_set.all %}

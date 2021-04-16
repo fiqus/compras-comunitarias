@@ -56,7 +56,7 @@ def create_order(request):
             form.save()
             formset.save()
             order = Order.objects.get(pk=form.instance.pk)
-            return render(request, 'orders/order_success.html', {'order': order})
+            return render(request, 'orders/order_success.html', {'order': order, 'categories':categories})
     else:
         form = OrderForm()
         formset = OrderProductInlineFormset(instance=form.instance)
