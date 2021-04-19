@@ -25,13 +25,11 @@ input[type=number] {
 
 /* Estilos hackerspace */
 
-.body{
-  background-color: rgb(106, 107, 129);
+
+
+.data-value{
+  margin:5px
 }
-
-
-
-
 /*idea responsive*/
 /*
 
