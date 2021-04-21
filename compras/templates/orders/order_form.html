@@ -45,7 +45,7 @@ Pedidos
    <div>
       <div id="accordion">
         <div class="carda bg-warning">
-          <div class="card-header" id="headingOne">
+          <div class="card-header mb-3" id="headingOne">
             <h5 class="mb-0">
               <button type="button" class="btn btn-link " data-toggle="collapse" data-target="#collapse{{forloop.counter}}" aria-expanded="true" aria-controls="collapseOne" id="boton">
                 {{c}}
@@ -64,7 +64,7 @@ Pedidos
 
     <div class="col-lg-8 offset-lg-2 mb-3">
       <div id="collapse{{forloop.parentloop.counter}}" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-        <div class="card">
+        <div class="card shadow p-3 mb-5 bg-white rounded">
           <div class="card-body">
             {% thumbnail p.grouper.image "600x200" crop="center" as im %}
               <img class="img-fluid img-thumbnail d-sm-none d-block mb-2" src="{{im.url}}" alt="{{p.grouper.name}}">
