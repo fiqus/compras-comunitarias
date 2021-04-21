@@ -44,7 +44,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item" id="pedido" >
-              <a class="nav-link bg-warning text-light"data-value="pedido"  href="{% url 'orders:create' %}">Hacer Pedido</a>
+              <a class="nav-link bg-warning text-light"data-value="pedido"  href="{% url 'orders:create' %}">Pedido</a>
             </li>
             {% if request.user.is_authenticated %}
               <li class="nav-item"id="perfil" >
