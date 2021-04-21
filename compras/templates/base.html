@@ -44,16 +44,16 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item" id="pedido" >
-              <a class="nav-link bg-warning text-dark"data-value="pedido"  href="{% url 'orders:create' %}">Hacer Pedido</a>
+              <a class="nav-link bg-warning text-light"data-value="pedido"  href="{% url 'orders:create' %}">Hacer Pedido</a>
             </li>
             {% if request.user.is_authenticated %}
               <li class="nav-item"id="perfil" >
                 {# URL provided by django-allauth/account/urls.py #}
-                <a class="nav-link bg-success text-dark" data-value="perfil" href="{% url 'users:detail' request.user.username  %}">{% trans "My Profile" %}</a>
+                <a class="nav-link bg-success text-light" data-value="perfil" href="{% url 'users:detail' request.user.username  %}">{% trans "My Profile" %}</a>
               </li>
               <li class="nav-item" id="salir">
                 {# URL provided by django-allauth/account/urls.py #}
-                <a class="nav-link bg-danger text-dark"data-value="salir"   href="{% url 'account_logout' %}">{% trans "Sign Out" %}</a>
+                <a class="nav-link bg-danger text-light"data-value="salir"   href="{% url 'account_logout' %}">{% trans "Sign Out" %}</a>
               </li>
             {% else %}
               <li class="nav-item">

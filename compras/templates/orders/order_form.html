@@ -8,13 +8,12 @@
 Pedidos
 {% endblock %}
 {% block content %}
-<h1>
+<h1 class="text-center">
   {% if order %}
-  Modificar Pedido -
+  Modificar Pedido 
   {% else %}
-  Nuevo Pedido -
+  Nuevo Pedido 
   {% endif %}
-  {{listing}}
 </h1>
 
 <form class="form-horizontal" method="post" action="{% url 'orders:create' %}">
@@ -48,7 +47,7 @@ Pedidos
         <div class="carda bg-warning">
           <div class="card-header" id="headingOne">
             <h5 class="mb-0">
-              <button type="button" class="btn btn-link " data-toggle="collapse" data-target="#collapse{{forloop.counter}}" aria-expanded="true" aria-controls="collapseOne">
+              <button type="button" class="btn btn-link " data-toggle="collapse" data-target="#collapse{{forloop.counter}}" aria-expanded="true" aria-controls="collapseOne" id="boton">
                 {{c}}
               </button>
             </h5>
