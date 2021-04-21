@@ -50,5 +50,15 @@ input[type=number] {
 
 #boton{
   text-decoration: none;
+  text-transform: uppercase;
+  font-size: large;
   
+}
+.producer{
+  text-decoration: none;
+
+}
+.producer a:hover{
+  text-decoration: none;
+  color:green
 }

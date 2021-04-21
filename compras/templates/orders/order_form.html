@@ -46,7 +46,7 @@ Pedidos
       <div id="accordion">
         <div class="carda bg-warning">
           <div class="card-header" id="headingOne">
-            <h5 class="mb-0">
+            <h5 class="mb-0 text-center">
               <button type="button" class="btn btn-link " data-toggle="collapse" data-target="#collapse{{forloop.counter}}" aria-expanded="true" aria-controls="collapseOne" id="boton">
                 {{c}}
               </button>
@@ -74,8 +74,8 @@ Pedidos
                 <img class="img-fluid img-thumbnail d-sm-block d-none" src="{{im.url}}" alt="{{p.grouper.name}}">
               {% endthumbnail %}
               <div class="pl-sm-3">
-                <h5 class="card-title">{{p.grouper.name}}</h5>
-                <h6><a href="/orders/producer/{{p.grouper.producer.id}}">{{p.grouper.producer.name}}</a> - <a href="{{p.product.producer.url}}">{{p.product.producer.url}}</a></h6>
+                <h4 class="card-title">{{p.grouper.name}}</h5>
+                <h6><a href="/orders/producer/{{p.grouper.producer.id}}">{{p.grouper.producer.name}}</a> - <a href="{{p.grouper.producer.url}}" class="producer">{{p.grouper.producer.url}}</a></h6>
                 <p class="card-text">{{p.grouper.description}}</p>
                   {% for tag in p.grouper.tag_set.all %}
                     <a class="tags">{{tag.name}}</a>

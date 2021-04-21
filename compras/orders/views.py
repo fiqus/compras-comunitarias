@@ -42,7 +42,7 @@ def create_order(request):
                 categories[category] = []
             
             categories[category].append(p)
-    print(products, categories)
+    
 
     OrderProductInlineFormset = inlineformset_factory(Order, OrderProduct, fields=('product', 'amount'),
                                                       can_delete=False, extra=listing.products.count())
