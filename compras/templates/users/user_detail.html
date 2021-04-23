@@ -1,5 +1,6 @@
-{% extends "base.html" %}
-{% load static %}
+{% extends "orders/order_success.html" %}
+{% load crispy_forms_tags %}
+{% load thumbnail %}
 
 {% block title %}User: {{ object.username }}{% endblock %}
 
@@ -18,7 +19,7 @@
 
 {% if object == request.user %}
 <!-- Action buttons -->
-<div class="row text-center">
+<div class="row text-center mb-5">
 
   <div class="col-sm-12">
     <a class="btn btn-primary bg-success" href="{% url 'users:update' %}" role="button">My Info</a>
@@ -27,10 +28,43 @@
   </div>
 
 </div>
-<!-- End Action buttons -->
-{% endif %}
+{%endif%}
 
 
-</div>
-{% endblock content %}
+<h1>este es su pedido</h1>
 
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th scope="col">Producto</th>
+    <th scope="col" class="text-right">Cantidad</th>
+    <th scope="col" class="text-right">Precio Unitario</th>
+    <th scope="col" class="text-right">Precio Total</th>
+    
+  </tr>
+  {% comment %} {%for c, listing_products in categories.items%}
+    <td> {{c}}</td>
+  {%endfor%} {% endcomment %}
+  </thead>
+  <tbody>
+  {% for op in order.orderproduct_set.all %}
+  {% if op.amount %}
+  <tr>
+    <td>{{op.product.product.name}} - {{op.product.presentation}}</td>
+    <td class="text-right">{{op.amount}}</td>
+    <td class="text-right">${{op.product.price}}</td>
+    <td class="text-right">${{op.total}}</td>
+  </tr>
+  {% endif %}
+  {% endfor %}
+
+  </tbody>
+  <tfoot>
+  <tr>
+    <th scope="row" colspan="3" class="text-right">Total:</th>
+    <td class="text-right">${{order.total}}</td>
+  </tr>
+  </tfoot>
+</table>
+
+{% endblock %}

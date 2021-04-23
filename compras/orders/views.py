@@ -25,6 +25,7 @@ class OrderForm(ModelForm):
         fields = ['listing']
 
 
+
 def create_order(request):
     
     listing = Business().available_listings()
@@ -57,6 +58,7 @@ def create_order(request):
             formset.save()
             order = Order.objects.get(pk=form.instance.pk)
             return render(request, 'orders/order_success.html', {'order': order, 'categories':categories})
+    
     else:
         form = OrderForm()
         formset = OrderProductInlineFormset(instance=form.instance)
@@ -70,6 +72,7 @@ def create_order(request):
                                                       'amounts': amounts, 'order': order, 'categories':categories,
                                                       'iterator': TemplateCounter()})
     return {listing}
+
 
 
 class View_producer(DetailView):
@@ -86,4 +89,3 @@ class View_producer(DetailView):
         context["products"] = listing.listingproduct_set.filter(product__producer=self.object.id).all()
        # print(context["products"].name)
         return self.render_to_response(context)
-
