@@ -4,7 +4,6 @@
 {% load dict_key %}
 
 {% block title %}
-{% comment %} {{listing}} {% endcomment %}
 Pedidos
 {% endblock %}
 {% block content %}
@@ -40,8 +39,6 @@ Pedidos
   
 {%for c, listing_products in categories.items%}
 
-
-  {% comment %} <h1><button href="#"type="button"> {{c}}</button></h1> {% endcomment %}
    <div>
       <div id="accordion">
         <div class="carda bg-warning mb-3">
