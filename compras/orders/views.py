@@ -62,6 +62,7 @@ def create_order(request):
         formset = OrderProductInlineFormset(instance=form.instance)
     amounts = defaultdict(int)
     if order:
+        
         for p in order.orderproduct_set.all():
             amounts[p.product.id] = p.amount
 
