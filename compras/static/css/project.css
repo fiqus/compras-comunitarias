@@ -32,22 +32,7 @@ input[type=number] {
 .data-value{
   margin:5px
 }
-/*idea responsive*/
-/*
 
-.navbar{ background:#F97300;}
-
-.nav-link , .navbar-brand{ color: #f4f4f4; cursor: pointer;}
-
-.nav-link{ margin-right: 1em !important;}
-
-.nav-link:hover{ background: #f4f4f4; color: #f97300; }
-
-.navbar-collapse{ justify-content: flex-end;}
-
-.navbar-toggler{  background:#fff !important;}
-
-*/
 
 
 #boton{
@@ -62,4 +47,21 @@ input[type=number] {
 .producer a:hover{
   text-decoration: none;
   color:green
+}
+
+
+#conteiner{
+  width: 100%;
+}
+
+.view{
+  width: 100%;
+}
+
+#intro {
+    background: url("https://cdn.discordapp.com/attachments/817379054130823199/835222838780624896/b2ap3_large_economa-de-mercado.jpg")no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
