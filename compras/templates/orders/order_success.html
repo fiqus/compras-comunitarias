@@ -6,29 +6,26 @@ Pedido realizado
 {% endblock %}
 
 {% block content %}
-<h1>Su pedido fue realizado correctamente</h1>
+<h1 class="text-center mb-3">Su pedido fue realizado correctamente!</h1>
 
 <table class="table table-hover">
   <thead>
   <tr>
-    <th scope="col">Producto</th>
-    <th scope="col" class="text-right">Cantidad</th>
-    <th scope="col" class="text-right">Precio Unitario</th>
-    <th scope="col" class="text-right">Precio Total</th>
+    <th scope="col"class="bg-primary">Producto</th>
+    <th scope="col" class="text-right bg-warning">Cantidad</th>
+    <th scope="col" class="text-right bg-success">Precio Unitario</th>
+    <th scope="col" class="text-right bg-danger">Precio Total</th>
     
   </tr>
-  {% comment %} {%for c, listing_products in categories.items%}
-    <td> {{c}}</td>
-  {%endfor%} {% endcomment %}
   </thead>
   <tbody>
   {% for op in order.orderproduct_set.all %}
   {% if op.amount %}
   <tr>
-    <td>{{op.product.product.name}} - {{op.product.presentation}}</td>
-    <td class="text-right">{{op.amount}}</td>
-    <td class="text-right">${{op.product.price}}</td>
-    <td class="text-right">${{op.total}}</td>
+    <td class="bg-primary">{{op.product.product.name}} - {{op.product.presentation}}</td>
+    <td class="text-right bg-warning">{{op.amount}}</td>
+    <td class="text-right bg-success">${{op.product.price}}</td>
+    <td class="text-right bg-danger">${{op.total}}</td>
   </tr>
   {% endif %}
   {% endfor %}
@@ -37,7 +34,7 @@ Pedido realizado
   <tfoot>
   <tr>
     <th scope="row" colspan="3" class="text-right">Total:</th>
-    <td class="text-right">${{order.total}}</td>
+    <td class="text-right bg-danger">${{order.total}}</td>
   </tr>
   </tfoot>
 </table>

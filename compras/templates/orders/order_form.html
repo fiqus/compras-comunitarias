@@ -40,14 +40,14 @@ Pedidos
 {%for c, listing_products in categories.items%}
 
    <div>
-      <div id="accordion">
+      <div id="accordion" >
         <div class="carda bg-warning mb-3">
           <div class="card-header" id="headingOne">
-            <h5 class="mb-0 text-center">
-              <button type="button" class="btn btn-link btn-block" data-toggle="collapse" data-target="#collapse{{forloop.counter}}" aria-expanded="true" aria-controls="collapseOne" id="boton">
+            <h3 class="mb-0 text-center">
+              <button type="button" class="btn btn-link btn-block " data-toggle="collapse" data-target="#collapse{{forloop.counter}}" aria-expanded="true" aria-controls="collapseOne" id="boton">
                 {{c}}
               </button>
-            </h5>
+            </h3>
           </div>
         </div>
       </div>
@@ -71,7 +71,7 @@ Pedidos
                 <img class="img-fluid img-thumbnail d-sm-block d-none" src="{{im.url}}" alt="{{p.grouper.name}}">
               {% endthumbnail %}
               <div class="pl-sm-3">
-                <h4 class="card-title">{{p.grouper.name}}</h5>
+                <h4 class="card-title font-weight-bolder">{{p.grouper.name}}</h5>
                 <h6><a href="/orders/producer/{{p.grouper.producer.id}}">{{p.grouper.producer.name}}</a> - <a href="{{p.grouper.producer.url}}" class="producer">{{p.grouper.producer.url}}</a></h6>
                 <p class="card-text">{{p.grouper.description}}</p>
                   {% for tag in p.grouper.tag_set.all %}
@@ -121,8 +121,8 @@ Pedidos
 {%endfor%}   
 {%endfor%}
   <div class="col-lg-8 offset-lg-2 mb-3">
-    <div class="card mb-3">
-      <div class="card-header">
+    <div class="card shadow p-3 mb-5">
+      <div class="card-header bg-primary ">
         Total
       </div>
       <div class="card-body">
