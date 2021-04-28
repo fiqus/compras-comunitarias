@@ -9,7 +9,7 @@ Pedido realizado
 <div class="container">
   <h1 class="text-center mb-3">Su pedido fue realizado correctamente!</h1>
 
-  <table class="table table-hover">
+  <table class="table table-hover table-responsive-sm">
     <thead>
     <tr>
       <th scope="col"class="bg-primary">Producto</th>
@@ -23,10 +23,10 @@ Pedido realizado
     {% for op in order.orderproduct_set.all %}
     {% if op.amount %}
     <tr>
-      <td class="bg-primary">{{op.product.product.name}} - {{op.product.presentation}}</td>
-      <td class="text-right bg-warning">{{op.amount}}</td>
-      <td class="text-right bg-success">${{op.product.price}}</td>
-      <td class="text-right bg-danger">${{op.total}}</td>
+      <td class="table-primary">{{op.product.product.name}} - {{op.product.presentation}}</td>
+      <td class="text-right table-warning">{{op.amount}}</td>
+      <td class="text-right table-success">${{op.product.price}}</td>
+      <td class="text-right table-danger">${{op.total}}</td>
     </tr>
     {% endif %}
     {% endfor %}
