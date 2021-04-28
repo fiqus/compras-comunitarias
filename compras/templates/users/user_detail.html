@@ -31,7 +31,7 @@
 {%endif%}
 
 
-<h1>este es su pedido</h1>
+<h1 class="text-center">Pedido Actual</h1>
 
 <table class="table table-hover">
   <thead>
@@ -42,9 +42,7 @@
     <th scope="col" class="text-right">Precio Total</th>
     
   </tr>
-  {% comment %} {%for c, listing_products in categories.items%}
-    <td> {{c}}</td>
-  {%endfor%} {% endcomment %}
+
   </thead>
   <tbody>
   {% for op in order.orderproduct_set.all %}
