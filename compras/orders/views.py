@@ -87,5 +87,18 @@ class View_producer(DetailView):
             return render(request, 'orders/no_listing.html')
 
         context["products"] = listing.listingproduct_set.filter(product__producer=self.object.id).all()
-       # print(context["products"].name)
         return self.render_to_response(context)
+
+
+def userHandler(request):
+    model = Listing
+
+    listing = Business().available_listings()
+    listing = listing.latest('limit_date')
+    order = Order.objects.filter(user=request.user, listing=listing).last()
+    print("order", order)
+    if order:
+        return render(request, 'users/user_detail.html', {'order': order, 'categories':categories})
+
+
+    

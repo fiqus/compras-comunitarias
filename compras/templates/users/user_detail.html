@@ -10,10 +10,10 @@
   <div class="row text-center">
     <div class="col-sm-12">
 
-      <h2>{{ object.username }}</h2>
-      {% if object.name %}
+      <h1>{{ object.username }}</h1>
+      {% comment %} {% if object.name %}
         <p>{{ object.name }}</p>
-      {% endif %}
+      {% endif %} {% endcomment %}
     </div>
   </div>
 
@@ -30,39 +30,39 @@
 </div>
 {%endif%}
 
-
+<hr/>
 <h1 class="text-center">Pedido Actual</h1>
+{% comment %} {% include 'orders/order_success.html' %} {% endcomment %}
+{{order}}
+<table class="table table-hover table-responsive-sm">
+    <thead>
+    <tr>
+      <th scope="col"class="bg-primary">Producto</th>
+      <th scope="col" class="text-right bg-warning">Cantidad</th>
+      <th scope="col" class="text-right bg-success">Precio Unitario</th>
+      <th scope="col" class="text-right bg-danger">Precio Total</th>
+      
+    </tr>
+    </thead>
+    <tbody>
+    {% for op in order.orderproduct_set.all %}
+    {% if op.amount %}
+    <tr>
+      <td class="table-primary">{{op.product.product.name}} - {{op.product.presentation}}</td>
+      <td class="text-right table-warning">{{op.amount}}</td>
+      <td class="text-right table-success">${{op.product.price}}</td>
+      <td class="text-right table-danger">${{op.total}}</td>
+    </tr>
+    {% endif %}
+    {% endfor %}
 
-<table class="table table-hover">
-  <thead>
-  <tr>
-    <th scope="col">Producto</th>
-    <th scope="col" class="text-right">Cantidad</th>
-    <th scope="col" class="text-right">Precio Unitario</th>
-    <th scope="col" class="text-right">Precio Total</th>
-    
-  </tr>
-
-  </thead>
-  <tbody>
-  {% for op in order.orderproduct_set.all %}
-  {% if op.amount %}
-  <tr>
-    <td>{{op.product.product.name}} - {{op.product.presentation}}</td>
-    <td class="text-right">{{op.amount}}</td>
-    <td class="text-right">${{op.product.price}}</td>
-    <td class="text-right">${{op.total}}</td>
-  </tr>
-  {% endif %}
-  {% endfor %}
-
-  </tbody>
-  <tfoot>
-  <tr>
-    <th scope="row" colspan="3" class="text-right">Total:</th>
-    <td class="text-right">${{order.total}}</td>
-  </tr>
-  </tfoot>
+    </tbody>
+    <tfoot>
+    <tr>
+      <th scope="row" colspan="3" class="text-right">Total:</th>
+      <td class="text-right bg-danger">${{order.total}}</td>
+    </tr>
+    </tfoot>
 </table>
 
 {% endblock %}
