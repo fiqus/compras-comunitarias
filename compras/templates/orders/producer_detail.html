@@ -6,56 +6,57 @@
 {% endblock %}
 
 {% block content %}
-
-<h1 class="col-lg-8 offset-lg-2 mb-3">
-    <a>{{object}}</a>
-        {% thumbnail object.logo "100x100" crop="center" as im %}
-        <img class="img-fluid img-thumbnail d-sm-block d-none" src="{{im.url}}" alt="{{product.name}}">
-        {% endthumbnail %}
-</h1>
-
-  {% for lp in products %}
-  <div class="col-lg-8 offset-lg-2 mb-3">
-    <div class="card">
-      <div class="card-body">
-        {% thumbnail lp.product.image "600x200" crop="center" as im %}
-        <img class="img-fluid img-thumbnail d-sm-none d-block mb-2" src="{{im.url}}" alt="{{lp.product.name}}">
-        {% endthumbnail %}
-        <div class="d-flex">
-          {% thumbnail lp.product.image "100x100" crop="center" as im %}
-          <img class="img-fluid img-thumbnail d-sm-block d-none" src="{{im.url}}" alt="{{lp.product.name}}">
+<div class="container">
+  <h1 class="col-lg-8 offset-lg-2 mb-3">
+      <a>{{object}}</a>
+          {% thumbnail object.logo "100x100" crop="center" as im %}
+          <img class="img-fluid img-thumbnail d-sm-block d-none" src="{{im.url}}" alt="{{product.name}}">
           {% endthumbnail %}
-          <div class="pl-sm-3">
-            <h5 class="card-title">{{lp.product.name}}</h5>
-            {% for tag in lp.product.tag_set.all %}
-        
-              <a class="tags">{{tag.name}}</a>
-                {% thumbnail tag.image "20x20" crop="20%" as im %} 
-                <img class="img-fluid img-thumbnail d-sm-inline-block d-none" src="{{im.url}}">
-                {% endthumbnail %} 
-           
-            {% endfor %}
-          <br>
-           {{lp.product.description}}
-          </div>
-        </div>
-        <ul class="list-group list-group-flush mt-2">
+  </h1>
+
+    {% for lp in products %}
+    <div class="col-lg-8 offset-lg-2 mb-3">
+      <div class="card">
+        <div class="card-body">
+          {% thumbnail lp.product.image "600x200" crop="center" as im %}
+          <img class="img-fluid img-thumbnail d-sm-none d-block mb-2" src="{{im.url}}" alt="{{lp.product.name}}">
+          {% endthumbnail %}
+          <div class="d-flex">
+            {% thumbnail lp.product.image "100x100" crop="center" as im %}
+            <img class="img-fluid img-thumbnail d-sm-block d-none" src="{{im.url}}" alt="{{lp.product.name}}">
+            {% endthumbnail %}
+            <div class="pl-sm-3">
+              <h5 class="card-title">{{lp.product.name}}</h5>
+              {% for tag in lp.product.tag_set.all %}
           
-          {% with n=iterator.next %}
-          <li class="list-group-item">
-            <div class="row">
-              <input type="hidden" class="price" name="orderproduct_set-{{n}}-product" value="{{lp.id}}">
-              <input id="{{lp.product.id}}_price" type="hidden" class="price" value="{{lp.product.price}}" data-id="{{lp.id}}">
-              <div class="col-12 col-md-6 mb-2 mb-md-0">
-                <span>  ${{lp.price}}</span>
-              </div>
+                <a class="tags">{{tag.name}}</a>
+                  {% thumbnail tag.image "20x20" crop="20%" as im %} 
+                  <img class="img-fluid img-thumbnail d-sm-inline-block d-none" src="{{im.url}}">
+                  {% endthumbnail %} 
+            
+              {% endfor %}
+            <br>
+            {{lp.product.description}}
             </div>
-          </li>
-          {% endwith %}
-        
-        </ul>
+          </div>
+          <ul class="list-group list-group-flush mt-2">
+            
+            {% with n=iterator.next %}
+            <li class="list-group-item">
+              <div class="row">
+                <input type="hidden" class="price" name="orderproduct_set-{{n}}-product" value="{{lp.id}}">
+                <input id="{{lp.product.id}}_price" type="hidden" class="price" value="{{lp.product.price}}" data-id="{{lp.id}}">
+                <div class="col-12 col-md-6 mb-2 mb-md-0">
+                  <span>  ${{lp.price}}</span>
+                </div>
+              </div>
+            </li>
+            {% endwith %}
+          
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
-  {% endfor %}
+    {% endfor %}
+</div>
 {% endblock %}
