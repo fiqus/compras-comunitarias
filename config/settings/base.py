@@ -67,7 +67,6 @@ THIRD_PARTY_APPS = [
     "crispy_forms",
     "allauth",
     "allauth.account",
-    "allauth.socialaccount",
     "sorl.thumbnail",
 ]
 
