@@ -10,6 +10,7 @@ from django.views.generic import CreateView
 from .models import Listing, Order, OrderProduct, Producer, Category, Product
 from django.views.generic import DetailView
 import itertools
+from django.contrib.auth import get_user_model
 
 from compras.business.business import Business
 
@@ -90,15 +91,23 @@ class View_producer(DetailView):
         return self.render_to_response(context)
 
 
-def userHandler(request):
-    model = Listing
 
-    listing = Business().available_listings()
-    listing = listing.latest('limit_date')
-    order = Order.objects.filter(user=request.user, listing=listing).last()
-    print("order", order)
-    if order:
-        return render(request, 'users/user_detail.html', {'order': order, 'categories':categories})
+User = get_user_model()   
+class UserDetailView(LoginRequiredMixin, DetailView):
+    
+    model = User
+    slug_field = "username"
+    slug_url_kwarg = "username"
 
 
+
+    def userHandler(request):
+        listing = Business().available_listings()
+        listing = listing.latest('limit_date')
+        order = Order.objects.filter(user=request.user, listing=listing).last()
+        print("order", order)
+        if order:
+            return render(request, 'users/user_detail.html', {'order': order, 'categories':categories})
+
+user_detail_view = UserDetailView.as_view()
     
