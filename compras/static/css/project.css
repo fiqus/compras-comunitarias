@@ -29,9 +29,13 @@ input[type=number] {
   background-image: url(https://www.argentina.gob.ar/sites/default/files/el_mercado_en_tu_barrio_landing_frutas_verduras_0.jpg);
 }
 
+body {
+  background-color: #0eff00;
+  background: repeating-linear-gradient( -45deg, #929292, #929292 2px, #0eff00 2px, #0eff00 10px );
+}
+
 .rojo {
   background-color: #FE0002;
-
 }
 
 .naranja {
