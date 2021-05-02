@@ -134,8 +134,8 @@ class Listing(models.Model):
     @property
     def users(self):
         query_set = self.order_set.all()
+        users = []
         if query_set:
-            users = []
             for order in query_set:
                 user = order.user
                 object_user = {
