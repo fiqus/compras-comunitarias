@@ -8,7 +8,7 @@ Pedidos
 {% endblock %}
 {% block content %}
 <div class="container">
-  <h1 class="text-center">
+  <h1 class="text-left mt-3">
     {% if order %}
     Modificar Pedido 
     {% else %}
@@ -45,7 +45,7 @@ Pedidos
           <div class="carda bg-warning mb-3">
             <div class="card-header" id="headingOne">
               <h3 class="mb-0">
-                <button type="button" class="btn btn-link btn-block " data-toggle="collapse" data-target="#collapse{{forloop.counter}}" aria-expanded="true" aria-controls="collapseOne" id="boton">
+                <button type="button" class="btn btn-link btn-block text-left " data-toggle="collapse" data-target="#collapse{{forloop.counter}}" aria-expanded="true" aria-controls="collapseOne" id="boton">
                   {{c}}
                 </button>
               </h3>
