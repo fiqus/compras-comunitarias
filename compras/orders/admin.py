@@ -1,10 +1,13 @@
 from django.contrib import admin
+from django.contrib.sites.models import Site
 from django.utils.html import format_html
 from django.conf.urls import url
 from compras.orders.models import Listing, Order, Product, ListingProduct, Producer, OrderProduct, Tag, Category
 from .forms import ListingSummaryForm, ListingRealTimeForm,ListingReportOrdersForm
 from django.http import JsonResponse
+from django.contrib.auth.models import Group
 
+ 
 from django.urls import reverse
 
 from django.template.response import TemplateResponse
@@ -164,6 +167,8 @@ admin.site.register(Product)
 admin.site.register(Producer)
 admin.site.register(Tag)
 admin.site.register(Category)
+admin.site.unregister(Group)
+admin.site.unregister(Site)
 
 # Cambiando nombre del admin
 admin.site.site_header = "Compras Comunitarias - Administración"
