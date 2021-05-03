@@ -41,10 +41,11 @@
         <a class="navbar-brand" id="compras"  href="{% url 'home' %}">Compras Comunitarias</a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item" id="pedido" >
-              <a class="nav-link bg-warning text-light rounded-corners-left" data-value="pedido"  href="{% url 'orders:create' %}">Pedido</a>
-            </li>
+            
             {% if request.user.is_authenticated %}
+              <li class="nav-item" id="pedido" >
+                <a class="nav-link bg-warning text-light rounded-corners-left" data-value="pedido"  href="{% url 'orders:create' %}">Pedido</a>
+              </li>
               <li class="nav-item"id="perfil" >
                 {# URL provided by django-allauth/account/urls.py #}
                 <a class="nav-link bg-success text-light" data-value="perfil" href="{% url 'orders:detail' %}">{% trans "My Profile" %}</a>
@@ -56,11 +57,11 @@
             {% else %}
               <li class="nav-item">
                 {# URL provided by django-allauth/account/urls.py #}
-                <a id="sign-up-link" class="nav-link" href="{% url 'account_signup' %}">{% trans "Sign Up" %}</a>
+                <a id="sign-up-link" class="nav-link bg-warning rounded-corners-left" href="{% url 'account_signup' %}">{% trans "Sign Up" %}</a>
               </li>
               <li class="nav-item">
                 {# URL provided by django-allauth/account/urls.py #}
-                <a id="log-in-link" class="nav-link" href="{% url 'account_login' %}">{% trans "Sign In" %}</a>
+                <a id="log-in-link" class="nav-link bg-success rounded-corners-right" href="{% url 'account_login' %}">{% trans "Sign In" %}</a>
               </li>
             {% endif %}
           </ul>
