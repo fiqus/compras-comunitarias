@@ -16,7 +16,7 @@
   <h2 class="text-center display-3"> Productos </h2>
     {% for lp in products %}
     <div class="col-lg-8 offset-lg-2 mb-3">
-      <div class="card shadow p-3 ">
+      <div class="card shadow p-3 mb-5">
         <div class="card-body">
           {% thumbnail lp.product.image "600x200" crop="center" as im %}
           <img class="img-fluid img-thumbnail d-sm-none d-block mb-2" src="{{im.url}}" alt="{{lp.product.name}}">
