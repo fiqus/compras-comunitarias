@@ -6,7 +6,8 @@ from compras.orders.models import Listing, Order, Product, ListingProduct, Produ
 from .forms import ListingSummaryForm, ListingRealTimeForm,ListingReportOrdersForm
 from django.http import JsonResponse
 from django.contrib.auth.models import Group
-
+from allauth.socialaccount.models import SocialApp, SocialAccount, SocialToken
+from allauth.account.models import EmailAddress
  
 from django.urls import reverse
 
@@ -169,6 +170,11 @@ admin.site.register(Tag)
 admin.site.register(Category)
 admin.site.unregister(Group)
 admin.site.unregister(Site)
+admin.site.unregister(SocialApp)
+admin.site.unregister(SocialAccount)
+admin.site.unregister(SocialToken)
+admin.site.unregister(EmailAddress)
+
 
 # Cambiando nombre del admin
 admin.site.site_header = "Compras Comunitarias - Administración"
