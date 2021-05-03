@@ -11,5 +11,5 @@ app_name = "orders"
 urlpatterns = [
     path("create/", view=create_order, name="create"),
     path("producer/<int:pk>", view=View_producer.as_view(), name="producer"),
-    path("<str:username>/", view=user_detail_view, name="detail"),
+    path("user_detail/", view=user_detail_view, name="detail"),
 ]

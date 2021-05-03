@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms.models import BaseModelForm, ModelForm, inlineformset_factory
 from django.http.response import HttpResponse
 from django.shortcuts import render
-from django.views.generic import CreateView
+from django.views.generic import CreateView, TemplateView
 from .models import Listing, Order, OrderProduct, Producer, Category, Product
 from django.views.generic import DetailView
 import itertools
@@ -93,21 +93,14 @@ class View_producer(DetailView):
 
 
 User = get_user_model()   
-class UserDetailView(LoginRequiredMixin, DetailView):
-    
-    model = User
-    slug_field = "username"
-    slug_url_kwarg = "username"
-
-
-
-    def userHandler(request):
+class UserDetailView(LoginRequiredMixin, TemplateView):
+    def get(self, request):
         listing = Business().available_listings()
         listing = listing.latest('limit_date')
         order = Order.objects.filter(user=request.user, listing=listing).last()
         print("order", order)
         if order:
-            return render(request, 'users/user_detail.html', {'order': order, 'categories':categories})
+            return render(request, 'users/user_detail.html', {'order': order, 'object': request.user})
 
 user_detail_view = UserDetailView.as_view()
     
