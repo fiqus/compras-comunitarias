@@ -30,6 +30,7 @@ input[type=number] {
 }
 
 body {
+  font-family: 'Roboto', sans-serif;
   background-color: #e0e0e0;
   background-image:  linear-gradient(30deg, #d2d2d2 12%, transparent 12.5%, transparent 87%, #d2d2d2 87.5%, #d2d2d2), linear-gradient(150deg, #d2d2d2 12%, transparent 12.5%, transparent 87%, #d2d2d2 87.5%, #d2d2d2), linear-gradient(30deg, #d2d2d2 12%, transparent 12.5%, transparent 87%, #d2d2d2 87.5%, #d2d2d2), linear-gradient(150deg, #d2d2d2 12%, transparent 12.5%, transparent 87%, #d2d2d2 87.5%, #d2d2d2), linear-gradient(60deg, #d2d2d277 25%, transparent 25.5%, transparent 75%, #d2d2d277 75%, #d2d2d277), linear-gradient(60deg, #d2d2d277 25%, transparent 25.5%, transparent 75%, #d2d2d277 75%, #d2d2d277);
   background-size: 40px 70px;
@@ -83,7 +84,9 @@ body {
   margin:5px
 }
 
-
+.black-background {
+  background-color: #202225;
+}
 
 #boton{
   text-decoration: none;
