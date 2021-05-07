@@ -82,12 +82,14 @@ class View_producer(DetailView):
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
         context = self.get_context_data(object=self.object)
-        try:
-            listing = Listing.objects.get(enabled=True)
-        except Listing.DoesNotExist:
-            return render(request, 'orders/no_listing.html')
+        listings = Listing.objects.filter(enabled=True)
+        products = []
+        for listing in listings:
+            products += listing.listingproduct_set.filter(product__producer=self.object.id).all()
 
-        context["products"] = listing.listingproduct_set.filter(product__producer=self.object.id).all()
+        
+
+        context["products"] = products
         return self.render_to_response(context)
 
 
@@ -98,9 +100,9 @@ class UserDetailView(LoginRequiredMixin, TemplateView):
         listing = Business().available_listings()
         listing = listing.latest('limit_date')
         order = Order.objects.filter(user=request.user, listing=listing).last()
-        print("order", order)
-        if order:
-            return render(request, 'users/user_detail.html', {'order': order, 'object': request.user})
-
+       
+       
+        return render(request, 'users/user_detail.html', {'order': order, 'object': request.user})
+       
 user_detail_view = UserDetailView.as_view()
     
