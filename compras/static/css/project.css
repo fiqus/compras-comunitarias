@@ -114,3 +114,11 @@ body {
   color:green
 }
 
+
+
+@media (max-width: 700px) {
+  .rounded-corners-left, .rounded-corners-right{
+    border-radius: 0;
+  }
+  
+}

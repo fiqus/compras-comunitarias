@@ -15,7 +15,11 @@ Pedidos
     Nuevo Pedido 
     {% endif %}
   </h1>
-
+{% comment %} {% if orders_listing > 1 %}
+  {% for l in listing.list %}
+    {{l}}
+  {% endfor %}
+{% else %} {% endcomment %}
   <form class="form-horizontal" method="post" action="{% url 'orders:create' %}">
     {% csrf_token %}
     <input name="listing" type="hidden" value="{{listing.id}}">
@@ -140,6 +144,7 @@ Pedidos
     </div>
   </form>
 </div>  
+{% comment %} {% endif %} {% endcomment %}
 {% endblock %}
 
 
