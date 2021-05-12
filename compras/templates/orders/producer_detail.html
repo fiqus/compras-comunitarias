@@ -16,7 +16,7 @@
             {% endthumbnail %}
     </div>
   </div>    {% endcomment %}
-  <div class="d-flex justify-content-center max-width">
+  <div class="d-flex justify-content-center max-width mt-3">
     <div class="card mb-3 producer-card">
         {% thumbnail object.logo "500x200" as im %}
           <img class="img-fluid card-img-top fit limit-im-size" src="{{im.url}}" alt="{{product.producer.name}}">
