@@ -16,16 +16,17 @@
             {% endthumbnail %}
     </div>
   </div>    {% endcomment %}
-  <div class="card mb-3 producer-card">
-      {% thumbnail object.logo "500x200" crop="center" as im %}
-        <img class="img-fluid card-img-top" src="{{im.url}}" alt="{{product.producer.name}}">
-      {% endthumbnail %}
-    <div class="card-body">
-      <h2 class="card-title ">{{object}}</h2>
+  <div class="d-flex justify-content-center max-width">
+    <div class="card mb-3 producer-card">
+        {% thumbnail object.logo "500x200" as im %}
+          <img class="img-fluid card-img-top fit limit-im-size" src="{{im.url}}" alt="{{product.producer.name}}">
+        {% endthumbnail %}
+      <div class="card-body">
+        <h2 class="card-title ">{{object}}</h2>
       <p class="card-text">{{object.description}}</p>
+      </div>
     </div>
   </div>
-
     <h2 class="text-center display-3"> Productos </h2>
     {% for lp in products %}
     <div class="col-lg-8 offset-lg-2 mb-3">
