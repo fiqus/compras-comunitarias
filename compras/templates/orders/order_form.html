@@ -78,7 +78,9 @@ Pedidos
                 <div class="pl-sm-3">
                   <h4 class="card-title font-weight-bolder">{{p.grouper.name}}</h5>
                   <h6><a href="/orders/producer/{{p.grouper.producer.id}}">{{p.grouper.producer.name}}</a> - <a href="{{p.grouper.producer.url}}" class="producer">{{p.grouper.producer.url}}</a></h6>
-                  <p class="card-text">{{p.grouper.description}}</p>
+                  <div inside-parent>
+                    <a class="card-text">{{p.grouper.description}}</a>
+                  </div>
                     {% for tag in p.grouper.tag_set.all %}
                       <a class="tags">{{tag.name}}</a>
                         {% thumbnail tag.image "20x20" crop="20%" as im %} 
