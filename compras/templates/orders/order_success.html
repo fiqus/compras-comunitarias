@@ -7,15 +7,15 @@ Pedido realizado
 
 {% block content %}
 <div class="container">
-  <h1 class="text-center mb-3">Su pedido fue realizado correctamente!</h1>
+  <h1 class="text-center mt-3 mb-3">Su pedido fue realizado correctamente!</h1>
 
   <table class="table table-hover table-responsive-sm">
     <thead>
     <tr>
-      <th scope="col"class="bg-primary">Producto</th>
-      <th scope="col" class="text-right bg-warning">Cantidad</th>
-      <th scope="col" class="text-right bg-success">Precio Unitario</th>
-      <th scope="col" class="text-right bg-danger">Precio Total</th>
+      <th scope="col"class="text-white black-background">Producto</th>
+      <th scope="col" class="text-right text-white black-background">Cantidad</th>
+      <th scope="col" class="text-right text-white black-background">Precio Unitario</th>
+      <th scope="col" class="text-right text-white black-background">Precio Total</th>
       
     </tr>
     </thead>
@@ -23,10 +23,10 @@ Pedido realizado
     {% for op in order.orderproduct_set.all %}
     {% if op.amount %}
     <tr>
-      <td class="table-primary">{{op.product.product.name}} - {{op.product.presentation}}</td>
-      <td class="text-right table-warning">{{op.amount}}</td>
-      <td class="text-right table-success">${{op.product.price}}</td>
-      <td class="text-right table-danger">${{op.total}}</td>
+      <td class="text-white table-black-background">{{op.product.product.name}} - {{op.product.presentation}}</td>
+      <td class="text-right text-white table-black-background">{{op.amount}}</td>
+      <td class="text-right text-white table-black-background">${{op.product.price}}</td>
+      <td class="text-right text-white table-black-background">${{op.total}}</td>
     </tr>
     {% endif %}
     {% endfor %}
@@ -35,7 +35,7 @@ Pedido realizado
     <tfoot>
     <tr>
       <th scope="row" colspan="3" class="text-right">Total:</th>
-      <td class="text-right bg-danger">${{order.total}}</td>
+      <td class="text-right text-white black-background">${{order.total}}</td>
     </tr>
     </tfoot>
   </table>

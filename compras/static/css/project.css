@@ -88,6 +88,10 @@ body {
   background-color: #202225;
 }
 
+.table-black-background {
+  background-color: #53575e;
+}
+
 .under-nav {
   height: 5px;
   background: -webkit-linear-gradient(left, #FE0002 14%, #FE6603 14%, #FE6603 28%, #FEFF04 28%, #FEFF04 42%, #00cd02 42%, #00CD02 56%, #578fa1 56%, #578fa1 70%, #0100CC 70%, #0100CC 84%, #690097 80%);
