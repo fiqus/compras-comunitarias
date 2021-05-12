@@ -9,7 +9,7 @@
 {% block content %}
 <div class="container">
 
-  <div class="col-12">
+  <div class="col-12 mt-3">
     <div class="card mb-3 producer-card">
         {% thumbnail object.logo "500x200" crop="center" as im %}
           <img class="img-fluid card-img-top" src="{{im.url}}" alt="{{product.producer.name}}">
