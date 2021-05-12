@@ -5,7 +5,7 @@
 {% block title %}Usuario: {{ object.username }}{% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container mt-3">
 
   <div class="row text-center">
     <div class="col-sm-12">
@@ -38,10 +38,10 @@
   <table class="table table-hover table-responsive-sm">
       <thead>
       <tr>
-        <th scope="col"class="bg-primary">Producto</th>
-        <th scope="col" class="text-right bg-warning">Cantidad</th>
-        <th scope="col" class="text-right bg-success">Precio Unitario</th>
-        <th scope="col" class="text-right bg-danger">Precio Total</th>
+        <th scope="col" class="black-background text-white">Producto</th>
+        <th scope="col" class="text-right text-white black-background">Cantidad</th>
+        <th scope="col" class="text-right text-white black-background">Precio Unitario</th>
+        <th scope="col" class="text-right text-white black-background">Precio Total</th>
         
       </tr>
       </thead>
@@ -49,10 +49,10 @@
       {% for op in order.orderproduct_set.all %}
       {% if op.amount %}
       <tr>
-        <td class="table-primary">{{op.product.product.name}} - {{op.product.presentation}}</td>
-        <td class="text-right table-warning">{{op.amount}}</td>
-        <td class="text-right table-success">${{op.product.price}}</td>
-        <td class="text-right table-danger">${{op.total}}</td>
+        <td class="table-black-background text-white">{{op.product.product.name}} - {{op.product.presentation}}</td>
+        <td class="text-right text-white table-black-background">{{op.amount}}</td>
+        <td class="text-right text-white table-black-background">${{op.product.price}}</td>
+        <td class="text-right text-white table-black-background">${{op.total}}</td>
       </tr>
       {% endif %}
       {% endfor %}
@@ -61,7 +61,7 @@
       <tfoot>
       <tr>
         <th scope="row" colspan="3" class="text-right">Total:</th>
-        <td class="text-right bg-danger">${{order.total}}</td>
+        <td class="text-right text-white black-background">${{order.total}}</td>
       </tr>
       </tfoot>
   </table>
