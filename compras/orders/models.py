@@ -45,7 +45,6 @@ class Product(models.Model):
     def __str__(self):
         return f"{self.name}"
 
-#-----CREANDO TAGS H-S --------#
 class Tag (models.Model):
     name = models.CharField(max_length=50)
     product = models.ManyToManyField(Product)
@@ -62,6 +61,7 @@ class Listing(models.Model):
 
     enabled = models.BooleanField(default=False)
     limit_date = models.DateTimeField()
+    name = models.CharField(max_length=100, default="null")
     description = models.TextField()
     products = models.ManyToManyField(Product, through="ListingProduct")
 
