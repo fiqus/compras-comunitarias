@@ -36,7 +36,14 @@ body {
   background-size: 40px 70px;
   background-position: 0 0, 0 0, 20px 35px, 20px 35px, 0 0, 20px 35px;
 }
-
+.enlase{
+  text-decoration: none;
+  color:rgba(17, 0, 255, 0.911)
+}
+.enlase:hover{
+  text-decoration: none;
+  color: #000038;
+}
 .rojo {
   background-color: #FE0002;
 }
@@ -93,6 +100,10 @@ body {
   background: -webkit-linear-gradient(left, #FE0002 14%, #FE6603 14%, #FE6603 28%, #FEFF04 28%, #FEFF04 42%, #00cd02 42%, #00CD02 56%, #578fa1 56%, #578fa1 70%, #0100CC 70%, #0100CC 84%, #690097 80%);
 }
 
+.fit {
+  object-fit: cover;
+}
+
 
 #boton{
   text-decoration: none;
@@ -113,8 +124,11 @@ body {
   text-decoration: none;
   color:green
 }
+
 .producer-card{
-  background-color: rgb(115, 124, 124);
+  align-self: center;
+  max-width: 500px;
+  background-color: rgb(118, 182, 182);
 }
 
 

@@ -16,58 +16,86 @@
             {% endthumbnail %}
     </div>
   </div>    {% endcomment %}
-  <div class="card mb-3 producer-card">
-      {% thumbnail object.logo "500x200" crop="center" as im %}
-        <img class="img-fluid card-img-top" src="{{im.url}}" alt="{{product.producer.name}}">
-      {% endthumbnail %}
-    <div class="card-body">
-      <h2 class="card-title ">{{object}}</h2>
+  <div class="d-flex justify-content-center max-width">
+    <div class="card mb-3 producer-card">
+        {% thumbnail object.logo "500x200" as im %}
+          <img class="img-fluid card-img-top fit limit-im-size" src="{{im.url}}" alt="{{product.producer.name}}">
+        {% endthumbnail %}
+      <div class="card-body">
+        <h2 class="card-title ">{{object}}</h2>
       <p class="card-text">{{object.description}}</p>
+      <p class="card-text text-light">Visita nuestra web - <a href="{{object.url}}" class="producer enlase" target="_blank">{{object.url}}</a> </p>
     </div>
   </div>
 
-    <h2 class="text-center display-3"> Productos </h2>
-    {% for lp in products %}
-    <div class="col-lg-8 offset-lg-2 mb-3">
-      <div class="card shadow p-3 mb-5">
-        <div class="card-body">
-          {% thumbnail lp.product.image "600x200" crop="center" as im %}
-          <img class="img-fluid img-thumbnail d-sm-none d-block mb-2" src="{{im.url}}" alt="{{lp.product.name}}">
-          {% endthumbnail %}
-          <div class="d-flex">
-            {% thumbnail lp.product.image "100x100" crop="center" as im %}
-            <img class="img-fluid img-thumbnail d-sm-block d-none" src="{{im.url}}" alt="{{lp.product.name}}">
-            {% endthumbnail %}
-            <div class="pl-sm-3">
-              <h5 class="card-title">{{lp.product.name}}</h5>
-              {% for tag in lp.product.tag_set.all %}
-          
-                <a class="tags">{{tag.name}}</a>
-                  {% thumbnail tag.image "20x20" crop="20%" as im %} 
-                  <img class="img-fluid img-thumbnail d-sm-inline-block d-none" src="{{im.url}}">
-                  {% endthumbnail %} 
-            
-              {% endfor %}
-            <br>
-            {{lp.product.description}}
-            <p> FECHA :{{lp.listing}}</p> 
+    {% comment %} <h2 class="text-center display-3"> Productos </h2> {% endcomment %}
+
+
+      <div>
+        <div id="accordion" >
+          <div class="carda btn-outline-primary mb-3 black-background">
+            <div class="card-header" id="headingOne">
+              <h3 class="mb-0">
+                <button type="button" class="btn btn-link btn-block text-left text-white font-weight-bold" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" id="boton">
+                  Productos
+                </button>
+              </h3>
             </div>
           </div>
-          <ul class="list-group list-group-flush mt-2">
+        </div>
+      </div>
+
+
+
+
+    {% for lp in products %}
+    <div class="col-lg-8 offset-lg-2 mb-3">
+      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+        <div class="card shadow p-3 mb-5">
+          <div class="card-body">
+            {% thumbnail lp.product.image "600x200" crop="center" as im %}
+            <img class="img-fluid img-thumbnail d-sm-none d-block mb-2" src="{{im.url}}" alt="{{lp.product.name}}">
+            {% endthumbnail %}
+            <div class="d-flex">
+              {% thumbnail lp.product.image "100x100" crop="center" as im %}
+              <img class="img-fluid img-thumbnail d-sm-block d-none" src="{{im.url}}" alt="{{lp.product.name}}">
+              {% endthumbnail %}
+              <div class="pl-sm-3">
+                <h5 class="card-title">{{lp.product.name}}</h5>
+                {% for tag in lp.product.tag_set.all %}
             
-            {% with n=iterator.next %}
-            <li class="list-group-item">
-              <div class="row">
-                <input type="hidden" class="price" name="orderproduct_set-{{n}}-product" value="{{lp.id}}">
-                <input id="{{lp.product.id}}_price" type="hidden" class="price" value="{{lp.product.price}}" data-id="{{lp.id}}">
-                <div class="col-12 col-md-6 mb-2 mb-md-0">
-                  <span>  ${{lp.price}}</span>
-                </div>
+                  <a class="tags">{{tag.name}}</a>
+                    {% thumbnail tag.image "20x20" crop="20%" as im %} 
+                    <img class="img-fluid img-thumbnail d-sm-inline-block d-none" src="{{im.url}}">
+                    {% endthumbnail %} 
+              
+                {% endfor %}
+              <br>
+              {{lp.product.description}}
+              <br>
+              {% if lp.listing.name == "null" %}
+                <a class="enlase" href="#" > Compra de la fecha :{{lp.listing}}</a> 
+              {% else %}
+                <a class="enlase" href="#"> {{lp.listing.name}} </a>
+              {% endif %}
               </div>
-            </li>
-            {% endwith %}
-          
-          </ul>
+            </div>
+            <ul class="list-group list-group-flush mt-2">
+              
+              {% with n=iterator.next %}
+              <li class="list-group-item">
+                <div class="row">
+                  <input type="hidden" class="price" name="orderproduct_set-{{n}}-product" value="{{lp.id}}">
+                  <input id="{{lp.product.id}}_price" type="hidden" class="price" value="{{lp.product.price}}" data-id="{{lp.id}}">
+                  <div class="col-12 col-md-6 mb-2 mb-md-0">
+                    <span>  ${{lp.price}}</span>
+                  </div>
+                </div>
+              </li>
+              {% endwith %}
+            
+            </ul>
+          </div>
         </div>
       </div>
     </div>
