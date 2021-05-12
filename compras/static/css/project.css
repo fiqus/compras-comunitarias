@@ -127,10 +127,17 @@ body {
 
 .producer-card{
   align-self: center;
-  background-color: rgb(118, 182, 182);
+  background-color: rgb(159, 182, 182);
 }
-
-
+.enlase{
+  text-decoration: none;
+  color: #4452cf;
+  margin-bottom: 0;
+}
+.enlase:hover{
+  text-decoration: none;
+  color: #000e91;
+}
 
 @media (max-width: 700px) {
   .rounded-corners-left, .rounded-corners-right{

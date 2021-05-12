@@ -17,12 +17,7 @@
       <div class="card-body">
         <h2 class="card-title ">{{object}}</h2>
         <p class="card-text">{{object.description}}</p>
-        <br>
-          {% if lp.listing.name == "null" %}
-            <a href="#" > Compra de la fecha :{{lp.listing}}</a> 
-          {% else %}
-            <a href="#"> {{lp.listing.name}} </a>
-          {% endif %}
+        <p class="text-light"> Visita nuestra web - <a href="{{object.url}}" class="enlase">{{object.url}}</a> </p>
       </div>
     </div>
   </div>
@@ -71,9 +66,9 @@
               {{lp.product.description}}
               <br>
               {% if lp.listing.name == "null" %}
-                <a href="#" > Compra de la fecha :{{lp.listing}}</a> 
+                <a href="#" class="enlase"> Compra de la fecha :{{lp.listing}}</a> 
               {% else %}
-                <a href="#"> {{lp.listing.name}} </a>
+                <a href="#"class="enlase"> {{lp.listing.name}} </a>
               {% endif %}
               </div>
             </div>
