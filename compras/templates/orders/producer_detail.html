@@ -50,7 +50,12 @@
               {% endfor %}
             <br>
             {{lp.product.description}}
-            <p> FECHA :{{lp.listing}}</p> 
+            <br>
+            {% if lp.listing.name == "null" %}
+              <a href="#" > Compra de la fecha :{{lp.listing}}</a> 
+            {% else %}
+              <a href="#"> {{lp.listing.name}} </a>
+            {% endif %}
             </div>
           </div>
           <ul class="list-group list-group-flush mt-2">
