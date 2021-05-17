@@ -1,9 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-{% for listing in listings %}}
-<h1>{{listing}}</h1>
+<div class="container">
+<h1> Compras disponibles <h1/>
+<div class="col-12">
+{% for listing in listings %}
+    <div class="row">
+        <a href="#" class="display-3">{{listing.name}}</a>
+        <p> {{listing.description}}</p>
+    </div>
+</div>
 {% endfor %}
+</div>
 
 {% endblock %}
