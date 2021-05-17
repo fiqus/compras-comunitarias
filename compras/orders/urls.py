@@ -4,6 +4,7 @@ from compras.orders.views import (
     create_order,
     View_producer,
     user_detail_view,
+    Select_listing
 )
 
 
@@ -12,4 +13,6 @@ urlpatterns = [
     path("create/", view=create_order, name="create"),
     path("producer/<int:pk>", view=View_producer.as_view(), name="producer"),
     path("user_detail/", view=user_detail_view, name="detail"),
+    path("select_listing/", view=Select_listing, name="select")
 ]
+

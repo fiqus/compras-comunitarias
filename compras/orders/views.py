@@ -106,3 +106,8 @@ class UserDetailView(LoginRequiredMixin, TemplateView):
        
 user_detail_view = UserDetailView.as_view()
     
+class Select_listing(TemplateView):
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        listings = Listing.objects.filter(enabled=True)
+        return render(request, 'orders/select_listing.html', {"listings": listing})

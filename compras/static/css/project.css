@@ -108,6 +108,9 @@ body {
   object-fit: cover;
 }
 
+.fixed-top {
+  position: fixed;
+}
 
 #boton{
   text-decoration: none;
