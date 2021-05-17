@@ -16,7 +16,7 @@
     <link rel="icon" href="{% static 'images/favicons/favicon.ico' %}">
 
     {% block css %}
-    
+  
     <!-- Latest compiled and minified Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     
@@ -45,7 +45,7 @@
             
             {% if request.user.is_authenticated %}
               <li class="nav-item" id="pedido" >
-                <a class="nav-link text-light rounded-corners-left" data-value="pedido"  href="{% url 'orders:create' %}">Pedido</a>
+                <a class="nav-link text-light rounded-corners-left" data-value="pedido"  href="{% url 'orders:select' %}">Pedido</a>
               </li>
               <li class="nav-item"id="perfil" >
                 {# URL provided by django-allauth/account/urls.py #}
