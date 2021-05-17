@@ -2,14 +2,13 @@
 
 {% block content %}
 <div class="container">
-    <h1> Compras disponibles </h1>
-    <div>
+<h1> Compras disponibles <h1/>
+    <div class="col-12">
     {% for listing in listings %}
-        <div class="row mb-5 ">
-            <a href="{% url 'orders:create' %}" class="col display-3 btn-outline-primary black-background btn btn-block text-left text-white font-weight-bold">{{listing.name}}</a>
-            <p class="col">{{listing.description}}</p>
+        <div class="row">
+            <a href="{% url 'orders:create' listing.id%}" class="col display-3 btn-outline-primary black-background btn btn-block text-left text-white font-weight-bold">{{listing.name}}</a>
+            <p> {{listing.description}}</p>
         </div>
-
     {% endfor %}
     </div>
 </div>

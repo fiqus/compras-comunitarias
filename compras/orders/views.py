@@ -5,7 +5,7 @@ from typing import Any, Dict
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms.models import BaseModelForm, ModelForm, inlineformset_factory
 from django.http.response import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import CreateView, TemplateView
 from .models import Listing, Order, OrderProduct, Producer, Category, Product
 from django.views.generic import DetailView
@@ -27,12 +27,12 @@ class OrderForm(ModelForm):
 
 
 
-def create_order(request):
+def create_order(request, pk):
     
     listing = Business().available_listings()
     if (not listing):
         return render(request, 'orders/no_listing.html')
-    listing = listing.latest('limit_date')
+    listing = get_object_or_404(Listing, pk=pk)
     
     order = Order.objects.filter(user=request.user, listing=listing).last()
     products =listing.listingproduct_set.all()
