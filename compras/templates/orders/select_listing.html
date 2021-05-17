@@ -6,7 +6,7 @@
 <div class="col-12">
 {% for listing in listings %}
     <div class="row">
-        <a href="#" class="display-3">{{listing.name}}</a>
+        <a href="{% url 'orders:create' %}" class="display-3">{{listing.name}}</a>
         <p> {{listing.description}}</p>
     </div>
 </div>
