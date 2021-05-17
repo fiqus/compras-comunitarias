@@ -20,7 +20,7 @@ Pedidos
     {{l}}
   {% endfor %}
 {% else %} {% endcomment %}
-  <form class="form-horizontal" method="post" action="{% url 'orders:create' %}">
+  <form class="form-horizontal" method="post" action="{% url 'orders:create' listing.id %}">
     {% csrf_token %}
     <input name="listing" type="hidden" value="{{listing.id}}">
     {{ formset.management_form }}
