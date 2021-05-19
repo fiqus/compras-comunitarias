@@ -31,10 +31,10 @@
 {%endif%}
 
 <hr/>
-{% if  order%}
-  <h1 class="text-left">Pedido Actual</h1>
-  {% comment %} {% include 'orders/order_success.html' %} {% endcomment %}
-  {{order}}
+<h1 class="text-left">Pedidos Actuales</h1>
+{% if orders%}
+{% for order in orders%}  
+  {{order.listing.name}}
   <table class="table table-hover table-responsive-sm">
       <thead>
       <tr>
@@ -65,6 +65,7 @@
       </tr>
       </tfoot>
   </table>
+{% endfor %}
 {% else %}
   <h1>No hay pedidos aun</h1>
   <h2> Has tu pedido <a data-value="pedido"  href="{% url 'orders:select' %}"> aqui </a> ! </h2>

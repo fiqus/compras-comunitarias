@@ -97,12 +97,13 @@ class View_producer(DetailView):
 User = get_user_model()   
 class UserDetailView(LoginRequiredMixin, TemplateView):
     def get(self, request):
-        listing = Business().available_listings()
-        listing = listing.latest('limit_date')
-        order = Order.objects.filter(user=request.user, listing=listing).last()
+        listings = Listing.objects.filter(enabled=True)
+        orders = []
+        for listing in listings:
+            order = Order.objects.filter(user=request.user, listing=listing)
+            orders += order
        
-       
-        return render(request, 'users/user_detail.html', {'order': order, 'object': request.user})
+        return render(request, 'users/user_detail.html', {'orders': orders, 'object': request.user, 'listing':listing})
        
 user_detail_view = UserDetailView.as_view()
     
