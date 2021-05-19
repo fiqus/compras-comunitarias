@@ -5,10 +5,12 @@
 <h1> Compras disponibles <h1/>
     <div class="col-12">
     {% for listing in listings %}
-        <div class="row">
-            <a href="{% url 'orders:create' listing.id%}" class="col display-3 btn-outline-primary black-background btn btn-block text-left text-white font-weight-bold">{{listing.name}}</a>
-            <p> {{listing.description}}</p>
-        </div>
+            <div class="row-2">
+                <h1>
+                    <a href="{% url 'orders:create' listing.id%}" class="col btn-outline-primary black-background btn btn-block text-left text-white font-weight-bold">{{listing.name}} disponible hasta: {{listing.limit_date}}</a>
+                </h1>
+                <p class="display-5"> {{listing.description}}</p>
+            </div>
     {% endfor %}
     </div>
 </div>
