@@ -32,7 +32,7 @@ def create_order(request, pk):
     listing = Business().available_listings()
     if (not listing):
         return render(request, 'orders/no_listing.html')
-    listing = get_object_or_404(Listing, pk=pk)
+    listing = get_object_or_404(Listing, pk=pk, enabled=True)
     
     order = Order.objects.filter(user=request.user, listing=listing).last()
     products =listing.listingproduct_set.all()
