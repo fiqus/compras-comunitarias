@@ -26,11 +26,12 @@ input[type=number] {
 /* Estilos hackerspace */
 
 .conteiner {
-  max-width:100%;
-  max-height:100%;
-  position: relative;
-  display: inline-block;
-  text-align: center;
+  background-image:url('https://cdn.discordapp.com/attachments/817379054130823199/844661724513566750/header.jpg');
+  background-size: cover;
+ 
+  background-repeat: no-repeat;
+  
+ 
 }
 
 body {
