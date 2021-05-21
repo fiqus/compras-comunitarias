@@ -26,7 +26,11 @@ input[type=number] {
 /* Estilos hackerspace */
 
 .conteiner {
-  background-image: url(https://www.argentina.gob.ar/sites/default/files/el_mercado_en_tu_barrio_landing_frutas_verduras_0.jpg);
+  max-width:100%;
+  max-height:100%;
+  position: relative;
+  display: inline-block;
+  text-align: center;
 }
 
 body {
@@ -110,6 +114,12 @@ body {
 
 .fixed-top {
   position: fixed;
+}
+.centrado{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 #boton{
