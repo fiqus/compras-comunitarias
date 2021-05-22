@@ -34,6 +34,13 @@ services:
     env_file:
       - ./.envs/.local/.postgres
 
+  mailhog:
+      image: mailhog/mailhog
+      container_name: 'mailhog'
+      ports:
+        - "1025:1025"
+        - "8025:8025"
+
   # docs:
   #   image: compras_local_docs
   #   container_name: docs
