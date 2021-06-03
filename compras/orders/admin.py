@@ -125,17 +125,18 @@ class ListingAdmin(admin.ModelAdmin):
         listing = self.get_object(request, listing_id)
         orders = listing.orders
         for order in orders:
-            send_mail(
-                'Confirmamos tu compra!',
-                'Here is the message.',
-                'from@example.com',
-                [order['user']['email']],
-                fail_silently=False,
-            )
+            if order['nofication_stations'] == 'not_notified':
+                send_mail(
+                    'Confirmamos tu compra!',
+                    'Here is the message.',
+                    'from@example.com',
+                    [order['user']['email']],
+                    fail_silently=False,
+                )
 
-            order_to_change_notification_status = Order.objects.get(pk=order['id'])
-            order_to_change_notification_status.notification_status = "notified"
-            order_to_change_notification_status.save()
+                order_to_change_notification_status = Order.objects.get(pk=order['id'])
+                order_to_change_notification_status.notification_status = "notified"
+                order_to_change_notification_status.save()
         return JsonResponse({})
 
     @csrf_protected_method
