@@ -1,3 +1,4 @@
+from django.core.mail import send_mail
 from django.contrib import admin
 from django.contrib.sites.models import Site
 from django.utils.html import format_html
@@ -45,13 +46,17 @@ class ListingAdmin(admin.ModelAdmin):
                 name='listing-realtime',
             ),
             url(
+                r'^(?P<listing_id>.+)/realtime/change_status/',
+                self.change_order_status,
+            ),
+            url(
                 r'^(?P<listing_id>.+)/report-orders/$',
                 self.admin_site.admin_view(self.report_orders),
                 name='report-orders',
             ),
             url(
-                r'^(?P<listing_id>.+)/realtime/change_status/',
-                self.change_order_status,
+                r'^(?P<listing_id>.+)/report-orders/send-emails',
+                self.send_emails,
             ),
         ]
         return custom_urls + urls
@@ -105,16 +110,33 @@ class ListingAdmin(admin.ModelAdmin):
     def report_orders(self, request, listing_id, *args, **kwargs):
         listing = self.get_object(request, listing_id)
         data = {
-            "users": listing.users
+            "orders": listing.orders
         }
         return self.process_action(
             request=request,
             listing_id=listing_id,
             action_form=ListingRealTimeForm,
-            template='admin/order/vue_app/report_orders.html',
+            template='admin/order/report_orders.html',
             action_title='Informar Pedidos',
             data=data
         )
+
+    def send_emails(self, request, listing_id):
+        listing = self.get_object(request, listing_id)
+        orders = listing.orders
+        for order in orders:
+            send_mail(
+                'Confirmamos tu compra!',
+                'Here is the message.',
+                'from@example.com',
+                [order['user']['email']],
+                fail_silently=False,
+            )
+
+            order_to_change_notification_status = Order.objects.get(pk=order['id'])
+            order_to_change_notification_status.notification_status = "notified"
+            order_to_change_notification_status.save()
+        return JsonResponse({})
 
     @csrf_protected_method
     def change_order_status(self, request, listing_id):

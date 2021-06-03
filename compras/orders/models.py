@@ -138,14 +138,35 @@ class Listing(models.Model):
         if query_set:
             for order in query_set:
                 user = order.user
-                object_user = {
+                user_object = {
                     "name": user.name,
                     "dni": user.dni,
                     "email": user.email,
                 }
-                users.append(object_user)
+                users.append(user_object)
 
         return users
+
+    @property
+    def orders(self):
+        query_set = self.order_set.all()
+        orders = []
+        if query_set:
+            for order in query_set:
+                user = order.user
+                order_object = {
+                    "id": order.id,
+                    "user": {
+                        "name": user.name,
+                        "email": user.email,
+                    },
+                    "listing_id": order.listing_id,
+                    "status": order.status,
+                    "notification_status": order.notification_status,
+                }
+                orders.append(order_object)
+
+        return orders
 
     def __str__(self):
         return f"{self.limit_date}"
@@ -173,6 +194,7 @@ class Order(models.Model):
     listing = models.ForeignKey(to=Listing, on_delete=models.CASCADE)
     products = models.ManyToManyField(ListingProduct, through="OrderProduct")
     status = models.CharField(max_length=64, default="await")
+    notification_status = models.CharField(max_length=64, default="not_notified")
 
 
     def __str__(self):
