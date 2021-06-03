@@ -19,7 +19,7 @@
 
 {% block content %}
     <div class="container">
-        <button type="button" class="btn btn-primary" onClick="sendEmails()">Enviar correo de confirmación</button>
+        <button type="button" class="btn btn-primary" onClick="sendEmails()">Enviar correos de confirmación</button>
         <div class="row">
             <div class="col-md-9">
                 {% if data.orders %}
@@ -34,9 +34,13 @@
                       <tbody>
                           {% for order in data.orders %}
                               <tr>
-                                  <td>{{order.user.name}}</th>
-                                  <td>{{order.user.email}}</th>
-                                  <td>{{order.notification_status}}</th>
+                                  <td>{{order.user.name}}</td>
+                                  <td>{{order.user.email}}</td>
+                                  {% if order.notification_status == "not_notified" %}
+                                    <td>no notificado</td>
+                                  {% else %}
+                                    <td>notificado</td>
+                                  {% endif %}
                               </tr>
                           {% endfor %}
                       </tbody>
