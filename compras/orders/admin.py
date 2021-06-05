@@ -17,6 +17,8 @@ from django.core.serializers.json import DjangoJSONEncoder
 import json
 from django.views.decorators.csrf import csrf_protect
 from django.utils.decorators import method_decorator
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
 
 csrf_protected_method = method_decorator(csrf_protect)
 
@@ -125,18 +127,29 @@ class ListingAdmin(admin.ModelAdmin):
         listing = self.get_object(request, listing_id)
         orders = listing.orders
         for order in orders:
-            if order['nofication_stations'] == 'not_notified':
-                send_mail(
-                    'Confirmamos tu compra!',
-                    'Here is the message.',
-                    'from@example.com',
-                    [order['user']['email']],
-                    fail_silently=False,
-                )
+            # TODO: todo esto esta hardcodeado para probar, aca tenemos que usar la informacion real de las ordenes
+            # quizas deberiamos extraer esta logica a otro lugar
+            subject, from_email, to = 'Confirmamos tu compra', 'from@example.com', 'joaquinmansilla@fiqus.com'
+            text_content = ''
+            html_content = render_to_string(
+                'email_template.html', 
+                {
+                    'user_name': 'Joaco',
+                    'listing_name': 'Primera compra', 
+                    'date': '03/08/1997',
+                    'description': 'Helado Artesanal',
+                    'amount': '$100',
+                    'total': '$100',
+                    'support_email': 'compras@comunitarias.coop'
+                }
+            )
+            msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+            msg.attach_alternative(html_content, "text/html")
+            msg.send()
 
-                order_to_change_notification_status = Order.objects.get(pk=order['id'])
-                order_to_change_notification_status.notification_status = "notified"
-                order_to_change_notification_status.save()
+            order_to_change_notification_status = Order.objects.get(pk=order['id'])
+            order_to_change_notification_status.notification_status = "notified"
+            order_to_change_notification_status.save()
         return JsonResponse({})
 
     @csrf_protected_method
