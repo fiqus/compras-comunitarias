@@ -103,7 +103,7 @@ class UserDetailView(LoginRequiredMixin, TemplateView):
             order = Order.objects.filter(user=request.user, listing=listing)
             orders += order
        
-        return render(request, 'users/user_detail.html', {'orders': orders, 'object': request.user, 'listing':listing})
+        return render(request, 'users/user_detail.html', {'orders': orders, 'object': request.user})
        
 user_detail_view = UserDetailView.as_view()
     
