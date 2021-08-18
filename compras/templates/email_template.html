@@ -239,6 +239,7 @@
     
     .purchase_content {
       width: 100%;
+      table-layout: fixed;
       margin: 0;
       padding: 25px 0 0 0;
       -premailer-width: 100%;
@@ -466,7 +467,7 @@
                             <td>
                               <h3>{{listing_name}}</h3></td>
                             <td>
-                              <h3 class="align-right">{{date}}</h3></td>
+                              <h3 class="align-right">{{limit_date}}</h3></td>
                           </tr>
                           <tr>
                             <td colspan="2">
@@ -476,19 +477,28 @@
                                     <p class="f-fallback">Detalle</p>
                                   </th>
                                   <th class="purchase_heading" align="right">
+                                    <p class="f-fallback">Cantidad</p>
+                                  </th>
+                                  <th class="purchase_heading" align="right">
                                     <p class="f-fallback">Precio</p>
                                   </th>
                                 </tr>
+                                {% for product in order_products %}
                                 <tr>
-                                  <td width="80%" class="purchase_item"><span class="f-fallback">{{description}}</span></td>
-                                  <td class="align-right" width="20%" class="purchase_item"><span class="f-fallback">{{amount}}</span></td>
+                                  <td width="60%" class="purchase_item"><span class="f-fallback">{{product.name}}</span></td>
+                                  <td width="20%" class="align-right" class="purchase_item"><span class="f-fallback">{{product.quantity}}</span></td>
+                                  <td width="20%" class="align-right" class="purchase_item"><span class="f-fallback">{{product.price}}</span></td>
                                 </tr>
+                                {% endfor %}
                                 <tr>
-                                  <td width="80%" class="purchase_footer" valign="middle">
+                                  <td width="60%" class="purchase_footer" valign="middle">
+                                    <p class="f-fallback purchase_total purchase_total--label"></p>
+                                  </td>
+                                  <td width="20%" class="purchase_footer" valign="middle">
                                     <p class="f-fallback purchase_total purchase_total--label">Total</p>
                                   </td>
                                   <td width="20%" class="purchase_footer" valign="middle">
-                                    <p class="f-fallback purchase_total">{{total}}</p>
+                                    <p class="f-fallback purchase_total">{{order_total}}</p>
                                   </td>
                                 </tr>
                               </table>

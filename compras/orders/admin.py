@@ -1,3 +1,5 @@
+from compras.utils.emails.email_types import ConfirmPurchaseEmailType
+from compras.utils.emails.email_sender import EmailSender
 from django.core.mail import send_mail
 from django.contrib import admin
 from django.contrib.sites.models import Site
@@ -30,6 +32,7 @@ class ProductAdmin(admin.TabularInline):
 class ListingAdmin(admin.ModelAdmin):
     inlines = [ProductAdmin]
     list_display = (
+        'name',
         'limit_date',
         'listing_actions',
     )
@@ -127,29 +130,20 @@ class ListingAdmin(admin.ModelAdmin):
         listing = self.get_object(request, listing_id)
         orders = listing.orders
         for order in orders:
-            # TODO: todo esto esta hardcodeado para probar, aca tenemos que usar la informacion real de las ordenes
-            # quizas deberiamos extraer esta logica a otro lugar
-            subject, from_email, to = 'Confirmamos tu compra', 'from@example.com', 'joaquinmansilla@fiqus.com'
-            text_content = ''
-            html_content = render_to_string(
-                'email_template.html', 
-                {
-                    'user_name': 'Joaco',
-                    'listing_name': 'Primera compra', 
-                    'date': '03/08/1997',
-                    'description': 'Helado Artesanal',
-                    'amount': '$100',
-                    'total': '$100',
-                    'support_email': 'compras@comunitarias.coop'
-                }
-            )
-            msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
-            msg.attach_alternative(html_content, "text/html")
-            msg.send()
+            order_data = Order.objects.get(pk=order['id'])
+            data = {
+                'from': "test@test.com",
+                'to': order['user']['email'],
+                'user_name': order['user']['name'],
+                'listing_name': listing.name,
+                'limit_date': listing.limit_date,
+                'order_products': order_data.get_products(),
+                'order_total': order_data.total,
+            }
+            EmailSender(ConfirmPurchaseEmailType(), data).send_email()
 
-            order_to_change_notification_status = Order.objects.get(pk=order['id'])
-            order_to_change_notification_status.notification_status = "notified"
-            order_to_change_notification_status.save()
+            order_data.notification_status = "notified"
+            order_data.save()
         return JsonResponse({})
 
     @csrf_protected_method

@@ -60,8 +60,8 @@ class Listing(models.Model):
         verbose_name_plural = "publicaciones"
 
     enabled = models.BooleanField(default=False)
-    limit_date = models.DateTimeField()
-    name = models.CharField(max_length=100, default="null")
+    limit_date = models.DateTimeField(verbose_name="Fecha Limite")
+    name = models.CharField(max_length=100, default="null", verbose_name="Nombre")
     description = models.TextField()
     products = models.ManyToManyField(Product, through="ListingProduct")
 
@@ -205,6 +205,18 @@ class Order(models.Model):
         total = sum(p.total for p in self.orderproduct_set.all())
         return total
 
+    def get_products(self):
+        products = []
+        for product in self.orderproduct_set.all():
+            products.append(
+                {
+                    'name': str(product.product),
+                    'price': str(product.total),
+                    'quantity': product.amount
+                }
+            )
+        
+        return products
 
 class OrderProduct(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
