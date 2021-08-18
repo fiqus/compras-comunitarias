@@ -19,7 +19,18 @@
 
 {% block content %}
     <div class="container">
-        <button type="button" class="btn btn-primary" onClick="sendEmails()">Enviar correos de confirmación</button>
+        <div id="success-notification" class="alert alert-success" role="alert" hidden>
+            Correos de confirmación enviados correctamente!
+        </div>
+        
+        <div style="margin-bottom: 1rem;">
+            <button id="loading-button" class="btn btn-primary" type="button" disabled hidden>
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Enviando correos de confirmación...
+            </button>
+            <button id="send-button" type="button" class="btn btn-primary" onClick="sendEmails()">Enviar correos de confirmación</button>
+        </div>
+        
         <div class="row">
             <div class="col-md-9">
                 {% if data.orders %}
@@ -37,9 +48,13 @@
                                   <td>{{order.user.name}}</td>
                                   <td>{{order.user.email}}</td>
                                   {% if order.notification_status == "not_notified" %}
-                                    <td>no notificado</td>
+                                    <td align="center">
+                                        <span class="badge badge-danger">No notificado</span>
+                                    </td>
                                   {% else %}
-                                    <td>notificado</td>
+                                    <td align="center">
+                                        <span class="badge badge-success">Notificado</span>
+                                    </td>
                                   {% endif %}
                               </tr>
                           {% endfor %}
@@ -56,6 +71,8 @@
 
     <script>
         function sendEmails() {
+            $("#loading-button").prop('hidden', false);
+            $("#send-button").prop('hidden', true);
             axios({
                 method: 'post',
                 url: 'send-emails/',
@@ -69,6 +86,12 @@
 
             .then ( function (response){ //success function
                 console.log('axios ajax success. data returned ==' + response.data); //if returned data format is like {[ {'id':1,'id':2} ]} we may have to do response.data['output_dict'][0]['id']
+                $("#loading-button").prop('hidden', true);
+                $("#send-button").prop('hidden', false);
+                $("#success-notification").prop('hidden', false);
+                setTimeout(() => {
+                    location.reload()
+                }, 1500)
                 fn();
             }.bind(this)) //bind(this) is required when accessing Vue variable inside Axios success function (.then)
 
