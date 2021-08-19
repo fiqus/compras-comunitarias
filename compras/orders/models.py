@@ -186,6 +186,13 @@ class ListingProduct(models.Model):
         return f"{self.product.name} ({self.presentation})"
 
 class Order(models.Model):
+    NOTIFIED = "notified"
+    NOT_NOTIFIED = "not_notified"
+
+    NOTIFICATION_STATUS_CHOICES = [
+        (NOTIFIED, "notificado"),
+        (NOT_NOTIFIED, "no notificado"),
+    ]
     class Meta:
         verbose_name = "pedido"
         verbose_name_plural = "pedidos"
@@ -194,7 +201,7 @@ class Order(models.Model):
     listing = models.ForeignKey(to=Listing, on_delete=models.CASCADE)
     products = models.ManyToManyField(ListingProduct, through="OrderProduct")
     status = models.CharField(max_length=64, default="await")
-    notification_status = models.CharField(max_length=64, default="not_notified")
+    notification_status = models.CharField(max_length=64, choices=NOTIFICATION_STATUS_CHOICES, default=NOT_NOTIFIED)
 
 
     def __str__(self):

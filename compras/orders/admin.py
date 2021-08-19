@@ -127,27 +127,29 @@ class ListingAdmin(admin.ModelAdmin):
         listing = self.get_object(request, listing_id)
         orders = listing.orders
         for order in orders:
+            print("-----------------------------------------------------------------------------------------")
+            print("notification_status", order['notification_status'])
+            print("-----------------------------------------------------------------------------------------")
+            if order['notification_status'] == Order.NOT_NOTIFIED:
+                order_data = Order.objects.get(pk=order['id'])
 
-            print("order", order)
-            order_data = Order.objects.get(pk=order['id'])
+                from_email = "test@test.com"
+                to_email = order['user']['email']
+                email_data = {
+                    'user_name': order['user']['name'],
+                    'listing_name': listing.name,
+                    'limit_date': listing.limit_date,
+                    'order_products': order_data.get_products(),
+                    'order_total': order_data.total,
+                    'support_email': EmailSender.SUPPORT_EMAIL
+                }
 
-            from_email = "test@test.com"
-            to_email = order['user']['email']
-            email_data = {
-                'user_name': order['user']['name'],
-                'listing_name': listing.name,
-                'limit_date': listing.limit_date,
-                'order_products': order_data.get_products(),
-                'order_total': order_data.total,
-                'support_email': EmailSender.SUPPORT_EMAIL
-            }
+                email_sender = EmailSender(ConfirmPurchaseEmailType(), from_email, to_email, email_data)
+                email_sender.send_email()
 
-            email_sender = EmailSender(ConfirmPurchaseEmailType(), from_email, to_email, email_data)
-            email_sender.send_email()
-
-            # change status of the order
-            order_data.notification_status = "notified"
-            order_data.save()
+                # change status of the order
+                order_data.notification_status = "notified"
+                order_data.save()
         return JsonResponse({})
 
     @csrf_protected_method
