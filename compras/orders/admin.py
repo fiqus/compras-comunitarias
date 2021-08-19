@@ -128,8 +128,6 @@ class ListingAdmin(admin.ModelAdmin):
         orders = listing.orders
         for order in orders:
             print("-----------------------------------------------------------------------------------------")
-            print("notification_status", order['notification_status'])
-            print("-----------------------------------------------------------------------------------------")
             if order['notification_status'] == Order.NOT_NOTIFIED:
                 order_data = Order.objects.get(pk=order['id'])
 
