@@ -22,6 +22,10 @@
         <div id="success-notification" class="alert alert-success" role="alert" hidden>
             Correos de confirmación enviados correctamente!
         </div>
+
+        <div id="fail-notification" class="alert alert-danger" role="alert" hidden>
+            Fallo el envío de los correo de confirmación!
+        </div>
         
         <div style="margin-bottom: 1rem;">
             <button id="loading-button" class="btn btn-primary" type="button" disabled hidden>
@@ -97,6 +101,9 @@
 
             .catch ( function (error){ //error function
                 console.log('Axios ajax error');
+                $("#fail-notification").prop('hidden', false);
+                $("#loading-button").prop('hidden', true);
+                $("#send-button").prop('hidden', false);
             });
 
         }

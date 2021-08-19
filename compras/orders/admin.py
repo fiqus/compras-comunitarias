@@ -131,17 +131,22 @@ class ListingAdmin(admin.ModelAdmin):
         orders = listing.orders
         for order in orders:
             order_data = Order.objects.get(pk=order['id'])
-            data = {
-                'from': "test@test.com",
-                'to': order['user']['email'],
+
+            from_email = "test@test.com"
+            to_email = order['user']['email']
+            email_data = {
                 'user_name': order['user']['name'],
                 'listing_name': listing.name,
                 'limit_date': listing.limit_date,
                 'order_products': order_data.get_products(),
                 'order_total': order_data.total,
+                'support_email': EmailSender.SUPPORT_EMAIL
             }
-            EmailSender(ConfirmPurchaseEmailType(), data).send_email()
 
+            email_sender = EmailSender(ConfirmPurchaseEmailType(), from_email, to_email, email_data)
+            email_sender.send_email()
+
+            # change status of the order
             order_data.notification_status = "notified"
             order_data.save()
         return JsonResponse({})
