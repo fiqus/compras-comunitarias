@@ -1,12 +1,11 @@
 from compras.utils.emails.email_types import ConfirmPurchaseEmailType
 from compras.utils.emails.email_sender import EmailSender
-from django.core.mail import send_mail
 from django.contrib import admin
 from django.contrib.sites.models import Site
 from django.utils.html import format_html
 from django.conf.urls import url
 from compras.orders.models import Listing, Order, Product, ListingProduct, Producer, OrderProduct, Tag, Category
-from .forms import ListingSummaryForm, ListingRealTimeForm,ListingReportOrdersForm
+from .forms import ListingSummaryForm, ListingRealTimeForm
 from django.http import JsonResponse
 from django.contrib.auth.models import Group
 from allauth.socialaccount.models import SocialApp, SocialAccount, SocialToken
@@ -19,8 +18,6 @@ from django.core.serializers.json import DjangoJSONEncoder
 import json
 from django.views.decorators.csrf import csrf_protect
 from django.utils.decorators import method_decorator
-from django.core.mail import EmailMultiAlternatives
-from django.template.loader import render_to_string
 
 csrf_protected_method = method_decorator(csrf_protect)
 

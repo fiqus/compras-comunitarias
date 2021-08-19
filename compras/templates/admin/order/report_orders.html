@@ -87,20 +87,18 @@
                     "content-type": "application/json"
                 }
             })
-
-            .then ( function (response){ //success function
-                console.log('axios ajax success. data returned ==' + response.data); //if returned data format is like {[ {'id':1,'id':2} ]} we may have to do response.data['output_dict'][0]['id']
+            .then((response) => {
                 $("#loading-button").prop('hidden', true);
                 $("#send-button").prop('hidden', false);
                 $("#success-notification").prop('hidden', false);
                 setTimeout(() => {
                     location.reload()
                 }, 1500)
-                fn();
-            }.bind(this)) //bind(this) is required when accessing Vue variable inside Axios success function (.then)
-
-            .catch ( function (error){ //error function
-                console.log('Axios ajax error');
+            })
+            .catch((error) => {
+                $("#loading-button").prop('hidden', true);
+                $("#send-button").prop('hidden', false);
+                $("#fail-notification").prop('hidden', false);
             });
 
         }
