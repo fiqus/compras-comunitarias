@@ -130,6 +130,8 @@ class ListingAdmin(admin.ModelAdmin):
         listing = self.get_object(request, listing_id)
         orders = listing.orders
         for order in orders:
+
+            print("order", order)
             order_data = Order.objects.get(pk=order['id'])
 
             from_email = "test@test.com"
