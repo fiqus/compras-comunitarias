@@ -275,3 +275,5 @@ compras/media/
 .env
 .envs/*
 !.envs/.local/
+
+.idea/

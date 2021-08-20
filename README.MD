@@ -23,7 +23,7 @@ Mailhog
 ## Run Django commands
 Create super user
 
-        docker-compose -f local.yml run --rm django python manage.py createsuperusar
+        docker-compose -f local.yml run --rm django python manage.py createsuperuser
 
 
 Create migrations

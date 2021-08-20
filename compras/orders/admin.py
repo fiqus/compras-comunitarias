@@ -10,7 +10,7 @@ from django.http import JsonResponse
 from django.contrib.auth.models import Group
 from allauth.socialaccount.models import SocialApp, SocialAccount, SocialToken
 from allauth.account.models import EmailAddress
- 
+
 from django.urls import reverse
 
 from django.template.response import TemplateResponse
@@ -82,7 +82,7 @@ class ListingAdmin(admin.ModelAdmin):
         products = listing.products_list
         data = {
             "summary": summary,
-            "products":products
+            "products": products
         }
         return self.process_action(
             request=request,
@@ -157,7 +157,6 @@ class ListingAdmin(admin.ModelAdmin):
         order.save()
         return JsonResponse({"status": order.status})
 
-
     def process_action(
         self,
         request,
@@ -181,6 +180,7 @@ class ListingAdmin(admin.ModelAdmin):
             context,
         )
 
+
 class OrderProductAdmin(admin.TabularInline):
     model = OrderProduct
 
@@ -189,10 +189,8 @@ class OrderAdmin(admin.ModelAdmin):
     inlines = [OrderProductAdmin]
 
 
-class TagAdmin (admin.TabularInline):
-    model= Tag
-
-
+class TagAdmin(admin.TabularInline):
+    model = Tag
 
 
 admin.site.register(Order, OrderAdmin)
@@ -207,7 +205,6 @@ admin.site.unregister(SocialApp)
 admin.site.unregister(SocialAccount)
 admin.site.unregister(SocialToken)
 admin.site.unregister(EmailAddress)
-
 
 # Cambiando nombre del admin
 admin.site.site_header = "Compras Comunitarias - Administración"

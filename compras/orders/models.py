@@ -1,8 +1,6 @@
 from django.db import models
 from sorl.thumbnail import ImageField
 import pandas as pd
-from django_pandas.io import read_frame
-
 
 
 class Producer(models.Model):
@@ -12,23 +10,33 @@ class Producer(models.Model):
 
     name = models.CharField(max_length=255)
     description = models.TextField()
-    url = models.URLField()
+    url = models.URLField(blank=True)
     logo = ImageField(upload_to="producer_logos")
 
     def __str__(self):
         return f"{self.name}"
 
+
 class Category(models.Model):
     name = models.CharField(max_length=100, verbose_name="Name")
     description = models.CharField(max_length=255, verbose_name="Description")
-    created_at= models.DateTimeField(auto_now_add=True)
-    
+    created_at = models.DateTimeField(auto_now_add=True)
+
     class Meta:
-         verbose_name = "categoria"
-         verbose_name_plural = "categorias"
+        verbose_name = "categoria"
+        verbose_name_plural = "categorias"
 
     def __str__(self):
         return self.name
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=50)
+    image = ImageField(default="null", verbose_name="Tag Image", upload_to="tag_image", blank="True")
+
+    def __str__(self):
+        return f"{self.name}"
+
 
 class Product(models.Model):
     class Meta:
@@ -39,20 +47,12 @@ class Product(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     image = ImageField(upload_to="product_images")
-    category = models.ForeignKey(Category, verbose_name="Category",on_delete=models.CASCADE,blank=True, null=True)
-
-
-    def __str__(self):
-        return f"{self.name}"
-
-class Tag (models.Model):
-    name = models.CharField(max_length=50)
-    product = models.ManyToManyField(Product)
-    image = ImageField(default="null", verbose_name="Tag Image",upload_to="tag_image", blank="True")
-
+    category = models.ForeignKey(Category, verbose_name="Category", on_delete=models.CASCADE, blank=True, null=True)
+    tag = models.ManyToManyField(Tag, blank=True)
 
     def __str__(self):
         return f"{self.name}"
+
 
 class Listing(models.Model):
     class Meta:
@@ -82,7 +82,7 @@ class Listing(models.Model):
                 f = pd.DataFrame(products)
                 df = df.append(f, ignore_index=True)
             df = df.groupby('product').sum()
-            df.loc['Total']= df.sum()
+            df.loc['Total'] = df.sum()
         return df
 
     @property
@@ -181,9 +181,9 @@ class ListingProduct(models.Model):
     def tag(self):
         self.products[0].tag
 
-
     def __str__(self):
         return f"{self.product.name} ({self.presentation})"
+
 
 class Order(models.Model):
     NOTIFIED = "notified"
@@ -193,6 +193,7 @@ class Order(models.Model):
         (NOTIFIED, "notificado"),
         (NOT_NOTIFIED, "no notificado"),
     ]
+
     class Meta:
         verbose_name = "pedido"
         verbose_name_plural = "pedidos"
@@ -202,7 +203,6 @@ class Order(models.Model):
     products = models.ManyToManyField(ListingProduct, through="OrderProduct")
     status = models.CharField(max_length=64, default="await")
     notification_status = models.CharField(max_length=64, choices=NOTIFICATION_STATUS_CHOICES, default=NOT_NOTIFIED)
-
 
     def __str__(self):
         return f"Orden - {self.user.name} - {self.listing.limit_date}"
@@ -222,8 +222,9 @@ class Order(models.Model):
                     'quantity': product.amount
                 }
             )
-        
+
         return products
+
 
 class OrderProduct(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
@@ -236,7 +237,3 @@ class OrderProduct(models.Model):
 
     def __str__(self):
         return f"{self.product.product.name} {self.product.presentation} - {self.amount}"
-
-
-
-
