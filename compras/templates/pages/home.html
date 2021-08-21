@@ -1,82 +1,340 @@
-{% extends "base.html" %}
-{% block content%}
+{% load static i18n %}<!DOCTYPE html>
+<html lang="en">
+<head>
+
+     <title>Compras Comunitarias</title>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+     <meta name="description" content="">
+     <meta name="keywords" content="">
+     <meta name="author" content="">
+     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+     {% block css %}
+
+     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+     <link href="{% static 'css/magnific-popup.css' %}" rel="stylesheet">
+     <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
+     
+     <!-- MAIN CSS -->
+     <link href="{% static 'css/templatemo-style.css' %}" rel="stylesheet">
+
+     {% endblock css %}
+</head>
+<body>
+
+     <!-- PRE LOADER -->
+     <section class="preloader">
+          <div class="spinner">
+               <span class="spinner-rotate"></span>
+          </div>
+     </section>
 
 
-<div class="container col-12" id="conteiner">
-    
-    <div id="intro" class="view">
+     <!-- MENU -->
+     <section class="navbar custom-navbar navbar-fixed-top" role="navigation">
+          <div class="container">
 
-        <div class="mask rgba-black-strong">
+               <div class="navbar-header">
+                    <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                         <span class="icon icon-bar"></span>
+                         <span class="icon icon-bar"></span>
+                         <span class="icon icon-bar"></span>
+                    </button>
 
-            <div class="container-fluid d-flex align-items-center justify-content-center h-100">
+                    <!-- lOGO TEXT HERE -->
+                    <a href="index.html" class="navbar-brand">Compras Comunitarias</a>
+               </div>
 
-                <div class="row d-flex justify-content-center text-center">
+               <!-- MENU LINKS -->
+               <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-nav-first">
+                         <li><a href="#home" class="smoothScroll">Inicio</a></li>
+                         <li><a href="#about" class="smoothScroll">Nosotros</a></li>
+                         <li><a href="#blog" class="smoothScroll">Compras Activas</a></li>
+                    </ul>
 
-                    <div class="col-md-10 mb-3">
+                    <ul class="nav navbar-nav navbar-right">
+                         <li><a href="#"><i class="fa fa-facebook-square"></i></a></li>
+                         <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                         <li class="section-btn"><a href="#" data-toggle="modal" data-target="#modal-form">Registrarse / Entrar</a></li>
+                    </ul>
+               </div>
 
-                        <div class="conteiner rounded-corners">
-                          <h2 class="display-4 font-weight-bold text-light pt-5 mb-2">Compras Comunitarias</h2>
+          </div>
+     </section>
 
-                        <!-- Divider -->
-                          <hr class="hr-light">
-                        
-                        <!-- parrafo -->
-                          <a class="">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</a>
-                        
-                        <!-- Divider -->
-                          <hr class="hr-light">
-                        </div>
-                        <!-- instrucciones -->
-                        <div class="">
-                            <div class="row">
-                              <div class="col">
-                                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud"
-                              </div>
-                              <div class="col">
-                                <img src="https://files.realpython.com/media/API-Integration-in-Python_watermark.c7945f579b25.jpg" style="max-height: 200px; max-width: 200;"> 
-                              </div>
-                            </div>
-                            <hr class="hr-light">
-                            <div class="row">
-                              <div class="col">
-                                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud"
-                              </div>
-                              <div class="col">
-                                <img src="https://files.realpython.com/media/API-Integration-in-Python_watermark.c7945f579b25.jpg" style="max-height: 200px; max-width: 200;"> 
-                              </div>
-                            </div>
-                            <hr class="hr-light">
-                            <div class="row">
-                              <div class="col">
-                                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud"
-                              </div>
-                              <div class="col">
-                                <img src="https://files.realpython.com/media/API-Integration-in-Python_watermark.c7945f579b25.jpg" style="max-height: 200px; max-width: 200;"> 
-                              </div>
-                            </div>
-                            <hr class="hr-light">
-                            <div class="row">
-                              <div class="col">
-                                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud"
-                              </div>
-                              <div class="col">
-                                <img src="https://files.realpython.com/media/API-Integration-in-Python_watermark.c7945f579b25.jpg" style="max-height: 200px; max-width: 400;">
-                              </div>
-                            </div>
-                            <hr class="hr-light">
-                            </div>
-                          </div>
-                        </div>
 
+     <!-- HOME -->
+     <section id="home" data-stellar-background-ratio="0.5">
+          <div class="overlay"></div>
+          <div class="container">
+               <div class="row">
+
+                    <div class="col-md-6 col-sm-12">
+                         <div class="home-info">
+                              <h1>Compras comunitarias de la Mesa de Asociativismo de V. La Angostura</h1>
+                              <a href="https://chat.whatsapp.com/F4SxzdEwArdI5tCC5x6ka5" class="btn section-btn smoothScroll">Sumate al Wathsapp</a>
+                              <span>
+                                   Para enterarte de la próxima compra
+                              </span>
+                         </div>
                     </div>
 
-                </div>
+                    <div class="col-md-6 col-sm-12">
+                         <div class="home-video">
+                              <div class="embed-responsive embed-responsive-16by9">
+                                   <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FESSVLA%2Fvideos%2F506722403845184%2F&show_text=false&t=0" allowFullScreen></iframe>
+                              </div>
+                         </div>
+                    </div>
+                    
+               </div>
+          </div>
+     </section>
 
-            </div>
 
-        </div>
+     <!-- ABOUT -->
+     <section id="about" data-stellar-background-ratio="0.5">
+          <div class="container">
+               <div class="row">
 
-    </div>
-</div>
+                    <div class="col-md-5 col-sm-6">
+                         <div class="about-info">
+                              <div class="section-title">
+                                   <h2>Nosotros</h2>
+                                   <span class="line-bar">...</span>
+                              </div>
+                              <p>Somos una comunidad de compras de alimentos organizada; basada en el precio justo, de productos sanos y cercanos y con una frecuencia mensual.</p>
+                         </div>
+                    </div>
 
-{%endblock%}
+                    <div class="col-md-3 col-sm-6">
+                         <div class="about-info skill-thumb">
+
+                              <strong>Productos de cooperativas</strong>
+                                   <span class="pull-right">85%</span>
+                                        <div class="progress">
+                                             <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 85%;"></div>
+                                        </div>
+
+                              <strong>Fruta y verdura agroecologica</strong>
+                                   <span class="pull-right">90%</span>
+                                        <div class="progress">
+                                             <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%;"></div>
+                                        </div>
+
+                              <strong>Productos locales</strong>
+                                   <span class="pull-right">75%</span>
+                                        <div class="progress">
+                                             <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%;"></div>
+                                        </div>
+                         </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-12">
+                         <div class="about-image" style="margin-bottom: 8rem;">
+                              <img src="{% static 'images/about-image.png' %}" class="img-responsive" alt="">
+                         </div>
+                    </div>
+
+               </div>
+          </div>
+     </section>
+
+
+     <!-- BLOG -->
+     <section id="blog" data-stellar-background-ratio="0.5">
+          <div class="container">
+               <div class="row">
+
+                    <div class="col-md-12 col-sm-12">
+                         <div class="section-title">
+                              <h2>Compras Activas</h2>
+                              <span class="line-bar">...</span>
+                         </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6">
+                         <!-- BLOG THUMB -->
+                         <div class="media blog-thumb">
+                              <!--div class="media-object media-left">
+                                   <a href=""><img src="images/cordero.jpeg" class="img-responsive" alt=""></a>
+                              </div-->
+                              <div class="media-body blog-info">
+                                   <small><i class="fa fa-clock-o"></i> Diciembre 22, 2017</small>
+                                   <h3><a href="">Compra de Chivos</a></h3>
+                                   <p>Tercera compra de chivos a la cooperativa aborigen de Jacobacci</p>
+                                   <a href="" class="btn section-btn">Comprar</a>
+                              </div>
+                         </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6">
+                         <!-- BLOG THUMB -->
+                         <div class="media blog-thumb">
+                              <!--div class="media-object media-left">
+                                   <a href=""><img src="images/verduras.jpg" class="img-responsive" alt=""></a>
+                              </div-->
+                              <div class="media-body blog-info">
+                                   <small><i class="fa fa-clock-o"></i> Diciembre 18, 2017</small>
+                                   <h3><a href="">Compra de Verduras</a></h3>
+                                   <p>Compra de verduras al colectivo agricola de viedma</p>
+                                   <a href="" class="btn section-btn">Comprar</a>
+                              </div>
+                         </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6">
+                         <!-- BLOG THUMB -->
+                         <div class="media blog-thumb">
+                              <!--div class="media-object media-left">
+                                   <a href=""><img src="images/canasta.jpg" class="img-responsive" alt=""></a>
+                              </div-->
+                              <div class="media-body blog-info">
+                                   <small><i class="fa fa-clock-o"></i> Septiembre 14, 2017</small>
+                                   <h3><a href="">10 Compra Mensual</a></h3>
+                                   <p>En esta sumamos nuevos productos y productores locales</p>
+                                   <a href="" class="btn section-btn">Comprar</a>
+                              </div>
+                         </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6">
+                         <!-- BLOG THUMB -->
+                         <div class="media blog-thumb">
+                              <!--div class="media-object media-left">
+                                   <a href=""><img src="images/artesania.jpeg" class="img-responsive" alt=""></a>
+                              </div-->
+                              <div class="media-body blog-info">
+                                   <small><i class="fa fa-clock-o"></i> Noviembre 10, 2017</small>
+                                   <h3><a href=""></a>Compras Artesanias</h3>
+                                   <p>Compra de artesanias al mercado de la estepa</p>
+                                   <a href="" class="btn section-btn">Comprar</a>
+                              </div>
+                         </div>
+                    </div>
+                    
+               </div>
+          </div>
+     </section>
+
+     <!-- FOOTER -->
+     <footer data-stellar-background-ratio="0.5">
+          <div class="container">
+               <div class="row">
+
+                    <div class="col-md-5 col-sm-12">
+                         <div class="footer-thumb footer-info"> 
+                              <h2>Compras Comunitarias</h2>
+                              <p>Compras comunitarias de la Mesa de Asociativismo de V. La Angostura.</p>
+                         </div>
+                    </div>
+
+                    <div class="col-md-2 col-sm-4"> 
+                         <div class="footer-thumb"> 
+                              <h2>Company</h2>
+                              <ul class="footer-link">
+                                   <li><a href="#">Inicio</a></li>
+                                   <li><a href="#">Nosotros</a></li>
+                                   <li><a href="#">Compras Activas</a></li>
+                              </ul>
+                         </div>
+                    </div>
+
+                    <div class="col-md-12 col-sm-12">
+                         <div class="footer-bottom">
+                              <div class="col-md-6 col-sm-5">
+                                   <div class="copyright-text"> 
+                                        <p>Created with ♥ by Fiqus</p>
+                                   </div>
+                              </div>
+                              <div class="col-md-6 col-sm-7">
+                                   <div class="phone-contact"> 
+                                        <a href="https://chat.whatsapp.com/F4SxzdEwArdI5tCC5x6ka5" style="color:white;">Sumate al Wathsapp</a>
+                                   </div>
+                                   <ul class="social-icon">
+                                        <li><a href="https://www.facebook.com/templatemo" class="fa fa-facebook-square" attr="facebook icon"></a></li>
+                                        <li><a href="#" class="fa fa-instagram"></a></li>
+                                   </ul>
+                              </div>
+                         </div>
+                    </div>
+                    
+               </div>
+          </div>
+     </footer>
+
+
+     <!-- MODAL -->
+     <section class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+               <div class="modal-content modal-popup">
+
+                    <div class="modal-header">
+                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                         </button>
+                    </div>
+
+                    <div class="modal-body">
+                         <div class="container-fluid">
+                              <div class="row">
+
+                                   <div class="col-md-12 col-sm-12">
+                                        <div class="modal-title">
+                                             <h2>Compras Comunitarias</h2>
+                                        </div>
+
+                                        <!-- NAV TABS -->
+                                        <ul class="nav nav-tabs" role="tablist">
+                                             <li class="active"><a href="#sign_up" aria-controls="sign_up" role="tab" data-toggle="tab">Registrarse</a></li>
+                                             <li><a href="#sign_in" aria-controls="sign_in" role="tab" data-toggle="tab">Entrar</a></li>
+                                        </ul>
+
+                                        <!-- TAB PANES -->
+                                        <div class="tab-content">
+                                             <div role="tabpanel" class="tab-pane fade in active" id="sign_up">
+                                                  <form action="#" method="post">
+                                                       <input type="text" class="form-control" name="name" placeholder="Name" required>
+                                                       <input type="telephone" class="form-control" name="telephone" placeholder="Telephone" required>
+                                                       <input type="email" class="form-control" name="email" placeholder="Email" required>
+                                                       <input type="password" class="form-control" name="password" placeholder="Password" required>
+                                                       <input type="submit" class="form-control" name="submit" value="Submit Button">
+                                                  </form>
+                                             </div>
+
+                                             <div role="tabpanel" class="tab-pane fade in" id="sign_in">
+                                                  <form action="#" method="post">
+                                                       <input type="email" class="form-control" name="email" placeholder="Email" required>
+                                                       <input type="password" class="form-control" name="password" placeholder="Password" required>
+                                                       <input type="submit" class="form-control" name="submit" value="Submit Button">
+                                                       <a href="https://www.facebook.com/templatemo">¿Olvidaste tu contraseña?</a>
+                                                  </form>
+                                             </div>
+                                        </div>
+                                   </div>
+
+                              </div>
+                         </div>
+                    </div>
+
+               </div>
+          </div>
+     </section>
+
+     {% block javascript %}
+
+     <!-- SCRIPTS -->
+
+     <script src="{% static 'js/jquery.js' %}"></script>
+     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+     <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+     <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+     <script src="{% static 'js/smoothscroll.js' %}"></script>
+     <script src="{% static 'js/custom.js' %}"></script>
+
+     {% endblock javascript %}
+
+</body>
+</html>
