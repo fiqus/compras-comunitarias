@@ -196,6 +196,13 @@
     </div>
 
     <script type="text/javascript">
+        var socker = new WebSocket('ws://localhost:8000/ws/some_url/')
+
+        socker.onmessage = function(event) {
+            var data = JSON.parse(event.data);
+            console.log(data);
+        };
+
         $('i').on('click', function(e){
             e.stopPropagation();
             // other stuff here
