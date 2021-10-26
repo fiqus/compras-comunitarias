@@ -74,6 +74,7 @@ class Listing(models.Model):
                 products = []
                 for product in order.orderproduct_set.all():
                     p = {}
+                    p["user"] = str(order.user)
                     p["product"] = str(product.product)
                     p["order"] = str(product.order)
                     p["amount"] = int(product.amount)
@@ -91,6 +92,7 @@ class Listing(models.Model):
         for order in self.order_set.all():
             for product in order.orderproduct_set.all():
                 p = {}
+                p["user"] = str(order.user)
                 p["product"] = product.product
                 p["price"] = product.total
                 p["order"] = product.order

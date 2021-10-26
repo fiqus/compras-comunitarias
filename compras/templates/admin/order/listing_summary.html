@@ -24,6 +24,7 @@
                   <table class="table table-bordered table-hover">
                       <thead>
                           <tr>
+                              <th>User</th>
                               <th>Product</th>
                               <th>Amount</th>
                               <th>Price</th>
@@ -33,6 +34,7 @@
                       <tbody>
                           {% for product in data.products %}
                               <tr>
+                                  <td>{{product.user}}</th>
                                   <td>{{product.product}}</th>
                                   <td>{{product.amount}}</th>
                                   <td>${{product.price}}</th>
