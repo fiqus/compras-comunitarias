@@ -142,6 +142,7 @@ class Listing(models.Model):
                     "name": user.name,
                     "dni": user.dni,
                     "email": user.email,
+                    "tel": user.tel,
                 }
                 users.append(user_object)
 

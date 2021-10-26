@@ -21,7 +21,7 @@ User = get_user_model()
 class UserUpdateView(LoginRequiredMixin, UpdateView):
 
     model = User
-    fields = ["name", "dni"]
+    fields = ["name", "dni", "tel"]
 
     def get_success_url(self):
         return reverse("orders:detail")

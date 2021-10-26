@@ -35,9 +35,11 @@ class UserCreationForm(admin_forms.UserCreationForm):
 class SimpleSignupForm(SignupForm):
     name = forms.CharField(max_length=255, label='Nombre y Apellido')
     dni = forms.CharField(max_length=255, label='DNI')
+    tel = forms.CharField(max_length=255, label='Teléfono de contacto')
     def save(self, request):
         user = super(SimpleSignupForm, self).save(request)
         user.name = self.cleaned_data['name']
         user.dni = self.cleaned_data['dni']
+        user.tel = self.cleaned_data['tel']
         user.save()
         return user
