@@ -100,6 +100,8 @@ class ListingAdmin(admin.ModelAdmin):
             "products_by_order": json.dumps(listing.products_by_order, cls=DjangoJSONEncoder),
             "listing": listing
         }
+        print(data)
+        print(str(request))
         return self.process_action(
             request=request,
             listing_id=listing_id,
