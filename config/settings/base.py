@@ -64,17 +64,18 @@ DJANGO_APPS = [
     "django.forms",
 ]
 THIRD_PARTY_APPS = [
+    "channels",
     "crispy_forms",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
     "sorl.thumbnail",
-    "channels",
 ]
 
 LOCAL_APPS = [
     "compras.users.apps.UsersConfig",
-    "compras.orders"
+    "compras.orders",
+    "api"
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
