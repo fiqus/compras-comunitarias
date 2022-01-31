@@ -67,29 +67,26 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
 	</>
 );
 
+const ExpandedComponent = ({ data }) => <pre>{JSON.stringify(data.products)}</pre>;
+
 const columns = [
 	{
 		name: 'Nombre',
-		selector: row => row.name,
+		selector: row => row.user.name,
 		sortable: true,
 	},
 	{
 		name: 'Email',
-		selector: row => row.email,
+		selector: row => row.user.email,
 		sortable: true,
-	},
-	{
-		name: 'Dirección',
-		selector: row => row.address,
-		sortable: true,
-	},
+	}
 ];
 
-function Table() {
+function Table({orders}) {
 	const [filterText, setFilterText] = React.useState('');
 	const [resetPaginationToggle, setResetPaginationToggle] = React.useState(false);
-	const filteredItems = fakeUsers.filter(
-		item => item.name && item.name.toLowerCase().includes(filterText.toLowerCase()),
+	const filteredItems = orders.filter(
+		item => item.user.name && item.user.name.toLowerCase().includes(filterText.toLowerCase()),
 	);
 
 	const subHeaderComponentMemo = React.useMemo(() => {
@@ -101,6 +98,7 @@ function Table() {
 		};
 
 		return (
+
 			<FilterComponent onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />
 		);
 	}, [filterText, resetPaginationToggle]);
@@ -116,6 +114,8 @@ function Table() {
 				subHeaderComponent={subHeaderComponentMemo}
 				selectableRows
 				persistTableHead
+				expandableRows
+				expandableRowsComponent={ExpandedComponent}
 			/>
 		</div>
 	);

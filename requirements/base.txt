@@ -20,4 +20,5 @@ pandas
 numpy
 django_pandas
 channels
-channel_redis
+djangorestframework 
+django-cors-headers

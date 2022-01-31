@@ -62,6 +62,8 @@ DJANGO_APPS = [
     # "django.contrib.humanize", # Handy template tags
     "django.contrib.admin",
     "django.forms",
+    'corsheaders',
+    'rest_framework',
 ]
 THIRD_PARTY_APPS = [
     "channels",
@@ -135,6 +137,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.common.BrokenLinkEmailsMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 # STATIC
@@ -283,3 +286,8 @@ ASGI_APPLICATION = "config.asgi.application"
 #         },
 #     },
 # }
+
+
+CORS_ORIGIN_WHITELIST = [
+     'http://localhost:3000'
+]
