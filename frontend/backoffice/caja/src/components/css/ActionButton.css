@@ -1,0 +1,17 @@
+.button-container {
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    border-radius: 0.5rem;
+    padding: 0.3rem 1rem;
+    display: flex;
+    flex-direction: row;
+    margin: 0rem 1rem;
+}
+
+.button-icon-container {
+    padding-top: 0.2rem;
+    align-self: center;
+}
+
+.button-name-container {
+    padding: 0.5rem;
+}

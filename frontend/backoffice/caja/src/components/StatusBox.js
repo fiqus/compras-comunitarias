@@ -1,6 +1,6 @@
 import {React} from 'react';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './css/StatusBar.css'
 
 function StatusBox({icon, quantity, status}) {

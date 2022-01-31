@@ -20,14 +20,12 @@ function App() {
     const orders = await get('/listing/1/orders');
     if (response.ok) {
       setOrders(orders);
-      setOrdersStatusPaid(orders.filter(order => order.status === "paid").length)
-      setOrdersStatusAwait(orders.filter(order => order.status === "await").length)
-      setOrdersStatusCancel(orders.filter(order => order.status === "cancel").length)
-      setOrdersStatusInside(orders.filter(order => order.status === "inside").length)
+      setOrdersStatusPaid(orders.filter(order => order.status === "paid").length);
+      setOrdersStatusAwait(orders.filter(order => order.status === "await").length);
+      setOrdersStatusCancel(orders.filter(order => order.status === "cancel").length);
+      setOrdersStatusInside(orders.filter(order => order.status === "inside").length);
     }
   }
-
-  console.log(orders)
 
   return (
     <div className="app-container">

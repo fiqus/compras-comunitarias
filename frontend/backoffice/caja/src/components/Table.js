@@ -1,25 +1,16 @@
-import React from 'react';
+import { faClock } from '@fortawesome/free-solid-svg-icons'
+import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
+import { faThumbsUp } from '@fortawesome/free-solid-svg-icons'
+import { faThumbsDown } from '@fortawesome/free-solid-svg-icons'
+
+import React, { useState, useMemo } from 'react';
 import styled from 'styled-components';
 import './css/Table.css'
 
 import DataTable from 'react-data-table-component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUndo } from '@fortawesome/free-solid-svg-icons'
-
-const fakeUsers = [
-	{
-		id: 1,
-		name: "Joaco Mansilla",
-		email: "Joaco@test.com",
-		address: "Av. Siempre Viva 123",
-	},
-	{
-		id: 2,
-		name: "Jero Clinaz",
-		email: "Jero@test.com",
-		address: "Av. Siempre Viva 321",
-	}
-]
+import ActionButton from './ActionButton'
 
 const TextField = styled.input`
 	height: 32px;
@@ -50,9 +41,8 @@ const ClearButton = styled.button`
 	justify-content: center;
 `;
 
-
 const FilterComponent = ({ filterText, onFilter, onClear }) => (
-	<>
+	<div style={{"display": "flex", "flexDirection": "row"}}>
 		<TextField
 			id="search"
 			type="text"
@@ -64,7 +54,7 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
 		<ClearButton type="button" onClick={onClear}>
 			<FontAwesomeIcon icon={faUndo}></FontAwesomeIcon>
 		</ClearButton>
-	</>
+	</div>
 );
 
 const ExpandedComponent = ({ data }) => <pre>{JSON.stringify(data.products)}</pre>;
@@ -83,13 +73,14 @@ const columns = [
 ];
 
 function Table({orders}) {
-	const [filterText, setFilterText] = React.useState('');
-	const [resetPaginationToggle, setResetPaginationToggle] = React.useState(false);
+	const [filterText, setFilterText] = useState('');
+	const [selectedRows, setSelectedRows] = useState([]);
+	const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
 	const filteredItems = orders.filter(
 		item => item.user.name && item.user.name.toLowerCase().includes(filterText.toLowerCase()),
 	);
 
-	const subHeaderComponentMemo = React.useMemo(() => {
+	const subHeaderComponentMemo = useMemo(() => {
 		const handleClear = () => {
 			if (filterText) {
 				setResetPaginationToggle(!resetPaginationToggle);
@@ -98,10 +89,20 @@ function Table({orders}) {
 		};
 
 		return (
-
-			<FilterComponent onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />
+			<div style={{"display": "flex", "flexDirection": "row", "alignItems": 'center'}}>
+				Marcar como:
+				<ActionButton icon={faClock} name={"Para Retirar"} action={() => console.log(selectedRows)}></ActionButton>
+				<ActionButton icon={faShoppingBag} name={"Retirando"} action={() => console.log(selectedRows)}></ActionButton>
+				<ActionButton icon={faThumbsUp} name={"Entregado"} action={() => console.log(selectedRows)}></ActionButton>
+				<ActionButton icon={faThumbsDown} name={"Cancelado"} action={() => console.log(selectedRows)}></ActionButton>
+				<FilterComponent onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />
+			</div>
 		);
-	}, [filterText, resetPaginationToggle]);
+	}, [filterText, resetPaginationToggle, selectedRows]);
+
+	const handleChange = ({ selectedRows }) => {
+		setSelectedRows(selectedRows);
+	};
 
 	return (
 		<div className="table-container">
@@ -112,10 +113,11 @@ function Table({orders}) {
 				paginationResetDefaultPage={resetPaginationToggle}
 				subHeader
 				subHeaderComponent={subHeaderComponentMemo}
-				selectableRows
 				persistTableHead
 				expandableRows
 				expandableRowsComponent={ExpandedComponent}
+				selectableRows
+      			onSelectedRowsChange={handleChange}
 			/>
 		</div>
 	);
