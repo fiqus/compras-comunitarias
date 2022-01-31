@@ -1,16 +1,11 @@
+import {React} from 'react';
 import StatusBar from './components/StatusBar'
 import Table from './components/Table'
+import './App.css'
 
 function App() {
-  const styles = {
-    statusBarContainer: {
-      "display": "flex",
-      "flex-direction": "column",
-      "align-items": "center",
-    }
-  }
   return (
-    <div style={styles.statusBarContainer}>
+    <div className="app-container">
       <StatusBar></StatusBar>
       <Table></Table>
     </div>
