@@ -1,18 +1,21 @@
 import itertools
 from collections import defaultdict
-from typing import Any, Dict
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.forms.models import BaseModelForm, ModelForm, inlineformset_factory
+from django.forms.models import  ModelForm, inlineformset_factory
 from django.http.response import HttpResponse
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import CreateView, TemplateView
-from .models import Listing, Order, OrderProduct, Producer, Category, Product
+from django.views.generic import TemplateView
+from .models import Listing, Order, OrderProduct, Producer
 from django.views.generic import DetailView
 import itertools
 from django.contrib.auth import get_user_model
 
 from compras.business.business import Business
+
+import json
+
+from django.core.serializers.json import DjangoJSONEncoder
 
 
 class TemplateCounter(itertools.count):
@@ -74,7 +77,11 @@ def create_order(request, pk):
                                                       'iterator': TemplateCounter()})
     return {listing}
 
+def listing_orders(request, listing_id):
+    listing = Listing.objects.get(pk=listing_id);
+    data = json.dumps(listing.orders, cls=DjangoJSONEncoder)
 
+    return HttpResponse(data, content_type="application/json")
 
 class View_producer(DetailView):
     model = Producer

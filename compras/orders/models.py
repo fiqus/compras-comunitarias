@@ -163,6 +163,7 @@ class Listing(models.Model):
                     "listing_id": order.listing_id,
                     "status": order.status,
                     "notification_status": order.notification_status,
+                    "products": order.get_products()
                 }
                 orders.append(order_object)
 
