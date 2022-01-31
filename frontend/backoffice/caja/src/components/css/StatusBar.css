@@ -1,0 +1,66 @@
+@font-face {
+    font-family: "Dongle-Regular";
+    src: url("../fonts/google/dongle/Dongle-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Dongle-Bold";
+    src: url("../fonts/google/dongle/Dongle-Bold.ttf");
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    margin-top: 5rem;
+    padding: 3rem 2rem;
+    border-radius: 10px;
+}
+.statusContainer {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    border-right: 3px solid #ECEFF1;
+    padding: 0rem 2rem;
+}
+
+.statusContainer:last-child {
+    border-right: none;
+}
+
+.icon {
+    flex-grow: 2;
+    align-self: center;
+}
+
+.detail {
+    flex-grow: 4;
+}
+
+.quantity {
+    font-family: 'Dongle-Bold', sans-serif;
+    font-size: 4rem;
+}
+
+.status {
+    font-family: 'Dongle-Regular', sans-serif;
+    font-size: 2rem;
+    color: slategray;
+}
+
+.fa-clock {
+    color: #c2c5c7;
+}
+
+.fa-shopping-bag {
+    color: #ec9867;
+}
+
+.fa-thumbs-up {
+    color: #70D49B;
+}
+
+.fa-thumbs-down {
+    color: #df6279;
+}

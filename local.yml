@@ -5,6 +5,13 @@ volumes:
   local_postgres_data_backups: {}
 
 services:
+  frontend-caja:
+    build:
+      context: ./frontend/backoffice/caja
+    image: frontend-caja
+    ports:
+      - "3000:3000"
+
   django:
     build:
       context: .
