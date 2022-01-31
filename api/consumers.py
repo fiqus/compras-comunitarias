@@ -1,6 +1,6 @@
 import json
 from channels.generic.websocket import WebsocketConsumer
-from compras.orders.models import Listing, Order
+
 
 class ApiConsumer(WebsocketConsumer):
     def connect(self):
@@ -11,8 +11,8 @@ class ApiConsumer(WebsocketConsumer):
 
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
-        message = text_data_json['message']
+        change = text_data_json['change']
 
         self.send(text_data=json.dumps({
-            'message': message
+            'change': change
         }))
