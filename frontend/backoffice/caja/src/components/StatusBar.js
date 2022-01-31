@@ -5,13 +5,13 @@ import { faThumbsDown } from '@fortawesome/free-solid-svg-icons'
 import './css/StatusBar.css'
 import StatusBox from './StatusBox'
 
-function StatusBar() {
+function StatusBar({ordersStatusPaid, ordersStatusAwait, ordersStatusCancel, ordersStatusInside}) {
   return (
     <div className="container">
-      <StatusBox icon={faClock} quantity={1} status={"Para Retirar"}></StatusBox>
-      <StatusBox icon={faShoppingBag} quantity={1} status={"Retirando"}></StatusBox>
-      <StatusBox icon={faThumbsUp} quantity={1} status={"Entregados"}></StatusBox>
-      <StatusBox icon={faThumbsDown} quantity={1} status={"Cancelados"}></StatusBox>
+      <StatusBox icon={faClock} quantity={ordersStatusAwait} status={"Para Retirar"}></StatusBox>
+      <StatusBox icon={faShoppingBag} quantity={ordersStatusInside} status={"Retirando"}></StatusBox>
+      <StatusBox icon={faThumbsUp} quantity={ordersStatusPaid} status={"Entregados"}></StatusBox>
+      <StatusBox icon={faThumbsDown} quantity={ordersStatusCancel} status={"Cancelados"}></StatusBox>
     </div>
   );
 }
