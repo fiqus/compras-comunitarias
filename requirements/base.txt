@@ -22,3 +22,4 @@ django_pandas
 channels
 djangorestframework 
 django-cors-headers
+channels_postgres

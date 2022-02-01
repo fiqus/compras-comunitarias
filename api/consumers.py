@@ -1,18 +1,18 @@
 import json
-from channels.generic.websocket import WebsocketConsumer
+from asgiref.sync import async_to_sync
+from channels.generic.websocket import WebsocketConsumer, AsyncWebsocketConsumer
 
 
-class ApiConsumer(WebsocketConsumer):
-    def connect(self):
-        self.accept()
 
-    def disconnect(self, close_code):
+class ApiConsumer(AsyncWebsocketConsumer):
+    async def connect(self):
+        # await self.channel_layer.group_add('compras-admin', self.channel_name)
+        await self.accept()
+
+    async def disconnect(self, close_code):
+        # Leave room group
+        # await self.channel_layer.group_discard('compras-admin', self.channel_name)
         pass
 
-    def receive(self, text_data):
-        text_data_json = json.loads(text_data)
-        change = text_data_json['change']
-
-        self.send(text_data=json.dumps({
-            'change': change
-        }))
+    
+   
