@@ -49,18 +49,18 @@
     color: slategray;
 }
 
-.fa-clock {
+.container .fa-clock {
     color: #c2c5c7;
 }
 
-.fa-shopping-bag {
+.container .fa-shopping-bag {
     color: #ec9867;
 }
 
-.fa-thumbs-up {
+.container .fa-thumbs-up {
     color: #70D49B;
 }
 
-.fa-thumbs-down {
+.container .fa-thumbs-down {
     color: #df6279;
 }

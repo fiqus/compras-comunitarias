@@ -5,6 +5,11 @@
     display: flex;
     flex-direction: row;
     margin: 0rem 1rem;
+    cursor: pointer;
+}
+
+.button-container:hover {
+    background: #c2c5c7;
 }
 
 .button-icon-container {
@@ -14,4 +19,16 @@
 
 .button-name-container {
     padding: 0.5rem;
+}
+
+.button-container .button-icon-container {
+    color: #c2c5c7;
+}
+
+.button-container:hover .button-icon-container  {
+    color: white;
+}
+
+.button-container:hover .button-name-container  {
+    color: white;
 }

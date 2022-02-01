@@ -291,3 +291,18 @@ ASGI_APPLICATION = "config.asgi.application"
 CORS_ORIGIN_WHITELIST = [
      'http://localhost:3000'
 ]
+
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication'
+    ]
+}

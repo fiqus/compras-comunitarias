@@ -14,13 +14,10 @@ def room(request, room_name):
         'room_name': room_name
     })
 
-def change_order_status(request, order_id, status):
-    # new_status = recived_data["status"]
-    new_status = status
-    # order_recived_id = data["order_id"]
-    order_id_changed = order_id
-    order = Order.objects.filter(pk=order_id_changed).update(status=new_status)
-    
+def change_order_status(request):
+    order = Order.objects.get(pk=request.body["order_id"])
+    order.status = request.body["status"]
+    order.save()
     return HttpResponse(status=200)
     
     
