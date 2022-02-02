@@ -17,6 +17,6 @@ const userTokensState = atom({
 const ordersState = atom({
     key: "ordersState",
     default: [],
-})
+});
 
 export { userTokensState, ordersState };

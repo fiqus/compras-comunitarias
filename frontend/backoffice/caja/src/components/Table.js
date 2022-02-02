@@ -13,6 +13,11 @@ import { faUndo } from '@fortawesome/free-solid-svg-icons'
 import ActionButton from './ActionButton'
 import './css/Table.css'
 
+import { httpPost } from '../apiClient';
+import { userTokensState, ordersState } from '../state';
+
+import { useRecoilState } from 'recoil';
+
 
 const TextField = styled.input`
 	height: 32px;
@@ -71,10 +76,18 @@ const columns = [
 		name: 'Email',
 		selector: row => row.user.email,
 		sortable: true,
-	}
+	},
+	{
+		name: 'Estado',
+		selector: row => row.status,
+		sortable: true,
+	},
 ];
 
-function Table({orders}) {
+function Table() {
+	const [userTokens, _] = useRecoilState(userTokensState);
+	const [orders, setOrders] = useRecoilState(ordersState);
+
 	const [filterText, setFilterText] = useState('');
 	const [selectedRows, setSelectedRows] = useState([]);
 	const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
@@ -90,14 +103,23 @@ function Table({orders}) {
 			}
 		};
 
+		const changeStatus = async (newStatus) => {
+			for (const row of selectedRows) {
+				await httpPost(
+					"/order/change_status", 
+					{"order_id": row.id, "status": newStatus}, 
+					{"Authorization": `Token ${userTokens.token}`}
+				);
+			}
+		};
 
 		return (
 			<div style={{"display": "flex", "flexDirection": "row", "alignItems": 'center'}}>
 				Marcar como:
-				<ActionButton icon={faClock} name={"Para Retirar"} action={() => console.log()}></ActionButton>
-				<ActionButton icon={faShoppingBag} name={"Retirando"} action={() => console.log()}></ActionButton>
-				<ActionButton icon={faThumbsUp} name={"Entregado"} action={() => console.log()}></ActionButton>
-				<ActionButton icon={faThumbsDown} name={"Cancelado"} action={() => console.log()}></ActionButton>
+				<ActionButton icon={faClock} name={"Para Retirar"} action={() => changeStatus("await")}></ActionButton>
+				<ActionButton icon={faShoppingBag} name={"Retirando"} action={() => changeStatus("inside")}></ActionButton>
+				<ActionButton icon={faThumbsUp} name={"Entregado"} action={() => changeStatus("paid")}></ActionButton>
+				<ActionButton icon={faThumbsDown} name={"Cancelado"} action={() => changeStatus("cancel")}></ActionButton>
 				<FilterComponent onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />
 			</div>
 		);

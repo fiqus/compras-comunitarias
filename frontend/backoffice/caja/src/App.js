@@ -13,24 +13,17 @@ function App() {
   const [orders, setOrders] = useRecoilState(ordersState);
 
   useEffect(() => {
-    console.log("holaa", userTokens)
     httpGet('/listing/1/orders', {}, {"Authorization": `Token ${userTokens.token}`})
-      .then((orders) => {
-        setOrders(orders)
+      .then((res) => {
+        setOrders(res.data)
       })
   }, [userTokens])
 
 
-
   return (
     <div className="app-container">
-      <StatusBar 
-        ordersStatusPaid={1} 
-        ordersStatusAwait={1} 
-        ordersStatusCancel={1} 
-        ordersStatusInside={1}>
-      </StatusBar>
-      <Table orders={[]}></Table>
+      <StatusBar></StatusBar>
+      <Table></Table>
     </div>
   );
 }
