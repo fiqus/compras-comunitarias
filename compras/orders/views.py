@@ -17,6 +17,9 @@ import json
 
 from django.core.serializers.json import DjangoJSONEncoder
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import authentication, permissions
 
 class TemplateCounter(itertools.count):
     def next(self):
@@ -28,6 +31,14 @@ class OrderForm(ModelForm):
         model = Order
         fields = ['listing']
 
+
+class ListingOrders(APIView):
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAdminUser]
+
+    def get(self, request, listing_id):
+        listing = Listing.objects.get(pk=listing_id);
+        return Response(listing.orders)
 
 
 def create_order(request, pk):
@@ -76,12 +87,6 @@ def create_order(request, pk):
                                                       'amounts': amounts, 'order': order, 'categories':categories,
                                                       'iterator': TemplateCounter()})
     return {listing}
-
-def listing_orders(request, listing_id):
-    listing = Listing.objects.get(pk=listing_id);
-    data = json.dumps(listing.orders, cls=DjangoJSONEncoder)
-
-    return HttpResponse(data, content_type="application/json")
 
 class View_producer(DetailView):
     model = Producer

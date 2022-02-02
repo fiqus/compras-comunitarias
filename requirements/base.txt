@@ -21,5 +21,7 @@ numpy
 django_pandas
 channels
 djangorestframework 
+djangorestframework-jwt
+djangorestframework-simplejwt
 django-cors-headers
 channels_postgres
