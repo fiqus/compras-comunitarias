@@ -62,8 +62,9 @@ DJANGO_APPS = [
     # "django.contrib.humanize", # Handy template tags
     "django.contrib.admin",
     "django.forms",
-    'rest_framework',
     'corsheaders',
+    'rest_framework',
+    'rest_framework.authtoken',
 ]
 THIRD_PARTY_APPS = [
     "channels",
@@ -300,15 +301,3 @@ CORS_ALLOW_METHODS = [
     "POST",
     "PUT",
 ]
-
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
-}

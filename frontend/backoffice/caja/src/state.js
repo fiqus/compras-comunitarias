@@ -1,17 +1,22 @@
 import { atom, selector } from 'recoil';
 import {httpPost} from './apiClient'
 
-const userTokenLoader = selector({
-    key: "userTokenLoader",
+const userTokensLoader = selector({
+    key: "userTokensLoader",
     get: async () => {
-        const tokens = await httpPost("/token/", {"username": "eljoaco", "password": "joaco1234"});
-        return tokens;
+        const res = await httpPost("/token/", {"username": "eljoaco", "password": "joaco1234"});
+        return res.data;
     },
   });
   
-const userTokenState = atom({
-    key: "userToken",
-    default: userTokenLoader
+const userTokensState = atom({
+    key: "userTokens",
+    default: userTokensLoader,
 });
 
-export {userTokenState};
+const ordersState = atom({
+    key: "ordersState",
+    default: [],
+})
+
+export { userTokensState, ordersState };
