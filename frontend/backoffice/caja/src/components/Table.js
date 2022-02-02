@@ -1,18 +1,18 @@
+import React, { useState, useMemo } from 'react';
+
+import DataTable from 'react-data-table-component';
+import styled from 'styled-components';
+
 import { faClock } from '@fortawesome/free-solid-svg-icons'
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons'
 import { faThumbsDown } from '@fortawesome/free-solid-svg-icons'
-
-import useFetch from 'use-http';
-
-import React, { useState, useMemo } from 'react';
-import styled from 'styled-components';
-import './css/Table.css'
-
-import DataTable from 'react-data-table-component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUndo } from '@fortawesome/free-solid-svg-icons'
+
 import ActionButton from './ActionButton'
+import './css/Table.css'
+
 
 const TextField = styled.input`
 	height: 32px;
@@ -82,8 +82,6 @@ function Table({orders}) {
 		item => item.user.name && item.user.name.toLowerCase().includes(filterText.toLowerCase()),
 	);
 
-	const {put} = useFetch('http://localhost:8000/api')
-	
 	const subHeaderComponentMemo = useMemo(() => {
 		const handleClear = () => {
 			if (filterText) {
@@ -93,21 +91,13 @@ function Table({orders}) {
 		};
 
 
-		async function changeStatus(newStatus) {
-			for (const row of selectedRows) {
-				console.log(row)
-				await put('/order/change_status', {order_id: row.id, status: newStatus});
-			}
-		};
-
-		
 		return (
 			<div style={{"display": "flex", "flexDirection": "row", "alignItems": 'center'}}>
 				Marcar como:
-				<ActionButton icon={faClock} name={"Para Retirar"} action={() => changeStatus("wait")}></ActionButton>
-				<ActionButton icon={faShoppingBag} name={"Retirando"} action={() => changeStatus("withdrawing")}></ActionButton>
-				<ActionButton icon={faThumbsUp} name={"Entregado"} action={() => changeStatus("delivered")}></ActionButton>
-				<ActionButton icon={faThumbsDown} name={"Cancelado"} action={() => changeStatus("cancelled")}></ActionButton>
+				<ActionButton icon={faClock} name={"Para Retirar"} action={() => console.log()}></ActionButton>
+				<ActionButton icon={faShoppingBag} name={"Retirando"} action={() => console.log()}></ActionButton>
+				<ActionButton icon={faThumbsUp} name={"Entregado"} action={() => console.log()}></ActionButton>
+				<ActionButton icon={faThumbsDown} name={"Cancelado"} action={() => console.log()}></ActionButton>
 				<FilterComponent onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />
 			</div>
 		);

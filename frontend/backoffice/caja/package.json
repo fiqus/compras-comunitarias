@@ -9,13 +9,13 @@
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
-    "mdbreact": "^5.2.0",
+    "axios": "^0.25.0",
     "react": "^17.0.2",
     "react-data-table-component": "^7.4.7",
     "react-dom": "^17.0.2",
     "react-scripts": "5.0.0",
+    "recoil": "^0.6.1",
     "styled-components": "^5.3.3",
-    "use-http": "^1.0.26",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
