@@ -34,7 +34,7 @@ class OrderForm(ModelForm):
 
 class ListingOrders(APIView):
     authentication_classes = [authentication.TokenAuthentication]
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request, listing_id):
         listing = Listing.objects.get(pk=listing_id);
