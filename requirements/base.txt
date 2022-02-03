@@ -19,7 +19,7 @@ sorl-thumbnail==12.7.0
 pandas
 numpy
 django_pandas
-channels
 djangorestframework 
 django-cors-headers
-channels_postgres
+channels
+channels-redis

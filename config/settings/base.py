@@ -40,15 +40,7 @@ LOCALE_PATHS = [str(ROOT_DIR / "locale")]
 # DATABASES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
-DATABASES = {"default": env.db("DATABASE_URL"),
-	'channels_postgres': {
-		'ENGINE': 'django.db.backends.postgresql_psycopg2',
-		'NAME': 'postgres',
-		'USER': 'IVhYWhiFOMxTuBZoqJOHITzHLSixeimr',
-        'PASSWORD': 'JKnvEdBXj5cXwuU7IBcxsjuD7I3ve0673ABayprjkf6121FGH0xHvvo32eeTxrq5',
-		'HOST': '172.21.0.1',
-		'PORT': '5432',
-	}}
+DATABASES = {"default": env.db("DATABASE_URL")}
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
 # URLS
@@ -76,7 +68,6 @@ DJANGO_APPS = [
 ]
 THIRD_PARTY_APPS = [
     "channels",
-    'channels_postgres',
     "crispy_forms",
     "allauth",
     "allauth.account",
@@ -290,15 +281,11 @@ SOCIALACCOUNT_ADAPTER = "compras.users.adapters.SocialAccountAdapter"
 ASGI_APPLICATION = "config.asgi.application"
 
 CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_postgres.core.PostgresChannelLayer',
-        'CONFIG': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'postgres',
-            'USER': 'IVhYWhiFOMxTuBZoqJOHITzHLSixeimr',
-            'PASSWORD': 'JKnvEdBXj5cXwuU7IBcxsjuD7I3ve0673ABayprjkf6121FGH0xHvvo32eeTxrq5',
-            'HOST': '172.21.0.1',
-            'PORT': '5432',},
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("redis", 6379)],
+        },
     },
 }
 
