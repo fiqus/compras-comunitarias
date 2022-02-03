@@ -22,3 +22,5 @@ def change_order_status(request):
     
     
 
+def consult(request):
+    return render(request, 'api_test/consult.html', {})

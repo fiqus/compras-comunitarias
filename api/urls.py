@@ -15,4 +15,5 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('listing/<int:listing_id>/orders', orders.views.ListingOrders.as_view(), name='listing_orders'),
     path('order/change_status', views.change_order_status, name="order_change_status"),
+    path('consult/', views.consult, name="consult")
 ]
