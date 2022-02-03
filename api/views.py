@@ -20,5 +20,6 @@ def change_order_status(request):
     order.save()
     return HttpResponse(status=200)
     
-    
+def consult(request):
+    return render(request, 'api_test/consult.html', {})
 
