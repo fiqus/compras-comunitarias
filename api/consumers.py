@@ -14,5 +14,11 @@ class ApiConsumer(AsyncWebsocketConsumer):
         # await self.channel_layer.group_discard('compras-admin', self.channel_name)
         pass
 
+    async def receive(self, text_data):
+        text_data_json = json.loads(text_data)
+        await self.channel_layer.group_send(
+            text_data_json
+        )
+
     
    
