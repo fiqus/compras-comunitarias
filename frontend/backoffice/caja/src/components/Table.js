@@ -129,6 +129,30 @@ function Table() {
 		setSelectedRows(selectedRows);
 	};
 
+	const conditionalRowStyles = [
+		{
+			when: row => row.status === "paid",
+			style: {
+				backgroundColor: '#70D49B',
+				color: 'white',
+			},
+		},
+		{
+			when: row => row.status === "inside",
+			style: {
+				backgroundColor: '#ec9867',
+				color: 'white',
+			},
+		},
+		{
+			when: row => row.status === "cancel",
+			style: {
+				backgroundColor: '#df6279',
+				color: 'white',
+			},
+		},
+	];
+
 	return (
 		<div className="table-container">
 			<DataTable
@@ -143,6 +167,7 @@ function Table() {
 				expandableRowsComponent={ExpandedComponent}
 				selectableRows
       			onSelectedRowsChange={handleChange}
+				conditionalRowStyles={conditionalRowStyles}
 			/>
 		</div>
 	);
