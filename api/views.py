@@ -15,15 +15,6 @@ from django.http import HttpResponse
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 
-# Create your views here.
-def index(request):
-    return render(request, 'api_test/index.html', {})
-
-def room(request, room_name):
-    return render(request, 'api_test/room.html', {
-        'room_name': room_name
-    })
-
 class OrderStatus(APIView):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
@@ -35,16 +26,9 @@ class OrderStatus(APIView):
         order.save()
 
         channel_layer = get_channel_layer()
-        async_to_sync(channel_layer.group_send(
-            'compras-admin',
-            {
-                'change': '1'
-            }
-        ))
+        async_to_sync(channel_layer.group_send)(
+            'caja',
+            {'type': 'alert', 'text': "hola"}
+        )
         
         return Response()
-
-
-def consult(request):
-    return render(request, 'api_test/consult.html', {})
-

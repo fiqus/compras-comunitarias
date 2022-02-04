@@ -7,12 +7,14 @@ import { httpGet } from './apiClient';
 import StatusBar from './components/StatusBar'
 import Table from './components/Table'
 import './App.css'
+import WebSocketInstance from './socket';
 
 function App() {
   const [userTokens, _] = useRecoilState(userTokensState);
   const [orders, setOrders] = useRecoilState(ordersState);
 
   useEffect(() => {
+    WebSocketInstance.connect()
     httpGet('/listing/1/orders', {}, {"Authorization": `Token ${userTokens.token}`})
       .then((res) => {
         setOrders(res.data)
