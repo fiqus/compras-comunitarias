@@ -34,6 +34,7 @@ function App() {
 
   return (
     <div className="app-container">
+      <div className="listing-name"> 8va Compra de Verduras Agroecologicas </div>
       <StatusBar></StatusBar>
       <Table></Table>
     </div>

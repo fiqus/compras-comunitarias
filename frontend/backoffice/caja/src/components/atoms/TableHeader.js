@@ -38,7 +38,7 @@ const TableHeader = ({
     };
 
     return (
-        <div style={{"display": "flex", "flexDirection": "row", "alignItems": 'center'}}>
+        <div style={{"display": "flex", "flexDirection": "row", "alignItems": 'center', "marginBottom": "1.5rem"}}>
             Marcar como:
             <ActionButton icon={faClock} name={"Para Retirar"} action={() => changeStatus("await")}></ActionButton>
             <ActionButton icon={faShoppingBag} name={"Retirando"} action={() => changeStatus("inside")}></ActionButton>

@@ -1,3 +1,8 @@
+@font-face {
+    font-family: "Dongle-Regular";
+    src: url("../fonts/google/dongle/Dongle-Regular.ttf");
+}
+
 .button-container {
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
     border-radius: 0.5rem;
@@ -13,13 +18,14 @@
 }
 
 .button-icon-container {
-    padding-top: 0.2rem;
     align-self: center;
 }
 
 .button-name-container {
     padding: 0.5rem;
-    font-size: 0.85rem;
+    font-size: 1.3rem;
+    font-family: 'Dongle-Regular', sans-serif;
+    color: #929292;
 }
 
 .button-container .button-icon-container {
