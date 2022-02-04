@@ -4,7 +4,7 @@ import {httpPost} from './apiClient'
 const userTokensLoader = selector({
     key: "userTokensLoader",
     get: async () => {
-        const res = await httpPost("/token/", {"username": "eljoaco", "password": "joaco1234"});
+        const res = await httpPost("/token/", {"username": "Jero", "password": "joacoselacome"});
         return res.data;
     },
 });

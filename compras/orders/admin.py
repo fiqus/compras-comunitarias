@@ -67,7 +67,7 @@ class ListingAdmin(admin.ModelAdmin):
         url_real_time = f"http://localhost:3000/"
         return format_html(
             '<a class="button" href="{}">Detalle de Pedido</a>&nbsp;'
-            '<a class="button" href="http://localhost:3000/">Entregas en tiempo real</a>&nbsp;'
+            '<a class="button" href="http://localhost:3000/" target=”_blank”>Entregas en tiempo real</a>&nbsp;'
             '<a class="button" href="{}">Informar Pedidos</a>',
             reverse('admin:listing-summary', args=[obj.pk]),
             # reverse('admin:listing-realtime', args=[obj.pk]),
