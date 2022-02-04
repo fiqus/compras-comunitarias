@@ -11,23 +11,24 @@ import WebSocketInstance from './socket';
 
 function App() {
   const [userTokens, _] = useRecoilState(userTokensState);
-  const [orders, setOrders] = useRecoilState(ordersState);
+  const [_orders, setOrders] = useRecoilState(ordersState);
 
-  const refresher = () => {
-    httpGet('/listing/1/orders', {}, {"Authorization": `Token ${userTokens.token}`})
-      .then((res) => {
-        setOrders(res.data)
-      })
-  };
+  const buildHeaders = () => {
+    return {"Authorization": `Token ${userTokens.token}`}
+  }
+
+  const getOrders = async () => {
+    const res = await httpGet('/listing/1/orders', {}, buildHeaders());
+    setOrders(res.data);
+  }
+
+  const refresher = () => getOrders();
 
   useEffect(() => {
     WebSocketInstance.addCallbacks(refresher.bind());
-
     WebSocketInstance.connect();
-    httpGet('/listing/1/orders', {}, {"Authorization": `Token ${userTokens.token}`})
-      .then((res) => {
-        setOrders(res.data)
-      })
+    
+    getOrders();
   }, [userTokens])
 
 
