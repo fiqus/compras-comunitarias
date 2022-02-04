@@ -13,8 +13,17 @@ function App() {
   const [userTokens, _] = useRecoilState(userTokensState);
   const [orders, setOrders] = useRecoilState(ordersState);
 
+  const refresher = () => {
+    httpGet('/listing/1/orders', {}, {"Authorization": `Token ${userTokens.token}`})
+      .then((res) => {
+        setOrders(res.data)
+      })
+  };
+
   useEffect(() => {
-    WebSocketInstance.connect()
+    WebSocketInstance.addCallbacks(refresher.bind());
+
+    WebSocketInstance.connect();
     httpGet('/listing/1/orders', {}, {"Authorization": `Token ${userTokens.token}`})
       .then((res) => {
         setOrders(res.data)

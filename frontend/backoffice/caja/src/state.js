@@ -7,7 +7,7 @@ const userTokensLoader = selector({
         const res = await httpPost("/token/", {"username": "eljoaco", "password": "joaco1234"});
         return res.data;
     },
-  });
+});
   
 const userTokensState = atom({
     key: "userTokens",
@@ -19,4 +19,4 @@ const ordersState = atom({
     default: [],
 });
 
-export { userTokensState, ordersState };
+export { userTokensState, ordersState};

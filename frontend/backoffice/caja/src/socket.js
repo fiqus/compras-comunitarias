@@ -32,9 +32,12 @@ class WebSocketService {
       };
     }
 
+    addCallbacks(reloadCallback) {
+      this.callbacks["reload"] = reloadCallback;
+    }
+
     socketNewMessage(data) {
-        const parsedData = JSON.parse(data);
-        console.log(parsedData)
+      this.callbacks.reload();
     }
   
 }

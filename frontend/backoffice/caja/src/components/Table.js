@@ -103,9 +103,9 @@ function Table() {
 			}
 		};
 
-		const changeStatus = async (newStatus) => {
+		const changeStatus = (newStatus) => {
 			for (const row of selectedRows) {
-				await httpPost(
+				httpPost(
 					"/order/change_status", 
 					{"order_id": row.id, "status": newStatus}, 
 					{"Authorization": `Token ${userTokens.token}`}
