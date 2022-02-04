@@ -1,27 +1,36 @@
 import React from 'react';
+import DataTable from 'react-data-table-component';
 
 import './css/Expanded.css'
 
+const columns = [
+	{
+		name: 'Nombre',
+		selector: row => row.name,
+		sortable: true,
+	},
+	{
+		name: 'cantidad',
+		selector: row => row.quantity,
+		sortable: true,
+	},
+	{
+		name: '$',
+		selector: row => row.price,
+		sortable: true,
+	},
+];
+
 function Expanded ({data}) {
-    const expandedHeader = () => {
-        return (
-            <div className="expanded-header"> Productos </div>
-        )
-    }
-
-    const productsElements = []
-    for (const product of data.products) {
-        console.log(product)
-        productsElements.push(
-            <div className="product-container">
-                <div className="product-name"> { product.name } </div>
-                <div className="product-quantity"> { product.quantity } </div>
-                <div className="product-price"> $ { product.price } </div>
-            </div>
-        )
-    }
-
-    return [expandedHeader(), ...productsElements];
+    return (
+        <div className="expanded-container">
+            <DataTable
+                columns={columns}
+                data={data.products}
+                selectableRows
+            />
+        </div>
+    );
 };
 
 export default Expanded
