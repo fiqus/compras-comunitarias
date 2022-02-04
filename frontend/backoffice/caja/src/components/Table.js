@@ -25,6 +25,18 @@ const columns = [
 		selector: row => row.status,
 		sortable: true,
 	},
+	{
+		name: 'Total',
+		sortable: true,
+		selector: row => {
+			let total = 0;
+			for(const product of row.products) {
+				total += parseFloat(product.price);
+			}
+			return `$ ${total}`;
+		}
+	},
+	
 ];
 
 const conditionalRowStyles = [
