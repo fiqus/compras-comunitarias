@@ -7,6 +7,7 @@ from django.http.response import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import TemplateView
 from .models import Listing, Order, OrderProduct, Producer
+from .serializers import *
 from django.views.generic import DetailView
 import itertools
 from django.contrib.auth import get_user_model
@@ -119,9 +120,17 @@ class UserDetailView(LoginRequiredMixin, TemplateView):
        
 user_detail_view = UserDetailView.as_view()
     
+
+# ACTUAL
 class Select_listing(LoginRequiredMixin, TemplateView):
     def get(self, request):
         listings = Listing.objects.filter(enabled=True)
         
         return render(request, 'orders/select_listing.html', {'listings':listings, 'object': request.user})
      
+# API
+class Select_listing_api(LoginRequiredMixin, APIView):
+    def get(self, request):
+        listings = Listing.objects.filter(enabled=True)
+        serializer = ListingSerializer(listings, many=True)
+        return Response(serializer.data)

@@ -11,4 +11,5 @@ urlpatterns = [
     path('token/', obtain_auth_token, name='token_obtain_pair'),
     path('listing/<int:listing_id>/orders', orders.views.ListingOrders.as_view(), name='listing_orders'),
     path('order/change_status', views.OrderStatus.as_view(), name="order_change_status"),
+    path('select_listing', orders.views.Select_listing_api.as_view(), name='select_listing'),
 ]
