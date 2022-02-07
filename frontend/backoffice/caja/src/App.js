@@ -4,10 +4,9 @@ import { useRecoilState } from 'recoil';
 import { userTokensState, ordersState } from './state';
 import { httpGet } from './apiClient';
 
-import StatusBar from './components/StatusBar'
-import Table from './components/Table'
-import './App.css'
+import { Routes, Route } from "react-router-dom";
 import WebSocketInstance from './socket';
+import MainPage from './pages/MainPage';
 
 function App() {
   const [userTokens, _] = useRecoilState(userTokensState);
@@ -33,11 +32,9 @@ function App() {
 
 
   return (
-    <div className="app-container">
-      <div className="listing-name"> 8va Compra de Verduras Agroecologicas </div>
-      <StatusBar></StatusBar>
-      <Table></Table>
-    </div>
+    <Routes>
+      <Route path="/" element={<MainPage />} />
+    </Routes>
   );
 }
 
