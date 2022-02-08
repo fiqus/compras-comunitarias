@@ -11,7 +11,7 @@ from .serializers import *
 from django.views.generic import DetailView
 import itertools
 from django.contrib.auth import get_user_model
-
+from django.core import serializers
 from compras.business.business import Business
 
 import json
@@ -90,58 +90,31 @@ def create_order(request, pk):
                                                       'iterator': TemplateCounter()})
     return {listing}
 
+
+
 #API
-@api_view(['GET', 'POST'])
-def create_order(request, pk):
-    
-    listing = Business().available_listings()
-    if (not listing):
-        return render(request, 'orders/no_listing.html')
-    listing = get_object_or_404(Listing, pk=pk, enabled=True)
-    
-    order = Order.objects.filter(user=request.user, listing=listing).last()
-    products =listing.listingproduct_set.all()
-    categories = {}
-    if listing:
-        for p in products:
-            category = str(p.product.category)
-            if category not in categories:
-                categories[category] = []
-            
-            categories[category].append(p)
-    
+class ListingProducts(LoginRequiredMixin, APIView):
+    def get(self, request, listing_id):
+        listing = Business().available_listings()
+        if (not listing):
+            return render(request, 'orders/no_listing.html')
+        listing = get_object_or_404(Listing, pk=listing_id, enabled=True)
+        order = Order.objects.filter(user=request.user, listing=listing).last()
+        products = listing.listingproduct_set.all()
+        lp_str = serializers.serialize('json', products)
+        lp_json = json.loads(lp_str)
+        categories = {}
+        if listing:
+            for p in products:
+                category = str(p.product.category)
+                if category not in categories:
+                    categories[category] = []
+                
+                categories[category].append(p)
 
-    OrderProductInlineFormset = inlineformset_factory(Order, OrderProduct, fields=('product', 'amount'),
-                                                      can_delete=False, extra=listing.products.count())
-    if request.method == "POST":
-        form = OrderForm(request.POST, request.FILES, initial={'listing': listing}, instance=order)
-        formset = OrderProductInlineFormset(request.POST, request.FILES, instance=form.instance)
-        if form.is_valid() and formset.is_valid():
-            form.instance.user = request.user
-            form.instance.listing = listing
-            form.instance.orderproduct_set.all().delete()
-            form.save()
-            formset.save()
-            order = Order.objects.get(pk=form.instance.pk)
-            return render(request, 'orders/order_success.html', {'order': order, 'categories':categories})
-    
-    else:
-        form = OrderForm()
-        formset = OrderProductInlineFormset(instance=form.instance)
-    amounts = defaultdict(int)
-    if order:
         
-        for p in order.orderproduct_set.all():
-            amounts[p.product.id] = p.amount
-
-    return render(request, 'orders/order_form.html', {'form': form, 'formset': formset, 'listing': listing,
-                                                      'amounts': amounts, 'order': order, 'categories':categories,
-                                                      'iterator': TemplateCounter()})
-    return {listing}
-
-
-    
-
+        
+        return Response(lp_json)
 
 
 
