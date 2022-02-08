@@ -19,6 +19,7 @@ import json
 from django.core.serializers.json import DjangoJSONEncoder
 
 from rest_framework.views import APIView
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import authentication, permissions
 
@@ -32,7 +33,7 @@ class OrderForm(ModelForm):
         model = Order
         fields = ['listing']
 
-
+#API
 class ListingOrders(APIView):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
@@ -41,7 +42,7 @@ class ListingOrders(APIView):
         listing = Listing.objects.get(pk=listing_id);
         return Response(listing.orders)
 
-
+#ACTUAL
 def create_order(request, pk):
     
     listing = Business().available_listings()
@@ -89,6 +90,89 @@ def create_order(request, pk):
                                                       'iterator': TemplateCounter()})
     return {listing}
 
+#API
+@api_view(['GET', 'POST'])
+def create_order(request, pk):
+    
+    listing = Business().available_listings()
+    if (not listing):
+        return render(request, 'orders/no_listing.html')
+    listing = get_object_or_404(Listing, pk=pk, enabled=True)
+    
+    order = Order.objects.filter(user=request.user, listing=listing).last()
+    products =listing.listingproduct_set.all()
+    categories = {}
+    if listing:
+        for p in products:
+            category = str(p.product.category)
+            if category not in categories:
+                categories[category] = []
+            
+            categories[category].append(p)
+    
+
+    OrderProductInlineFormset = inlineformset_factory(Order, OrderProduct, fields=('product', 'amount'),
+                                                      can_delete=False, extra=listing.products.count())
+    if request.method == "POST":
+        form = OrderForm(request.POST, request.FILES, initial={'listing': listing}, instance=order)
+        formset = OrderProductInlineFormset(request.POST, request.FILES, instance=form.instance)
+        if form.is_valid() and formset.is_valid():
+            form.instance.user = request.user
+            form.instance.listing = listing
+            form.instance.orderproduct_set.all().delete()
+            form.save()
+            formset.save()
+            order = Order.objects.get(pk=form.instance.pk)
+            return render(request, 'orders/order_success.html', {'order': order, 'categories':categories})
+    
+    else:
+        form = OrderForm()
+        formset = OrderProductInlineFormset(instance=form.instance)
+    amounts = defaultdict(int)
+    if order:
+        
+        for p in order.orderproduct_set.all():
+            amounts[p.product.id] = p.amount
+
+    return render(request, 'orders/order_form.html', {'form': form, 'formset': formset, 'listing': listing,
+                                                      'amounts': amounts, 'order': order, 'categories':categories,
+                                                      'iterator': TemplateCounter()})
+    return {listing}
+
+
+    
+
+
+
+
+# ACTUAL
+class Select_listing(LoginRequiredMixin, TemplateView):
+    def get(self, request):
+        listings = Listing.objects.filter(enabled=True)
+        
+        return render(request, 'orders/select_listing.html', {'listings':listings, 'object': request.user})
+     
+# API
+class get_listings(LoginRequiredMixin, APIView):
+    def get(self, request):
+        listings = Listing.objects.filter(enabled=True)
+        serializer = ListingSerializer(listings, many=True)
+        return Response(serializer.data)
+
+
+User = get_user_model()   
+class UserDetailView(LoginRequiredMixin, TemplateView):
+    def get(self, request):
+        listings = Listing.objects.filter(enabled=True)
+        orders = []
+        for listing in listings:
+            order = Order.objects.filter(user=request.user, listing=listing)
+            orders += order
+       
+        return render(request, 'users/user_detail.html', {'orders': orders, 'object': request.user})
+       
+user_detail_view = UserDetailView.as_view()
+
 class View_producer(DetailView):
     model = Producer
 
@@ -104,33 +188,3 @@ class View_producer(DetailView):
 
         context["products"] = products
         return self.render_to_response(context)
-
-
-
-User = get_user_model()   
-class UserDetailView(LoginRequiredMixin, TemplateView):
-    def get(self, request):
-        listings = Listing.objects.filter(enabled=True)
-        orders = []
-        for listing in listings:
-            order = Order.objects.filter(user=request.user, listing=listing)
-            orders += order
-       
-        return render(request, 'users/user_detail.html', {'orders': orders, 'object': request.user})
-       
-user_detail_view = UserDetailView.as_view()
-    
-
-# ACTUAL
-class Select_listing(LoginRequiredMixin, TemplateView):
-    def get(self, request):
-        listings = Listing.objects.filter(enabled=True)
-        
-        return render(request, 'orders/select_listing.html', {'listings':listings, 'object': request.user})
-     
-# API
-class Select_listing_api(LoginRequiredMixin, APIView):
-    def get(self, request):
-        listings = Listing.objects.filter(enabled=True)
-        serializer = ListingSerializer(listings, many=True)
-        return Response(serializer.data)
