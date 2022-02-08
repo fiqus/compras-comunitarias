@@ -93,7 +93,9 @@ def create_order(request, pk):
 
 
 #API
-class ListingProducts(LoginRequiredMixin, APIView):
+class ListingProducts(APIView):
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
     def get(self, request, listing_id):
         listing = Business().available_listings()
         if (not listing):
@@ -126,7 +128,9 @@ class Select_listing(LoginRequiredMixin, TemplateView):
         return render(request, 'orders/select_listing.html', {'listings':listings, 'object': request.user})
      
 # API
-class get_listings(LoginRequiredMixin, APIView):
+class get_listings(APIView):
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
     def get(self, request):
         listings = Listing.objects.filter(enabled=True)
         serializer = ListingSerializer(listings, many=True)
