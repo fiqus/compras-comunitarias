@@ -7,7 +7,7 @@ from django.http.response import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import TemplateView
 from .models import Listing, Order, OrderProduct, Producer
-from .serializers import *
+
 from django.views.generic import DetailView
 import itertools
 from django.contrib.auth import get_user_model
@@ -133,8 +133,9 @@ class get_listings(APIView):
     permission_classes = [permissions.IsAuthenticated]
     def get(self, request):
         listings = Listing.objects.filter(enabled=True)
-        serializer = ListingSerializer(listings, many=True)
-        return Response(serializer.data)
+        listing_str = serializers.serialize('json', listings)
+        listing_json = json.loads(listing_str)
+        return Response(listing_json)
 
 
 User = get_user_model()   
