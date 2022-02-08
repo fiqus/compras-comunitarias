@@ -25,5 +25,15 @@ class ListingSerializer(serializers.ModelSerializer):
 
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
-        moodel = Order
+        model = Order
         fields = ('id', 'name')
+
+class ListingProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ListingProduct
+        fields = ('id', 'listing', 'product','price','presentation')
+
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model: Product
+        fields = ('id', '')

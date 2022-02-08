@@ -12,4 +12,5 @@ urlpatterns = [
     path('listing/<int:listing_id>/orders', orders.views.ListingOrders.as_view(), name='listing_orders'),
     path('order/change_status', views.OrderStatus.as_view(), name="order_change_status"),
     path('get_listings', orders.views.get_listings.as_view(), name='select_listing'),
+    path('listing_products/<int:listing_id>', orders.views.ListingProducts.as_view(), name="listing_products")
 ]
