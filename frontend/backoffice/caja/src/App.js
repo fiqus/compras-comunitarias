@@ -1,14 +1,21 @@
 import React, {useEffect} from 'react';
 
 import { useRecoilState } from 'recoil';
-import { userTokensState, ordersState } from './state';
+import { userTokensState, ordersState, listingIdState } from './state';
 import { httpGet } from './apiClient';
 
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useSearchParams } from "react-router-dom";
 import WebSocketInstance from './socket';
 import MainPage from './pages/MainPage';
 
 function App() {
+  const [queryParamas, _setQueryParams] = useSearchParams()
+  const [listingId, setListingId] = useRecoilState(listingIdState)
+
+  useEffect(() => {
+      setListingId(queryParamas.get("listingId"))
+  }, [queryParamas])
+
   const [userTokens, _] = useRecoilState(userTokensState);
   const [_orders, setOrders] = useRecoilState(ordersState);
 
@@ -17,7 +24,7 @@ function App() {
   }
 
   const getOrders = async () => {
-    const res = await httpGet('/listing/1/orders', {}, buildHeaders());
+    const res = await httpGet(`/listing/${listingId}/orders`, {}, buildHeaders());
     setOrders(res.data);
   }
 
@@ -28,7 +35,7 @@ function App() {
     WebSocketInstance.connect();
     
     getOrders();
-  }, [userTokens])
+  }, [userTokens, listingId])
 
 
   return (

@@ -19,4 +19,9 @@ const ordersState = atom({
     default: [],
 });
 
-export { userTokensState, ordersState};
+const listingIdState = atom({
+    key: "listingIdState",
+    default: ""
+});
+
+export { userTokensState, ordersState, listingIdState};

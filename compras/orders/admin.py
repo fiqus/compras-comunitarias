@@ -66,10 +66,9 @@ class ListingAdmin(admin.ModelAdmin):
     def listing_actions(self, obj):
         return format_html(
             '<a class="button" href="{}">Detalle de Pedido</a>&nbsp;'
-            '<a class="button" href="{}">Entregas en tiempo real</a>&nbsp;'
+            f'<a class="button" href="http://localhost:3000/?listingId={obj.pk}">Entregas en tiempo real</a>&nbsp;'
             '<a class="button" href="{}">Informar Pedidos</a>',
             reverse('admin:listing-summary', args=[obj.pk]),
-            reverse('admin:listing-realtime', args=[obj.pk]),
             reverse('admin:report-orders', args=[obj.pk])
         )
 

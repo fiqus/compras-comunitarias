@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../App.css'
 
 import StatusBar from '../components/StatusBar'
 import Table from '../components/Table'
+
 
 function MainPage() {
     return (
