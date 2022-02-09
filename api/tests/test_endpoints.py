@@ -42,9 +42,12 @@ class TestGetListings(APITestCase, URLPatternsTestCase):
     ]
 
     def setUp(self):
+        #Autentication settings
         self.user = User.objects.create(name="jero", dni="12345678", email="tujavie", username="jero", password="tujavie")
         self.token = Token.objects.create(user=self.user)
         self.api_authentication()
+
+        #Creating listings in db
         expire_date = datetime(2023, 10, 11, 13)
         self.listing1 = create_listing(enabled=True, limit_date=expire_date)
         self.listing2 = create_listing(enabled=True, limit_date=expire_date)
