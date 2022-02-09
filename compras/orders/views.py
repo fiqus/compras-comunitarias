@@ -1,3 +1,4 @@
+from curses.ascii import HT
 import itertools
 from collections import defaultdict
 
@@ -68,6 +69,7 @@ def create_order(request, pk):
         form = OrderForm(request.POST, request.FILES, initial={'listing': listing}, instance=order)
         formset = OrderProductInlineFormset(request.POST, request.FILES, instance=form.instance)
         if form.is_valid() and formset.is_valid():
+            print("REUQEST", request)
             form.instance.user = request.user
             form.instance.listing = listing
             form.instance.orderproduct_set.all().delete()
@@ -101,7 +103,7 @@ class ListingProducts(APIView):
         if (not listing):
             return render(request, 'orders/no_listing.html')
         listing = get_object_or_404(Listing, pk=listing_id, enabled=True)
-        order = Order.objects.filter(user=request.user, listing=listing).last()
+        
         products = listing.listingproduct_set.all()
         lp_str = serializers.serialize('json', products)
         lp_json = json.loads(lp_str)
@@ -113,10 +115,43 @@ class ListingProducts(APIView):
                     categories[category] = []
                 
                 categories[category].append(p)
-
-        
-        
         return Response(lp_json)
+
+
+#API 
+class CreateOrder(APIView):
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def post(request, listing_id):
+
+        listing = get_object_or_404(Listing, pk=listing_id, enabled=True)
+        order = Order.objects.filter(user=request.user, listing=listing).last()
+
+        OrderProductInlineFormset = inlineformset_factory(Order, OrderProduct, fields=('product', 'amount'),
+                                                      can_delete=False, extra=listing.products.count())
+        
+        if request.method == "POST":
+            form = OrderForm(request.POST, request.FILES, initial={'listing': listing}, instance=order)
+            formset = OrderProductInlineFormset(request.POST, request.FILES, instance=form.instance)
+            if form.is_valid() and formset.is_valid():
+
+                form.instance.user = request.user
+                form.instance.listing = listing
+                form.instance.orderproduct_set.all().delete()
+                form.save()
+                formset.save()
+                order = Order.objects.get(pk=form.instance.pk)
+                return HttpResponse(200)
+        
+        else:
+            form = OrderForm()
+            formset = OrderProductInlineFormset(instance=form.instance)
+        amounts = defaultdict(int)
+
+        if order:
+            for p in order.orderproduct_set.all():
+                amounts[p.product.id] = p.amount
 
 
 

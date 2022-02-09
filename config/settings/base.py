@@ -289,6 +289,8 @@ CHANNEL_LAYERS = {
     },
 }
 
+#CORS
+
 CORS_ORIGIN_WHITELIST = [
      'http://localhost:3000'
 ]
@@ -301,3 +303,8 @@ CORS_ALLOW_METHODS = [
     "POST",
     "PUT",
 ]
+
+# REST_FRAMEWORK
+REST_FRAMEWORK = {
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json'
+}
