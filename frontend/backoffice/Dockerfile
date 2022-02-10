@@ -1,10 +1,10 @@
 FROM node:13.12.0-alpine
 
 # set working directory
-WORKDIR /caja
+WORKDIR /backoffice
 
 # add `/app/node_modules/.bin` to $PATH
-ENV PATH /caja/node_modules/.bin:$PATH
+ENV PATH /backoffice/node_modules/.bin:$PATH
 
 # install app dependencies
 COPY package.json ./
