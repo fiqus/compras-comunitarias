@@ -1,0 +1,41 @@
+@font-face {
+    font-family: "Dongle-Regular";
+    src: url("../fonts/google/dongle/Dongle-Regular.ttf");
+}
+
+.button-container {
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    border-radius: 0.5rem;
+    padding: 0.3rem 1rem;
+    display: flex;
+    flex-direction: row;
+    margin: 0rem 1rem;
+    cursor: pointer;
+}
+
+.button-container:hover {
+    background: #c2c5c7;
+}
+
+.button-icon-container {
+    align-self: center;
+}
+
+.button-name-container {
+    padding: 0.5rem;
+    font-size: 1.3rem;
+    font-family: 'Dongle-Regular', sans-serif;
+    color: #929292;
+}
+
+.button-container .button-icon-container {
+    color: #c2c5c7;
+}
+
+.button-container:hover .button-icon-container  {
+    color: white;
+}
+
+.button-container:hover .button-name-container  {
+    color: white;
+}

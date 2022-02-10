@@ -1,0 +1,17 @@
+@font-face {
+  font-family: "Dongle-Bold";
+  src: url("./components/fonts/google/dongle/Dongle-Bold.ttf");
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 8rem;
+}
+
+.listing-name {
+  font-family: Dongle-Bold;
+  font-size: 5rem;
+  color: #818181;
+}
