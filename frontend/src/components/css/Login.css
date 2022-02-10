@@ -1,16 +1,16 @@
 @font-face {
     font-family: "Dongle-Bold";
-    src: url("./fonts/google/dongle/Dongle-Bold.ttf");
+    src: url("../fonts/google/dongle/Dongle-Bold.ttf");
 }
 
 @font-face {
     font-family: "Dongle-Regular";
-    src: url("./fonts/google/dongle/Dongle-Regular.ttf");
+    src: url("../fonts/google/dongle/Dongle-Regular.ttf");
 }
 
 @font-face {
     font-family: "Dongle-Light";
-    src: url("./fonts/google/dongle/Dongle-Light.ttf");
+    src: url("../fonts/google/dongle/Dongle-Light.ttf");
 }
 
 .login-container {

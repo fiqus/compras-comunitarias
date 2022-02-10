@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import '../App.css'
 
 import StatusBar from '../components/StatusBar'
 import Table from '../components/Table'
 
 
-function MainPage() {
+function RealTimePage() {
     return (
         <div className="app-container">
             <div className="listing-name"> 
@@ -17,4 +17,4 @@ function MainPage() {
     )
 };
 
-export default MainPage;
+export default RealTimePage;

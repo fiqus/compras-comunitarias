@@ -6,7 +6,8 @@ import { httpGet } from './apiClient';
 
 import { Routes, Route, useSearchParams } from "react-router-dom";
 import WebSocketInstance from './socket';
-import MainPage from './pages/MainPage';
+import RealTimePage from './pages/RealTimePage';
+import Login from './pages/Login';
 
 function App() {
   const [queryParamas, _setQueryParams] = useSearchParams()
@@ -40,7 +41,8 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<MainPage />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/realtime" element={<RealTimePage />} />
     </Routes>
   );
 }
