@@ -3,17 +3,24 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 
 const theme = createTheme();
+
+
+const SigInButton = styled(Button)(({ theme }) => ({
+  color: theme.palette.getContrastText('#2C6C73'),
+  backgroundColor: '#2C6C73',
+  '&:hover': {
+    backgroundColor: '#052326',
+  },
+}));
 
 export default function SignIn() {
   const handleSubmit = (event) => {
@@ -44,7 +51,7 @@ export default function SignIn() {
             alignItems: 'center',
           }}>
           <Avatar sx={{width: 86, height: 86, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon style={{fontSize: 86}}/>
+            {/* <LockOutlinedIcon style={{fontSize: 86}}/> */}
           </Avatar>
           <Typography component="h1" variant="h6" sx={{fontStyle: "italic"}}>
             Mutual "La Correntoza"
@@ -53,7 +60,7 @@ export default function SignIn() {
             Te da la bienvenida a
           </Typography>
           </Box>
-         <Typography component="div" variant="h4" sx={{textAlign: "center", marginTop: 4, marginBottom: 4, fontWeight: 'bold'}} >
+         <Typography component="div" variant="h4" sx={{textAlign: "center", marginTop: 4, marginBottom: 4, fontWeight: 'bold', fontSize: 28}}  >
             Compras Comunitarias
           </Typography>
           
@@ -78,14 +85,15 @@ export default function SignIn() {
               id="password"
               autoComplete="current-password"
             />
-            <Button
+            <SigInButton
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 2, backgroundColor: '#2C6C73'}}
+              
             >
               Ingresar
-            </Button>
+            </SigInButton>
             {/* <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
