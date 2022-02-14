@@ -77,9 +77,14 @@ class TestGetListingsEndpoints(APITestCase, URLPatternsTestCase):
 
 
     def test_listing_products(self):
+        
+        self.listing_products = self.listing1.listingproduct_set.all()
+        self.listing_products_str = serializers.serialize('json',self.listing_products)
+        self.listing_products_json = json.loads(self.listing_products_str)
 
+        #Request url
         url = f'http://localhost:8000/api/listing_products/{self.listing1.id}'
-        print(url)
+
         #Request
         response = self.client.get(url)
 
@@ -87,5 +92,6 @@ class TestGetListingsEndpoints(APITestCase, URLPatternsTestCase):
         assert response.status_code == 200
 
         self.assertEqual(response.status_code , 200)
+        self.assertEqual(response.data, self.listing_products_json)
 
         pass
