@@ -9,6 +9,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import TemplateView
 from .models import Listing, Order, OrderProduct, Producer
 
+
 from django.views.generic import DetailView
 import itertools
 from django.contrib.auth import get_user_model
@@ -68,8 +69,9 @@ def create_order(request, pk):
     if request.method == "POST":
         form = OrderForm(request.POST, request.FILES, initial={'listing': listing}, instance=order)
         formset = OrderProductInlineFormset(request.POST, request.FILES, instance=form.instance)
+        print(f"REQUEST BODY: {request.body}################################")
+        print(f"REQUEST HEADERS: {request.headers}################################")
         if form.is_valid() and formset.is_valid():
-            print("REUQEST", request)
             form.instance.user = request.user
             form.instance.listing = listing
             form.instance.orderproduct_set.all().delete()
@@ -123,8 +125,11 @@ class CreateOrder(APIView):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     
-    def post(request, listing_id):
-
+    def post(self, request, listing_id):
+        print(f"LISTING ID {listing_id}")
+        listing = Business().available_listings()
+        if (not listing):
+            return render(request, 'orders/no_listing.html')
         listing = get_object_or_404(Listing, pk=listing_id, enabled=True)
         order = Order.objects.filter(user=request.user, listing=listing).last()
 

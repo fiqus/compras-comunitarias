@@ -95,3 +95,10 @@ class TestGetListingsEndpoints(APITestCase, URLPatternsTestCase):
         self.assertEqual(response.data, self.listing_products_json)
 
         pass
+
+    def test_create_order(self):
+
+        url = f'http://localhost:8000/api/create_order/{self.listing1.id}'
+        response = self.client.post(url)
+
+        assert response.status_code == 201
