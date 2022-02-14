@@ -3,6 +3,7 @@ from django.contrib.auth.models import AnonymousUser
 from django.http.response import Http404
 from django.test import RequestFactory
 from django.urls import include, path, reverse
+from django.utils import timezone
 
 from compras.orders.models import Listing, ListingProduct, Producer, Product
 
@@ -10,7 +11,7 @@ from compras.users.models import User
 from compras.users.tests.factories import UserFactory
 from compras.orders.views import *
 from requests.auth import HTTPBasicAuth
-from datetime import datetime
+from datetime import datetime,timezone
 
 from rest_framework.authtoken.models import Token
 from rest_framework.test import URLPatternsTestCase, APITestCase
@@ -35,7 +36,7 @@ def create_listing(enabled, limit_date):
 
 
 
-class TestGetListings(APITestCase, URLPatternsTestCase):
+class TestGetListingsEndpoints(APITestCase, URLPatternsTestCase):
 
     urlpatterns = [
         path('api/', include('api.urls')),
@@ -47,19 +48,21 @@ class TestGetListings(APITestCase, URLPatternsTestCase):
         self.token = Token.objects.create(user=self.user)
         self.api_authentication()
 
-        #Creating listings in db
-        expire_date = datetime(2023, 10, 11, 13)
+        #Creatinb
+        expire_date = datetime(2023, 10, 11, tzinfo=timezone.utc)
         self.listing1 = create_listing(enabled=True, limit_date=expire_date)
         self.listing2 = create_listing(enabled=True, limit_date=expire_date)
         self.listings = [self.listing1, self.listing2]
-        self.listings_str = serializers.serialize('json', self.listings)
-        self.listings_json = json.loads(self.listings_str)
-        self.maxDiff = None
+
     
     def api_authentication(self):
         self.client.credentials(HTTP_AUTHORIZATION="Token " + self.token.key)
 
-    def test_get(self):
+    def test_get_listings_list(self):
+
+        self.listings_str = serializers.serialize('json', self.listings)
+        self.listings_json = json.loads(self.listings_str)
+        self.maxDiff = None
         #Request url
         url = 'http://localhost:8000/api/get_listings'
         
@@ -69,7 +72,20 @@ class TestGetListings(APITestCase, URLPatternsTestCase):
         #Assertions
         assert response.status_code == 200
 
-        print("Response",str(response.data))
-        print("Esperado",str(self.listings_json))
-
         self.assertEqual(response.data, self.listings_json)
+        self.assertEqual(response.status_code , 200)
+
+
+    def test_listing_products(self):
+
+        url = f'http://localhost:8000/api/listing_products/{self.listing1.id}'
+        print(url)
+        #Request
+        response = self.client.get(url)
+
+        #Assertions
+        assert response.status_code == 200
+
+        self.assertEqual(response.status_code , 200)
+
+        pass
