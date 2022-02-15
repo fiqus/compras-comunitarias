@@ -57,6 +57,7 @@ class TestGetListingsEndpoints(APITestCase, URLPatternsTestCase):
         self.user = User.objects.create(name="jero", dni="12345678", email="tujavie", username="jero", password="tujavie")
         self.token = Token.objects.create(user=self.user)
         self.api_authentication()
+        self.base_api_url = 'http://localhost:8000/api'
 
         #Create listings
         expire_date = datetime(2023, 10, 11, tzinfo=timezone.utc)
@@ -83,8 +84,6 @@ class TestGetListingsEndpoints(APITestCase, URLPatternsTestCase):
         response = self.client.get(url)
 
         #Assertions
-        assert response.status_code == 200
-
         self.assertEqual(response.data, self.listings_json)
         self.assertEqual(response.status_code , 200)
 
@@ -96,14 +95,12 @@ class TestGetListingsEndpoints(APITestCase, URLPatternsTestCase):
         self.listing_products_json = json.loads(self.listing_products_str)
 
         #Request url
-        url = f'http://localhost:8000/api/listing_products/{self.listing1.id}'
+        url = f'{self.base_api_url}/listing_products/{self.listing1.id}'
 
         #Request
         response = self.client.get(url)
 
         #Assertions
-        assert response.status_code == 200
-
         self.assertEqual(response.status_code , 200)
         self.assertEqual(response.data, self.listing_products_json)
 
@@ -119,8 +116,7 @@ class TestGetListingsEndpoints(APITestCase, URLPatternsTestCase):
             'orderproduct_set-0-amount':1
         }
 
-        url = f'http://localhost:8000/api/create_order/{self.listing1.id}'
-        print(url)
+        url = f'{self.base_api_url}/create_order/{self.listing1.id}'
         response = self.client.post(url, mock_data_form)
 
         assert response.status_code == 200
@@ -131,13 +127,11 @@ class TestGetListingsEndpoints(APITestCase, URLPatternsTestCase):
         self.order_str = serializers.serialize('json',[self.order])
         self.order_json = json.loads(self.order_str)
         #Request url
-        url = f'http://localhost:8000/api/order/{self.listing1.id}'
+        url = f'{self.base_api_url}/order/{self.listing1.id}'
         
         #Request
         response = self.client.get(url)
 
         #Assertions
-        assert response.status_code == 200
-
         self.assertEqual(response.data, self.order_json)
         self.assertEqual(response.status_code , 200)

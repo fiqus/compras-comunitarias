@@ -69,8 +69,6 @@ def create_order(request, pk):
     if request.method == "POST":
         form = OrderForm(request.POST, request.FILES, initial={'listing': listing}, instance=order)
         formset = OrderProductInlineFormset(request.POST, request.FILES, instance=form.instance)
-        print(f"REQUEST BODY: {request.body}################################")
-        print(f"REQUEST HEADERS: {request.headers}################################")
         if form.is_valid() and formset.is_valid():
             form.instance.user = request.user
             form.instance.listing = listing
