@@ -48,7 +48,7 @@ class TestGetListingsEndpoints(APITestCase, URLPatternsTestCase):
         self.token = Token.objects.create(user=self.user)
         self.api_authentication()
 
-        #Creatinb
+        #Create listings
         expire_date = datetime(2023, 10, 11, tzinfo=timezone.utc)
         self.listing1 = create_listing(enabled=True, limit_date=expire_date)
         self.listing2 = create_listing(enabled=True, limit_date=expire_date)
@@ -97,8 +97,18 @@ class TestGetListingsEndpoints(APITestCase, URLPatternsTestCase):
         pass
 
     def test_create_order(self):
+        #MOCKING FORM
+        mock_data = {
+            'listing':self.listing1.id,
+            'orderproduct_set-TOTAL_FORMS': 1,
+            'orderproduct_set-INITIAL_FORMS': 0,
+            'orderproduct_set-0-product':0,
+            'orderproduct_set-0-amount':1
+        }
 
         url = f'http://localhost:8000/api/create_order/{self.listing1.id}'
-        response = self.client.post(url)
+        print("############AAAAACCCCAAAA#######" ,url)
+        response = self.client.post(url, mock_data)
 
-        assert response.status_code == 201
+        assert response.status_code == 200
+        self.assertEqual(response.status_code , 200)
