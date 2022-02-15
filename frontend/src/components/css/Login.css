@@ -1,0 +1,85 @@
+@font-face {
+    font-family: "Dongle-Bold";
+    src: url("../fonts/google/dongle/Dongle-Bold.ttf");
+}
+
+@font-face {
+    font-family: "Dongle-Regular";
+    src: url("../fonts/google/dongle/Dongle-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Dongle-Light";
+    src: url("../fonts/google/dongle/Dongle-Light.ttf");
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100vh;
+}
+
+.login-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 25%;
+}
+
+.login-form div {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+input, button {
+    width: 100%;
+    height: 2rem;
+    margin: 0.25rem;
+
+    font-family: "Dongle-Light";
+    font-size: 1.25rem;
+}
+
+input {
+    text-indent: 1.5rem;
+}
+
+.login-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100%;
+
+    font-family: "Dongle-Regular";
+    font-size: 1.5rem;
+    color: gray;
+}
+
+.login-header-title {
+    font-family: "Dongle-Bold";
+    font-size: 3rem;
+}
+
+.login-header-subtitle {
+    font-family: "Dongle-Regular";
+    font-size: 2rem;
+    color: gray;
+}
+
+#register-link {
+    color: #2C73FE;
+}

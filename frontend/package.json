@@ -1,5 +1,5 @@
 {
-  "name": "caja",
+  "name": "backoffice",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -13,6 +13,7 @@
     "react": "^17.0.2",
     "react-data-table-component": "^7.4.7",
     "react-dom": "^17.0.2",
+    "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
     "recoil": "^0.6.1",
     "socket.io-client": "^4.4.1",

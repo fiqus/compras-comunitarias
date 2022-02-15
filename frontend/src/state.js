@@ -1,6 +1,8 @@
 import { atom, selector } from 'recoil';
 import {httpPost} from './apiClient'
 
+// backoffice state
+
 const userTokensLoader = selector({
     key: "userTokensLoader",
     get: async () => {
@@ -19,4 +21,22 @@ const ordersState = atom({
     default: [],
 });
 
-export { userTokensState, ordersState};
+const listingIdState = atom({
+    key: "listingIdState",
+    default: ""
+});
+
+
+// frontoffice state
+
+const usernameState = atom({
+    key: "usernameState",
+    default: ""
+});
+
+const passwordState = atom({
+    key: "passwordState",
+    default: ""
+});
+
+export { userTokensState, ordersState, listingIdState, usernameState, passwordState};
