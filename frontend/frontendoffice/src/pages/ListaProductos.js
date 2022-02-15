@@ -1,100 +1,38 @@
-
-import React, { useState } from 'react'
-import NavBar from '../components/NavBar'
-import { Footer } from '../components/Footer';
-import { Button, ButtonGroup, Container, Divider, Grid, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { Box } from '@mui/system';
-
-const SigInButton = styled(Button)(({ theme }) => ({
-    color: theme.palette.getContrastText('#2C6C73'),
-    backgroundColor: '#2C6C73',
-    '&:hover': {
-      backgroundColor: '#052326',
-    },
-  }));
-
-const Img = styled('img')({
-    display: 'block',
-    maxWidth: '100%',
-    maxHeight: '100%',
-  });
-
+import React from "react";
+import NavBar from "../components/NavBar";
+import { Footer } from "../components/Footer";
+import { Container, Typography } from "@mui/material";
+import { CardProducto } from "../components/CardProducto";
 
 export const ListaProductos = () => {
-    const [producto, setProducto]= useState(0)
-    const [CounterButtom, setCounterButtom] = useState("none")
-    const [ButtomAgregar, setButtomAgregar] = useState("flex")
-    
-    const addButtomCounter = () => {
-        setButtomAgregar("none")
-        setCounterButtom("flex")
-        setProducto(producto + 1)
-    }
-    const addProducto = () => {
-        setProducto(producto + 1)
-    }
-    const deletProducto = () => {
-        setProducto(producto - 1)
-        if (producto < 2){
-            setButtomAgregar("flex")
-            setCounterButtom("none")
-        } 
-    }
-
-return (
+  return (
     <>
-    <NavBar/>
-    <Container fixed>
-    <Typography sx={{fontSize: 36,fontWeight: "bold", paddingTop: 2}}>15va Compra comunitaria</Typography>
-    {/* Ver si vamos a hacer por seccion o no */}
-    <Typography sx={{fontSize: 24}}>Sección 1/6 Almacén</Typography>
+      <NavBar />
+      <Container fixed sx={{ marginBottom: 20 }}>
+        <Typography
+          sx={{
+            fontSize: { md: 36, xs: 20 },
+            fontWeight: "bold",
+            paddingTop: 2,
+          }}
+        >
+          15va Compra comunitaria
+        </Typography>
+        {/* Ver si vamos a hacer por seccion o no */}
+        <Typography sx={{ fontSize: { md: 24, xs: 16 } }}>
+          Sección 1/6 Almacén
+        </Typography>
 
-
-{/* Carta de producto */}
-<Grid container  wrap="nowrap" sx={{marginTop: 2, marginLeft: 0, marginRight: 0,}}>
-        <Grid>
-          <Grid sx={{ width: 163, height: 108}}>
-            <Img alt="complex" src="/src/img/compras.jpeg" sx={{m: 0 }}/>
-          </Grid>
-        </Grid>
-        <Grid item xs={12} sm container>
-          <Grid item xs={12} sm container component="div" sx={{displey: "flex", alignContent: "center"}}>
-            <Grid item xs >
-                {/* Nombre de producto */}
-              <Typography gutterBottom variant="subtitle1" component="div" >
-              Harina de Garbanzo x1kg
-              </Typography>
-              {/* Descripcion */}
-              <Typography variant="body2" gutterBottom>
-              Harina de Garbanzo de Granja las praderas, sin conservantes, en envase de 1kg
-              </Typography>
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid item sx={{paddingTop: 2, paddingRight: 2,}}>
-            {/* Valor del producto */}
-            <Typography variant="subtitle1" component="div" sx={{textAlign: "end", fontSize: 24, fontWeight: "bold"}} >
-            $ 400
-            </Typography>
-
-            {/* Boton agregar al carrito */}
-            <SigInButton onClick={addButtomCounter} variant="contained" sx={{textTransform: "none", flexDirection: "row-reverse", display: `${ButtomAgregar}`}}>
-            <Typography wrap="nowrap" sx={{marginInline: 1.3}}>Agregar al carrito</Typography>    
-            </SigInButton>
-        
-           {/* Boton contador */}
-            <ButtonGroup  variant="contained" aria-label="outlined primary button group" sx={{display: `${CounterButtom}`}}>
-                <SigInButton onClick={deletProducto} >-</SigInButton>
-                <Typography component="div" sx={{display: "flex", alignItems: "center", paddingLeft: 1, paddingRight: 1 }}>{producto} en carrito</Typography>
-                <SigInButton onClick={addProducto} >+</SigInButton>
-            </ButtonGroup>
-
-        </Grid>
-      </Grid>
-      <Divider sx={{paddingTop: 2}} component="div" />
-    </Container>
-    <Footer/>
+        {/* Carta de producto */}
+        <CardProducto />
+        <CardProducto />
+        <CardProducto />
+        <CardProducto />
+        <CardProducto />
+        <CardProducto />
+        <CardProducto />
+      </Container>
+      <Footer />
     </>
-  )
-}
+  );
+};
