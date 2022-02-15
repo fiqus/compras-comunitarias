@@ -97,7 +97,7 @@ def create_order(request, pk):
 
 
 #API
-class ListingProducts(APIView):
+class get_listing_products(APIView):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     def get(self, request, listing_id):
@@ -185,7 +185,6 @@ class get_order(APIView):
         listing = get_object_or_404(Listing, pk=listing_id, enabled=True)
         order = Order.objects.filter(user=request.user, listing=listing).last()
         if order:
-            print("#########################", order)
             amounts = defaultdict(int)
             for p in order.orderproduct_set.all():
                 amounts[p.product.id] = p.amount

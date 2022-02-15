@@ -1,3 +1,4 @@
+from itertools import product
 import pytest
 from django.contrib.auth.models import AnonymousUser
 from django.http.response import Http404
@@ -34,6 +35,15 @@ def create_listing(enabled, limit_date):
     listing.save()
     return listing
 
+def create_order(listing, user):
+    order = Order(
+            user = user,
+            listing = listing,
+            status = "await",
+            notification_status = "notified"
+    )
+    order.save()
+    return order
 
 
 class TestGetListingsEndpoints(APITestCase, URLPatternsTestCase):
@@ -53,6 +63,9 @@ class TestGetListingsEndpoints(APITestCase, URLPatternsTestCase):
         self.listing1 = create_listing(enabled=True, limit_date=expire_date)
         self.listing2 = create_listing(enabled=True, limit_date=expire_date)
         self.listings = [self.listing1, self.listing2]
+
+        #Create Order
+        self.order = create_order(self.listing1, self.user)
 
     
     def api_authentication(self):
@@ -98,7 +111,7 @@ class TestGetListingsEndpoints(APITestCase, URLPatternsTestCase):
 
     def test_create_order(self):
         #MOCKING FORM
-        mock_data = {
+        mock_data_form = {
             'listing':self.listing1.id,
             'orderproduct_set-TOTAL_FORMS': 1,
             'orderproduct_set-INITIAL_FORMS': 0,
@@ -108,7 +121,23 @@ class TestGetListingsEndpoints(APITestCase, URLPatternsTestCase):
 
         url = f'http://localhost:8000/api/create_order/{self.listing1.id}'
         print(url)
-        response = self.client.post(url, mock_data)
+        response = self.client.post(url, mock_data_form)
 
         assert response.status_code == 200
+        self.assertEqual(response.status_code , 200)
+
+    def test_get_order_by_user(self):
+        
+        self.order_str = serializers.serialize('json',[self.order])
+        self.order_json = json.loads(self.order_str)
+        #Request url
+        url = f'http://localhost:8000/api/order/{self.listing1.id}'
+        
+        #Request
+        response = self.client.get(url)
+
+        #Assertions
+        assert response.status_code == 200
+
+        self.assertEqual(response.data, self.order_json)
         self.assertEqual(response.status_code , 200)
