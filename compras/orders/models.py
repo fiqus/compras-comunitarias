@@ -1,6 +1,11 @@
 from django.db import models
+from django.contrib.postgres.fields import DateTimeRangeField
 from sorl.thumbnail import ImageField
+from datetime import datetime  
 import pandas as pd
+from psycopg2.extras import DateTimeTZRange
+from django.utils import timezone
+from datetime import timedelta
 
 
 class Producer(models.Model):
@@ -53,6 +58,11 @@ class Product(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+#Help function to default DateTimeRangeField
+def next_year():
+    now = timezone.now()
+
+    return DateTimeTZRange(now, now + timedelta(days=365))
 
 class Listing(models.Model):
     class Meta:
@@ -64,6 +74,9 @@ class Listing(models.Model):
     name = models.CharField(max_length=100, default="null", verbose_name="Nombre")
     description = models.TextField()
     products = models.ManyToManyField(Product, through="ListingProduct")
+    delibery_date = models.DateTimeField(verbose_name="Fecha de Entrega", blank=True, default=datetime.now)
+    delibery_place = models.CharField(max_length=100, default="null", verbose_name="Lugar de Entrega")
+    delibery_time_range = DateTimeRangeField(blank=True, verbose_name="Horario de Entrega",default=next_year)
 
     @property
     def summary(self):
