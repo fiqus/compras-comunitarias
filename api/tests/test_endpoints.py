@@ -107,7 +107,7 @@ class TestGetListingsEndpoints(APITestCase, URLPatternsTestCase):
         }
 
         url = f'http://localhost:8000/api/create_order/{self.listing1.id}'
-        print("############AAAAACCCCAAAA#######" ,url)
+        print(url)
         response = self.client.post(url, mock_data)
 
         assert response.status_code == 200

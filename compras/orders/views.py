@@ -126,7 +126,6 @@ class CreateOrder(APIView):
     permission_classes = [permissions.IsAuthenticated]
     
     def post(self, request, listing_id):
-        print(f"LISTING ID {listing_id}")
         listing = Business().available_listings()
         if (not listing):
             return render(request, 'orders/no_listing.html')
@@ -178,6 +177,22 @@ class get_listings(APIView):
         return Response(listing_json)
 
 
+# API
+class get_order(APIView):
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    def get(self, request, listing_id):
+        listing = get_object_or_404(Listing, pk=listing_id, enabled=True)
+        order = Order.objects.filter(user=request.user, listing=listing).last()
+        if order:
+            print("#########################", order)
+            amounts = defaultdict(int)
+            for p in order.orderproduct_set.all():
+                amounts[p.product.id] = p.amount
+        order_str = serializers.serialize('json', [order])
+        order_json = json.loads(order_str)
+        return Response(order_json)
+
 User = get_user_model()   
 class UserDetailView(LoginRequiredMixin, TemplateView):
     def get(self, request):
@@ -206,3 +221,4 @@ class View_producer(DetailView):
 
         context["products"] = products
         return self.render_to_response(context)
+
