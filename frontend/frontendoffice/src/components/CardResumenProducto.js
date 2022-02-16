@@ -1,4 +1,11 @@
-import { Box, Grid, IconButton, Paper, Typography } from "@mui/material";
+import {
+  Box,
+  Divider,
+  Grid,
+  IconButton,
+  Paper,
+  Typography,
+} from "@mui/material";
 import React from "react";
 
 export const CardResumenProducto = () => {
@@ -10,7 +17,7 @@ export const CardResumenProducto = () => {
           container
           wrap="nowrap"
           sx={{
-            height: "66px",
+            height: { md: "66px", xs: "33px" },
             marginTop: 2,
             marginLeft: 0,
             marginRight: 0,
@@ -26,15 +33,36 @@ export const CardResumenProducto = () => {
               sx={{ display: "flex", alignItems: "center" }}
             >
               {/* Cantidades del producto */}
-              <Typography
-                sx={{ fontWeight: "bold", fontSize: "18px", paddingLeft: 2 }}
-              >
-                x2
-              </Typography>
+              <Grid item>
+                <Typography
+                  sx={{ fontWeight: "bold", fontSize: "18px", paddingLeft: 2 }}
+                >
+                  x2
+                </Typography>
+              </Grid>
+              <Divider
+                orientation="vertical"
+                variant="middle"
+                flexItem
+                sx={{
+                  border: "1px solid",
+                  marginLeft: 2,
+                  display: { md: "none", xs: "block" },
+                }}
+              />
               {/* Descripcion del producto */}
-              <Typography noWrap sx={{ fontSize: "14px", paddingLeft: 2 }}>
-                Descripción del producto y sus caracteristicas
-              </Typography>
+              <Grid item xs zeroMinWidth>
+                <Typography
+                  noWrap
+                  sx={{
+                    fontSize: "14px",
+                    paddingLeft: 2,
+                    width: { xs: "200px", md: "block" },
+                  }}
+                >
+                  Descripción del producto y sus caracteristicas
+                </Typography>
+              </Grid>
             </Grid>
           </Grid>
           <Grid
