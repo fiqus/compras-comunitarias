@@ -1,15 +1,17 @@
-import ComprasActivas from './pages/ComprasActivas';
-import { ListaProductos } from './pages/ListaProductos';
+import { CompraExitosa } from "./pages/CompraExitosa";
+import ComprasActivas from "./pages/ComprasActivas";
+import { ListaProductos } from "./pages/ListaProductos";
 import { Resumen } from "./pages/Resumen";
 import SignIn from "./pages/SigIn";
 
 function App() {
   return (
     <>
-      {/* <SignIn/> */}
+      <SignIn />
       {/* <ComprasActivas/> */}
       {/* <ListaProductos/> */}
-      <Resumen />
+      {/* <Resumen /> */}
+      {/* <CompraExitosa /> */}
     </>
   );
 }
