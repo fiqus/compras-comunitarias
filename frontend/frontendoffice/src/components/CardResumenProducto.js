@@ -1,11 +1,4 @@
-import {
-  Box,
-  Divider,
-  Grid,
-  IconButton,
-  Paper,
-  Typography,
-} from "@mui/material";
+import { Divider, Grid, Paper, Typography } from "@mui/material";
 import React from "react";
 
 export const CardResumenProducto = () => {

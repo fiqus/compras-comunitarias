@@ -1,17 +1,9 @@
-import {
-  Avatar,
-  Container,
-  CssBaseline,
-  Grid,
-  IconButton,
-  Link,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Container, CssBaseline, IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import { styled } from "@mui/material/styles";
 import NavBar from "../components/NavBar";
+
 
 const SigInButton = styled(IconButton)(({ theme }) => ({
   color: theme.palette.getContrastText("#2C6C73"),
@@ -53,7 +45,7 @@ export const CompraExitosa = () => {
               height: "201px",
             }}
           >
-            <Img src="src/img/carritoCompras.png" />
+            <Img src="/src/img/carrito.png" />
           </Box>
           <Typography
             component="div"
@@ -91,7 +83,7 @@ export const CompraExitosa = () => {
             </Typography>
           </Box>
           <Box component="div" pt={2}>
-            <SigInButton fullWidth variant="contained">
+            <SigInButton fullWidth variant="contained" href="/">
               <Typography noWrap component="div">
                 Volver al inicio
               </Typography>

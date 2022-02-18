@@ -65,6 +65,7 @@ export const Footer = () => {
                 variant="contained"
                 endIcon={<LocalGroceryStoreIcon />}
                 sx={{ backgroundColor: "#2C6C73", textTransform: "none" }}
+                href="/resumen"
               >
                 Ir al resumen
               </SigInButton>

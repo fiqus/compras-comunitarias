@@ -1,14 +1,10 @@
-import { Container, Grid, IconButton, Paper, Typography } from "@mui/material";
+import { Grid, IconButton, Typography } from "@mui/material";
 import React from "react";
-import NavBar from "../components/NavBar";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import { Box } from "@mui/system";
 import { styled } from "@mui/material/styles";
-import { CardResumenProducto } from "../components/CardResumenProducto";
-import { ResumenList } from "../components/ResumeList";
 import RoomIcon from "@mui/icons-material/Room";
 import TodayIcon from "@mui/icons-material/Today";
 import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
+
 
 const ConfirmBuyButton = styled(IconButton)(({ theme }) => ({
   color: theme.palette.getContrastText("#2C6C73"),
@@ -99,13 +95,14 @@ export const CardConfirmarCompra = () => {
             alignContent: { md: "flex-end", sm: "center" },
           }}
         >
-          <Grid pt={{ xs: 5 }}>
+          <Grid item pt={{ xs: 5 }}>
             <ConfirmBuyButton
               sx={{
                 backgroundColor: "#2C6C73",
                 textTransform: "none",
                 fontSize: "18px",
               }}
+              href="/compra-exitosa"
             >
               Confirmar compra
             </ConfirmBuyButton>

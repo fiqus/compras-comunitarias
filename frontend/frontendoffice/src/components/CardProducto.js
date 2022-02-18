@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Button, ButtonGroup, Divider, Grid, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Divider,
+  Grid,
+  Typography,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 const SigInButton = styled(Button)(({ theme }) => ({
@@ -102,6 +109,7 @@ export const CardProducto = () => {
           </Typography>
 
           {/* Boton agregar al carrito */}
+          <Box></Box>
           <SigInButton
             onClick={addButtomCounter}
             variant="contained"
@@ -121,8 +129,8 @@ export const CardProducto = () => {
           </SigInButton>
           {/* Boton contador */}
           <ButtonGroup
-            variant="contained"
-            aria-label="outlined primary button group"
+            variant="div"
+            wrap="nowrap"
             sx={{
               display: {
                 sm: `${CounterButtom}`,
@@ -157,15 +165,18 @@ export const CardProducto = () => {
           marginRight: 0,
           display: { md: "none", sm: "none" },
         }}
+        spacing={{ xs: 2 }}
       >
-        <Grid item xs={10}>
-          <Typography
-            variant="subtitle1"
-            component="div"
-            sx={{ textAlign: "center", fontSize: 24, fontWeight: "bold" }}
-          >
-            $400
-          </Typography>
+        <Grid item xs={9}>
+          <Box>
+            <Typography
+              variant="subtitle1"
+              component="div"
+              sx={{ textAlign: "center", fontSize: 24, fontWeight: "bold" }}
+            >
+              $400
+            </Typography>
+          </Box>
         </Grid>
         <Grid item xs={12} sm container>
           <Grid
@@ -176,43 +187,45 @@ export const CardProducto = () => {
             component="div"
             sx={{ displey: "flex", alignContent: "center" }}
           >
-            <Grid item xs>
-              {/* Boton agregar al carrito */}
-              <SigInButton
-                onClick={addButtomCounter}
-                variant="contained"
-                sx={{
-                  textTransform: "none",
-                  flexDirection: "row-reverse",
-                  display: { xs: `${ButtomAgregar}` },
-                }}
-              >
-                <Typography wrap="nowrap" sx={{ marginInline: 1.3 }}>
-                  Agregar al carrito
-                </Typography>
-              </SigInButton>
-
-              {/* Boton contador */}
-              <ButtonGroup
-                variant="contained"
-                aria-label="outlined primary button group"
-                sx={{ display: { xs: `${CounterButtom}` } }}
-              >
-                <SigInButton onClick={deletProducto}>-</SigInButton>
-                <Typography
-                  component="div"
+            <Box>
+              <Grid item xs>
+                {/* Boton agregar al carrito */}
+                <SigInButton
+                  onClick={addButtomCounter}
+                  variant="contained"
                   sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    paddingLeft: 1,
-                    paddingRight: 1,
+                    textTransform: "none",
+                    flexDirection: "row-reverse",
+                    display: { xs: `${ButtomAgregar}` },
                   }}
                 >
-                  {producto} en carrito
-                </Typography>
-                <SigInButton onClick={addProducto}>+</SigInButton>
-              </ButtonGroup>
-            </Grid>
+                  <Typography wrap="nowrap" sx={{ marginInline: 1.3 }}>
+                    Agregar al carrito
+                  </Typography>
+                </SigInButton>
+
+                {/* Boton contador */}
+                <ButtonGroup
+                  variant="contained"
+                  aria-label="outlined primary button group"
+                  sx={{ display: { xs: `${CounterButtom}` } }}
+                >
+                  <SigInButton onClick={deletProducto}>-</SigInButton>
+                  <Typography
+                    component="div"
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      paddingLeft: 1,
+                      paddingRight: 1,
+                    }}
+                  >
+                    {producto} en carrito
+                  </Typography>
+                  <SigInButton onClick={addProducto}>+</SigInButton>
+                </ButtonGroup>
+              </Grid>
+            </Box>
           </Grid>
         </Grid>
       </Grid>

@@ -1,17 +1,16 @@
-import { CompraExitosa } from "./pages/CompraExitosa";
-import ComprasActivas from "./pages/ComprasActivas";
-import { ListaProductos } from "./pages/ListaProductos";
-import { Resumen } from "./pages/Resumen";
-import SignIn from "./pages/SigIn";
+import SignUp from "./pages/SignUp";
+import { AppRouters } from "./router/AppRouters";
 
 function App() {
   return (
     <>
-      <SignIn />
+      {/* <AppRouters /> */}
+      {/* <SignIn/> */}
       {/* <ComprasActivas/> */}
       {/* <ListaProductos/> */}
       {/* <Resumen /> */}
       {/* <CompraExitosa /> */}
+      <SignUp />
     </>
   );
 }

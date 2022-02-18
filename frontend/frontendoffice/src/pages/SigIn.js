@@ -11,14 +11,14 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
 
+
 const theme = createTheme();
 
-
 const SigInButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.getContrastText('#2C6C73'),
-  backgroundColor: '#2C6C73',
-  '&:hover': {
-    backgroundColor: '#052326',
+  color: theme.palette.getContrastText("#2C6C73"),
+  backgroundColor: "#2C6C73",
+  "&:hover": {
+    backgroundColor: "#052326",
   },
 }));
 
@@ -28,8 +28,8 @@ export default function SignIn() {
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
     console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+      email: data.get("email"),
+      password: data.get("password"),
     });
   };
 
@@ -111,6 +111,7 @@ export default function SignIn() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2, backgroundColor: "#2C6C73" }}
+              href="/compras-activas"
             >
               Ingresar
             </SigInButton>

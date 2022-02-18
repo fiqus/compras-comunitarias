@@ -1,11 +1,8 @@
 import {
   AppBar,
-  Avatar,
   Button,
   Container,
-  Grid,
   IconButton,
-  Paper,
   Toolbar,
   Typography,
 } from "@mui/material";
@@ -14,28 +11,14 @@ import NavBar from "../components/NavBar";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { Box } from "@mui/system";
 import { styled } from "@mui/material/styles";
-import { CardResumenProducto } from "../components/CardResumenProducto";
 import { ResumenList } from "../components/ResumeList";
-import RoomIcon from "@mui/icons-material/Room";
-import TodayIcon from "@mui/icons-material/Today";
-import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
 import LocalGroceryStoreIcon from "@mui/icons-material/LocalGroceryStore";
 import { CardConfirmarCompra } from "../components/CardConfirmarCompra";
+
 
 const SigInButton = styled(IconButton)(({ theme }) => ({
   color: theme.palette.getContrastText("#2C6C73"),
   borderRadius: "5px",
-  backgroundColor: "#2C6C73",
-  "&:hover": {
-    backgroundColor: "#052326",
-  },
-}));
-
-const ConfirmBuyButton = styled(IconButton)(({ theme }) => ({
-  color: theme.palette.getContrastText("#2C6C73"),
-  borderRadius: "5px",
-  width: "327px",
-  height: "40px",
   backgroundColor: "#2C6C73",
   "&:hover": {
     backgroundColor: "#052326",
@@ -60,6 +43,7 @@ export const Resumen = () => {
               noWrap
               component="div"
               sx={{ mr: 2, display: { xs: "flex", md: "flex" } }}
+              href="/lista-productos"
             >
               <ArrowBackIosNewIcon fontSize="small" />
             </Button>
@@ -101,13 +85,12 @@ export const Resumen = () => {
         <Box
           component="div"
           sx={{
-            display: "flex",
             flexDirection: "row",
             alignItems: "center",
-            display: { xs: "none" },
+            display: { xs: "none", sm: "flex" },
           }}
         >
-          <SigInButton aria-label="delete">
+          <SigInButton aria-label="delete" href="/lista-productos">
             <ArrowBackIosNewIcon fontSize="small" />
           </SigInButton>
           <Typography sx={{ fontSize: "14px", paddingLeft: 2 }}>
