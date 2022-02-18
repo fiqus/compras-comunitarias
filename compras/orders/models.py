@@ -74,9 +74,9 @@ class Listing(models.Model):
     name = models.CharField(max_length=100, default="null", verbose_name="Nombre")
     description = models.TextField()
     products = models.ManyToManyField(Product, through="ListingProduct")
-    delibery_date = models.DateTimeField(verbose_name="Fecha de Entrega", blank=True, default=datetime.now)
-    delibery_place = models.CharField(max_length=100, default="null", verbose_name="Lugar de Entrega")
-    delibery_time_range = DateTimeRangeField(blank=True, verbose_name="Horario de Entrega",default=next_year)
+    delivery_date = models.DateTimeField(verbose_name="Fecha de Entrega", blank=True, default=datetime.now)
+    delivery_place = models.CharField(max_length=100, default="null", verbose_name="Lugar de Entrega")
+    delivery_time_range = DateTimeRangeField(blank=True, verbose_name="Horario de Entrega",default=next_year)
 
     @property
     def summary(self):

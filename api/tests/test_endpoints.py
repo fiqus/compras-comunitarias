@@ -19,13 +19,13 @@ from rest_framework.test import URLPatternsTestCase, APITestCase
 
 pytestmark = pytest.mark.django_db
 
-def create_listing(enabled, limit_date, delibery_date):
+def create_listing(enabled, limit_date, delivery_date):
     # TODO: convert this into object factories
     producer = Producer(name='Pagblo', url='adf@sdf.com', description='asdfasdf')
     producer.save()
     product = Product(name='Faina', producer_id=producer.id, description='rellena')
     product.save()
-    listing = Listing(enabled=enabled, limit_date=limit_date, delibery_date=delibery_date, description="Compa importante")
+    listing = Listing(enabled=enabled, limit_date=limit_date, delivery_date=delivery_date, description="Compa importante")
     listing.save()
     listing_product = ListingProduct(listing_id=listing.id, product_id=product.id, price=10)
     listing_product.save()
@@ -61,9 +61,9 @@ class TestGetListingsEndpoints(APITestCase, URLPatternsTestCase):
 
         #Create listings
         expire_date = datetime(2023, 10, 11, tzinfo=timezone.utc)
-        delibery_date = datetime.now(timezone.utc)
-        self.listing1 = create_listing(enabled=True, limit_date=expire_date, delibery_date=delibery_date)
-        self.listing2 = create_listing(enabled=True, limit_date=expire_date, delibery_date=delibery_date)
+        delivery_date = datetime.now(timezone.utc)
+        self.listing1 = create_listing(enabled=True, limit_date=expire_date, delivery_date=delivery_date)
+        self.listing2 = create_listing(enabled=True, limit_date=expire_date, delivery_date=delivery_date)
         self.listings = [self.listing1, self.listing2]
 
         #Create Order
