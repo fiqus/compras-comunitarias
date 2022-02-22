@@ -31,12 +31,5 @@ test-keepdb:
 
 ## START BACKOFFICE
 
-run-bo:
-	cd frontend/backoffice && npm start
-
-run-fo:
-	cd frontend/frontendoffice && npm start
-
 run-frontend:
-	gnome-terminal && make run-bo
-	make run-fo
+	cd frontend/ && npm start
