@@ -7,7 +7,7 @@ import { faThumbsDown } from '@fortawesome/free-solid-svg-icons'
 import './css/StatusBar.css'
 import StatusBox from './StatusBox'
 
-import { ordersState } from '../state';
+import { ordersState } from '../../state';
 
 function StatusBar() {
   const [orders, _] = useRecoilState(ordersState);

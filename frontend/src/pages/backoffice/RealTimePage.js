@@ -4,13 +4,13 @@ import { useSearchParams } from "react-router-dom";
 import { useRecoilState } from 'recoil';
 
 
-import '../App.css'
-import StatusBar from '../components/StatusBar'
-import Table from '../components/Table'
+// import '../App.css'
+import StatusBar from '../../components/backoffice/StatusBar'
+import Table from '../../components/backoffice/Table'
 
-import WebSocketInstance from '../socket';
-import { httpGet } from '../apiClient';
-import { userTokensState, ordersState, listingIdState } from '../state';
+import WebSocketInstance from '../../socket';
+import { httpGet } from '../../apiClient';
+import { userTokensState, ordersState, listingIdState } from '../../state';
 
 
 function RealTimePage() {

@@ -1,21 +1,17 @@
 import React, {Suspense} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import App from './App';
 import reportWebVitals from './reportWebVitals';
-
-import { BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from 'recoil';
 
-const App = React.lazy(() => import('./App'))
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <RecoilRoot>
-        <Suspense fallback={<div>Cargando...</div>}>
-          <App />
-        </Suspense>
-      </RecoilRoot>
-    </BrowserRouter>
+    <RecoilRoot>
+      <Suspense fallback={<div>Cargando...</div>}>
+        <App />
+      </Suspense>
+    </RecoilRoot>
   </React.StrictMode>,
   document.getElementById('root')
 );

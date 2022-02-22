@@ -7,7 +7,7 @@ import './css/Table.css'
 import TableHeader from './atoms/TableHeader';
 import Expanded from './atoms/Expanded';
 
-import { ordersState } from '../state';
+import { ordersState } from '../../state';
 
 const columns = [
 	{

@@ -9,8 +9,8 @@ import { faThumbsUp } from '@fortawesome/free-solid-svg-icons'
 import { faThumbsDown } from '@fortawesome/free-solid-svg-icons'
 
 import ActionButton from '../ActionButton';
-import { httpPost } from '../../apiClient';
-import { userTokensState } from '../../state';
+import { httpPost } from '../../../apiClient';
+import { userTokensState } from '../../../state';
 
 const TableHeader = ({
     selectedRows,
