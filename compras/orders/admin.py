@@ -64,6 +64,7 @@ class ListingAdmin(admin.ModelAdmin):
         return custom_urls + urls
 
     def listing_actions(self, obj):
+        url_real_time = f"http://localhost:3000/"
         return format_html(
             '<a class="button" href="{}">Detalle de Pedido</a>&nbsp;'
             f'<a class="button" href="http://localhost:3000/realtime/?listingId={obj.pk}">Entregas en tiempo real</a>&nbsp;'

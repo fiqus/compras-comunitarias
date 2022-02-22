@@ -8,8 +8,8 @@ from compras.users.tests.factories import UserFactory
 from compras.users.views import (
     UserRedirectView,
     UserUpdateView,
-    user_detail_view,
 )
+from compras.orders.views import user_detail_view
 
 pytestmark = pytest.mark.django_db
 

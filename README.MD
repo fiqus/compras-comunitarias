@@ -33,3 +33,9 @@ Create migrations
 Run migrations
 
         docker-compose -f local.yml run --rm django python manage.py migrate
+
+## Testing
+
+Run all test:
+
+        docker-compose -f local.yml run --rm django python manage.py test
