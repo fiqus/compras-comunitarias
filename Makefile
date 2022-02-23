@@ -28,7 +28,6 @@ test-keepdb:
 	@docker-compose -f local.yml run --rm django python manage.py test --keepdb
 
 ### REACT
-
 ## START FRONTEND
 
 run-frontend:
