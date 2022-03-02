@@ -51,6 +51,7 @@ class Product(models.Model):
     producer = models.ForeignKey(Producer, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     description = models.TextField()
+    ####NECESITA REPENSAR DONDE SE VAN A ALOJAR LAS IMAGENES PARA PODER BUSCARLAS DESDE REACT####
     image = ImageField(upload_to="product_images")
     category = models.ForeignKey(Category, verbose_name="Category", on_delete=models.CASCADE, blank=True, null=True)
     tag = models.ManyToManyField(Tag, blank=True)

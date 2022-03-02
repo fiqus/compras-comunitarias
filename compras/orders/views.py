@@ -7,7 +7,7 @@ from django.forms.models import  ModelForm, inlineformset_factory
 from django.http.response import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import TemplateView
-from .models import Listing, Order, OrderProduct, Producer
+from .models import Listing, Order, OrderProduct, Producer, Product
 
 
 from django.views.generic import DetailView
@@ -46,18 +46,51 @@ class ListingOrders(APIView):
         return Response(listing.orders)
 
 
+class get_listings(APIView):
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    def get(self, request):
+        listings_queryset = Listing.objects.filter(enabled=True).values('limit_date','name','description','delivery_place','delivery_date')
+        listing_list = list(listings_queryset)
+
+        return Response(listing_list)
+
+
 class get_listing_products(APIView):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     def get(self, request, listing_id):
         listing = Business().available_listings()
+        listing = get_object_or_404(Listing, pk=listing_id, enabled=True)
         if (not listing):
             return render(request, 'orders/no_listing.html')
-        listing = get_object_or_404(Listing, pk=listing_id, enabled=True)
         
         products = listing.listingproduct_set.all()
+
         lp_str = serializers.serialize('json', products)
         lp_json = json.loads(lp_str)
+        
+
+        # EN LP_JSON NOS DEVUELVE COMO PRODUCT EL ID DEL PRODUCTO, POR LO QUE HAY QUE DEFINIR EL CAMPO PRODUCT COMO EL NAME Y NO EL ID
+        response = []
+        for listing_product in lp_json:
+            listing_product_items = listing_product.items()
+            for fields in listing_product_items:
+                for field in fields:
+                    if isinstance(field, dict):
+                        product_id = field['product']
+                        #NAME
+                        product_name_queryset = Product.objects.filter(pk = product_id).values('name')
+                        product_name_list = list(product_name_queryset)
+                        product_name_str = str(product_name_list[0]['name'])
+                        #IMAGE
+                        product_image_queryset = Product.objects.filter(pk = product_id).values('image')
+                        product_image_list = list(product_image_queryset)
+                        product_image_str = str(product_image_list[0]['image'])
+                        field['product'] = product_name_str
+                        field['image'] = product_image_str
+                        response.append(field)
+
         categories = {}
         if listing:
             for p in products:
@@ -66,7 +99,8 @@ class get_listing_products(APIView):
                     categories[category] = []
                 
                 categories[category].append(p)
-        return Response(lp_json)
+
+        return Response(response)
 
 
 class CreateOrder(APIView):
@@ -87,7 +121,7 @@ class CreateOrder(APIView):
             form = OrderForm(request.POST, request.FILES, initial={'listing': listing}, instance=order)
             formset = OrderProductInlineFormset(request.POST, request.FILES, instance=form.instance)
             if form.is_valid() and formset.is_valid():
-
+    
                 form.instance.user = request.user
                 form.instance.listing = listing
                 form.instance.orderproduct_set.all().delete()
@@ -105,14 +139,6 @@ class CreateOrder(APIView):
             for p in order.orderproduct_set.all():
                 amounts[p.product.id] = p.amount
 
-class get_listings(APIView):
-    authentication_classes = [authentication.TokenAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
-    def get(self, request):
-        listings = Listing.objects.filter(enabled=True)
-        listing_str = serializers.serialize('json', listings)
-        listing_json = json.loads(listing_str)
-        return Response(listing_json)
 
 
 class get_order(APIView):
