@@ -10,6 +10,10 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
+import {useRecoilState} from "recoil";
+import {passwordState, usernameState, userTokensState} from "../../state";
+import {httpPost} from "../../apiClient";
+import {Navigate} from "react-router-dom";
 
 
 const theme = createTheme();
@@ -23,15 +27,24 @@ const SigInButton = styled(Button)(({ theme }) => ({
 }));
 
 export default function SignIn() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
+
+    const [username, setUsername] = useRecoilState(usernameState)
+    const [password, setPassword] = useRecoilState(passwordState)
+    const [_userToken, setUserToken] = useRecoilState(userTokensState)
+
+    const handleSubmit = async() => {
+        const res = await httpPost(
+            "/user/login",
+            {"username": username, "password": password},
+        );
+
+        if (res.status === 200) {
+            //TODO: MOSTRAR MENSAJE DE LOGIN EXITOSO
+            setUserToken(res.data.token);
+        } else {
+            //TODO: MOSTRAR UN MENSAJE MENSAJE DE ERROR CON DESCRIPCION
+        }
+    };
 
   return (
     <ThemeProvider theme={theme}>
@@ -82,7 +95,6 @@ export default function SignIn() {
 
           <Box
             component="form"
-            onSubmit={handleSubmit}
             noValidate
             sx={{ mt: 1 }}
           >
@@ -91,10 +103,11 @@ export default function SignIn() {
               required
               fullWidth
               id="email"
-              label="Ingresa mail"
+              label="Ingresa usuario"
               name="email"
-              autoComplete="email"
+              autoComplete="usuario"
               autoFocus
+              onChange={(event) => setUsername(event.target.value)}
             />
             <TextField
               margin="normal"
@@ -105,13 +118,14 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={(event) => setPassword(event.target.value)}
             />
             <SigInButton
-              type="submit"
+              type="button"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2, backgroundColor: "#2C6C73" }}
-              href="/compras-activas"
+              onClick={handleSubmit}
             >
               Ingresar
             </SigInButton>
