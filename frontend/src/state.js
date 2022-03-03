@@ -6,14 +6,14 @@ import {httpPost} from './apiClient'
 const userTokensLoader = selector({
     key: "userTokensLoader",
     get: async () => {
-        const res = await httpPost("/token/", {"username": "Jero", "password": "joacoselacome"});
+        const res = await httpPost("/token/", {"username": "joaquin", "password": "joaquin1234"});
         return res.data;
     },
 });
-  
+
 const userTokensState = atom({
     key: "userTokens",
-    default: userTokensLoader,
+    default: "",
 });
 
 const ordersState = atom({
@@ -31,12 +31,17 @@ const listingIdState = atom({
 
 const usernameState = atom({
     key: "usernameState",
-    default: ""
+    default: null
 });
 
 const passwordState = atom({
     key: "passwordState",
+    default: null
+});
+
+const notificationState = atom({
+    key: "notificationState",
     default: ""
 });
 
-export { userTokensState, ordersState, listingIdState, usernameState, passwordState};
+export { userTokensState, ordersState, listingIdState, usernameState, passwordState, notificationState};

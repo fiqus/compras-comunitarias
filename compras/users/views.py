@@ -55,19 +55,22 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
     def get_redirect_url(self):
         return reverse("orders:detail")
 
+
 class UserAuthentication(APIView):
+
     def post(self, request):
         data = json.loads(request.body)
         username = data["username"]
         password = data["password"]
 
         authenticated_user = authenticate(username=username, password=password)
-        
+
         if authenticated_user is not None:
             token = Token.objects.get_or_create(user=authenticated_user)[0]
             data = {"token": str(token), }
             return Response(data, status=200)
         else:
-            return Response(status=400)
+            data = {"message": "Credenciales Inválidas"}
+            return Response(data, status=401)
 
 user_redirect_view = UserRedirectView.as_view()

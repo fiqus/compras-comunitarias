@@ -1,11 +1,11 @@
-import { FrontOfficeRuters} from "./router/FrontOfficeRuters";
-import { BackOfficeRuters} from "./router/BackOfficeRuters";
+import { FrontOfficeRouter} from "./routers/FrontOfficeRouter";
+import { BackOfficeRouter} from "./routers/BackOfficeRouter";
 
 function App() {
   return (
     <>
-      <FrontOfficeRuters />
-      <BackOfficeRuters />
+      <FrontOfficeRouter />
+      <BackOfficeRouter />
     </>
   );
 }
