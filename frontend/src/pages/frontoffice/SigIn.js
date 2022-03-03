@@ -11,10 +11,11 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
 import {useRecoilState} from "recoil";
-import {passwordState, usernameState, userTokensState} from "../../state";
+import {notificationState, passwordState, usernameState, userTokensState} from "../../state";
 import {httpPost} from "../../apiClient";
-import {Navigate} from "react-router-dom";
-
+import {useNavigate} from "react-router-dom";
+import {Alert} from "@mui/material";
+import {useMemo} from "react";
 
 const theme = createTheme();
 
@@ -31,20 +32,26 @@ export default function SignIn() {
     const [username, setUsername] = useRecoilState(usernameState)
     const [password, setPassword] = useRecoilState(passwordState)
     const [_userToken, setUserToken] = useRecoilState(userTokensState)
+    const [notification, setNotification] = useRecoilState(notificationState)
+    const navigate = useNavigate()
 
     const handleSubmit = async() => {
-        const res = await httpPost(
-            "/user/login",
-            {"username": username, "password": password},
-        );
+        try {
+            const res = await httpPost(
+                "/user/login",
+                {"username": username, "password": password},
+            );
 
-        if (res.status === 200) {
-            //TODO: MOSTRAR MENSAJE DE LOGIN EXITOSO
             setUserToken(res.data.token);
-        } else {
-            //TODO: MOSTRAR UN MENSAJE MENSAJE DE ERROR CON DESCRIPCION
+            navigate("/compras-activas");
+        } catch ({response}) {
+            setNotification(response.data.message)
         }
     };
+
+    const Notification = useMemo(() => {
+        return notification ? <Alert severity="error"> { notification } </Alert> : <></>;
+    }, [notification]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -98,6 +105,7 @@ export default function SignIn() {
             noValidate
             sx={{ mt: 1 }}
           >
+            {Notification}
             <TextField
               margin="normal"
               required

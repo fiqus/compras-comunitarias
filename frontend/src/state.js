@@ -31,12 +31,17 @@ const listingIdState = atom({
 
 const usernameState = atom({
     key: "usernameState",
-    default: ""
+    default: null
 });
 
 const passwordState = atom({
     key: "passwordState",
+    default: null
+});
+
+const notificationState = atom({
+    key: "notificationState",
     default: ""
 });
 
-export { userTokensState, ordersState, listingIdState, usernameState, passwordState};
+export { userTokensState, ordersState, listingIdState, usernameState, passwordState, notificationState};
