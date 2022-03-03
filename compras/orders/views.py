@@ -60,10 +60,9 @@ class get_listing_products(APIView):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     def get(self, request, listing_id):
-        listing = Business().available_listings()
         listing = get_object_or_404(Listing, pk=listing_id, enabled=True)
         if (not listing):
-            return render(request, 'orders/no_listing.html')
+            return Response(404)
         
         products = listing.listingproduct_set.all()
 
@@ -112,7 +111,7 @@ class CreateOrder(APIView):
     def post(self, request, listing_id):
         listing = Business().available_listings()
         if (not listing):
-            return HttpResponse(400)
+            return Response(400)
         listing = get_object_or_404(Listing, pk=listing_id, enabled=True)
         order = Order.objects.filter(user=request.user, listing=listing).last()
 
@@ -131,11 +130,10 @@ class CreateOrder(APIView):
                 form.save()
                 formset.save()
                 order = Order.objects.get(pk=form.instance.pk)
-                print("PK", form.instance.pk )
-                return HttpResponse(200)
+                return Response(200)
+
             else:
-                print("FORM INVALIDO #####", "REQUEST=", request.FILES)
-                return HttpResponse(400)
+                return Response(400)
         
         else:
             form = OrderForm()
