@@ -7,16 +7,16 @@ import { useRecoilState } from 'recoil';
 import { userTokensState } from '../state';
 import { BrowserRouter } from "react-router-dom";
 
-export const BackOfficeRuters = () => {
+export const BackOfficeRouter = () => {
   const [userToken, _setUserToken] = useRecoilState(userTokensState)
 
   const whereNavigate = () => {
     if (!userToken) {
-      return <Navigate to="/login" /> 
+      return <Navigate to="/login" />
     } else {
       // TODO: acá deberiamos tener logica que sepa dependiendo
       // que rol tenga (ADMIN o CONSUMIDOR) donde tiene que ir
-      return <Navigate to="/realtime" /> 
+      return <Navigate to="/realtime" />
     }
   }
 

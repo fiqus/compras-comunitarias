@@ -8,7 +8,7 @@ import SignIn from "../pages/frontoffice/SigIn";
 import {useRecoilState} from "recoil";
 import {userTokensState} from "../state";
 
-export const FrontOfficeRuters = () => {
+export const FrontOfficeRouter = () => {
     const [userToken, _setUserToken] = useRecoilState(userTokensState)
     const whereNavigate = () => {
         console.log("userToken", userToken)
