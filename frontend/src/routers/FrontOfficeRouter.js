@@ -11,7 +11,6 @@ import {userTokensState} from "../state";
 export const FrontOfficeRouter = () => {
     const [userToken, _setUserToken] = useRecoilState(userTokensState)
     const whereNavigate = () => {
-        console.log("userToken", userToken)
         if (!userToken) {
             return <Navigate to="/sign-in" />
         } else {
