@@ -88,6 +88,7 @@ class get_listing_products(APIView):
                         product_image_list = list(product_image_queryset)
                         product_image_str = str(product_image_list[0]['image'])
                         field['product'] = product_name_str
+                        field['product_id'] = product_id
                         field['image'] = product_image_str
                         response.append(field)
 
@@ -110,7 +111,7 @@ class CreateOrder(APIView):
     def post(self, request, listing_id):
         listing = Business().available_listings()
         if (not listing):
-            return render(request, 'orders/no_listing.html')
+            return HttpResponse(400)
         listing = get_object_or_404(Listing, pk=listing_id, enabled=True)
         order = Order.objects.filter(user=request.user, listing=listing).last()
 
@@ -118,6 +119,7 @@ class CreateOrder(APIView):
                                                       can_delete=False, extra=listing.products.count())
         
         if request.method == "POST":
+            
             form = OrderForm(request.POST, request.FILES, initial={'listing': listing}, instance=order)
             formset = OrderProductInlineFormset(request.POST, request.FILES, instance=form.instance)
             if form.is_valid() and formset.is_valid():
@@ -128,12 +130,17 @@ class CreateOrder(APIView):
                 form.save()
                 formset.save()
                 order = Order.objects.get(pk=form.instance.pk)
+                print("PK", form.instance.pk )
                 return HttpResponse(200)
+            else:
+                print("FORM INVALIDO #####", "REQUEST=", request.FILES)
+                return HttpResponse(400)
         
         else:
             form = OrderForm()
             formset = OrderProductInlineFormset(instance=form.instance)
-        amounts = defaultdict(int)
+            amounts = defaultdict(int)
+            return HttpResponse(400)
 
         if order:
             for p in order.orderproduct_set.all():
