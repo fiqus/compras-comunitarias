@@ -10,7 +10,12 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
-
+import {useRecoilState} from "recoil";
+import {notificationState, passwordState, usernameState, userTokensState} from "../../state";
+import {httpPost} from "../../apiClient";
+import {useNavigate} from "react-router-dom";
+import {Alert} from "@mui/material";
+import {useMemo} from "react";
 
 const theme = createTheme();
 
@@ -23,15 +28,30 @@ const SigInButton = styled(Button)(({ theme }) => ({
 }));
 
 export default function SignIn() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
+
+    const [username, setUsername] = useRecoilState(usernameState)
+    const [password, setPassword] = useRecoilState(passwordState)
+    const [_userToken, setUserToken] = useRecoilState(userTokensState)
+    const [notification, setNotification] = useRecoilState(notificationState)
+    const navigate = useNavigate()
+
+    const handleSubmit = async() => {
+        try {
+            const res = await httpPost(
+                "/user/login",
+                {"username": username, "password": password},
+            );
+
+            setUserToken(res.data.token);
+            navigate("/compras-activas");
+        } catch ({response}) {
+            setNotification(response.data.message)
+        }
+    };
+
+    const Notification = useMemo(() => {
+        return notification ? <Alert severity="error"> { notification } </Alert> : <></>;
+    }, [notification]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -82,19 +102,20 @@ export default function SignIn() {
 
           <Box
             component="form"
-            onSubmit={handleSubmit}
             noValidate
             sx={{ mt: 1 }}
           >
+            {Notification}
             <TextField
               margin="normal"
               required
               fullWidth
               id="email"
-              label="Ingresa mail"
+              label="Ingresa usuario"
               name="email"
-              autoComplete="email"
+              autoComplete="usuario"
               autoFocus
+              onChange={(event) => setUsername(event.target.value)}
             />
             <TextField
               margin="normal"
@@ -105,13 +126,14 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={(event) => setPassword(event.target.value)}
             />
             <SigInButton
-              type="submit"
+              type="button"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2, backgroundColor: "#2C6C73" }}
-              href="/compras-activas"
+              onClick={handleSubmit}
             >
               Ingresar
             </SigInButton>
