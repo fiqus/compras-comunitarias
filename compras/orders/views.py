@@ -83,9 +83,9 @@ class get_listing_products(APIView):
                         product_name_list = list(product_name_queryset)
                         product_name_str = str(product_name_list[0]['name'])
                         #IMAGE
-                        product_image_queryset = Product.objects.filter(pk = product_id).values('image')
-                        product_image_list = list(product_image_queryset)
-                        product_image_str = str(product_image_list[0]['image'])
+                        product_image_queryset = Product.objects.get(pk = product_id)
+                        product_image_url = product_image_queryset.image.path
+                        product_image_str = str(product_image_url)
                         #DESCRIPTION
                         product_description_queryset = Product.objects.filter(pk = product_id).values('description')
                         product_description_list = list(product_description_queryset)
