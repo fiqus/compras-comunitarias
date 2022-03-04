@@ -3,7 +3,9 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
-
+import { useRecoilState } from "recoil";
+import { listingIdState, listingTitleState } from "../../state";
+import { useNavigate } from "react-router-dom";
 
 const Img = styled("img")({
   display: "block",
@@ -19,7 +21,12 @@ const SigInButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-export default function CardComprasActivas() {
+export default function CardComprasActivas({ listingId, title, description }) {
+  const navigate = useNavigate();
+
+  const [_, setListingId] = useRecoilState(listingIdState);
+  const [listingTitle, setListingTitle] = useRecoilState(listingTitleState);
+
   return (
     <>
       {/* Tarjeta de compras */}
@@ -49,10 +56,10 @@ export default function CardComprasActivas() {
           >
             <Grid item xs>
               <Typography gutterBottom variant="subtitle1" component="div">
-                15va Compra Comunitaria
+                {title}
               </Typography>
               <Typography variant="body2" gutterBottom>
-                Descripción de la compra
+                {description}
               </Typography>
             </Grid>
           </Grid>
@@ -62,7 +69,11 @@ export default function CardComprasActivas() {
         fullWidth
         variant="contained"
         sx={{ marginTop: 1 }}
-        href="/lista-productos"
+        onClick={() => {
+          setListingId(listingId);
+          setListingTitle(title);
+          navigate("/lista-productos");
+        }}
       >
         Comprar
       </SigInButton>

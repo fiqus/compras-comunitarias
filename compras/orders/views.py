@@ -50,7 +50,7 @@ class get_listings(APIView):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     def get(self, request):
-        listings_queryset = Listing.objects.filter(enabled=True).values('limit_date','name','description','delivery_place','delivery_date')
+        listings_queryset = Listing.objects.filter(enabled=True).values('id','limit_date','name','description','delivery_place','delivery_date')
         listing_list = list(listings_queryset)
 
         return Response(listing_list)

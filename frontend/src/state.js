@@ -21,27 +21,53 @@ const ordersState = atom({
     default: [],
 });
 
-const listingIdState = atom({
-    key: "listingIdState",
-    default: ""
-});
 
 
 // frontoffice state
 
 const usernameState = atom({
-    key: "usernameState",
-    default: null
+  key: "usernameState",
+  default: null,
 });
 
 const passwordState = atom({
-    key: "passwordState",
-    default: null
+  key: "passwordState",
+  default: null,
 });
 
 const notificationState = atom({
-    key: "notificationState",
-    default: ""
+  key: "notificationState",
+  default: "",
 });
 
-export { userTokensState, ordersState, listingIdState, usernameState, passwordState, notificationState};
+const listingsState = atom({
+  key: "listingsState",
+  default: [],
+});
+
+const listingIdState = atom({
+  key: "listingIdState",
+  default: ""
+});
+
+const listingTitleState = atom({
+  key: "listingTitleState",
+  default: ""
+});
+
+const listingsProductState = atom({
+key: "listingsProductState",
+default: [],
+});
+
+export {
+  listingsProductState,
+  listingTitleState,
+  userTokensState,
+  ordersState,
+  listingIdState,
+  usernameState,
+  passwordState,
+  notificationState,
+  listingsState,
+};
