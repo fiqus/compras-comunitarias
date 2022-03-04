@@ -100,11 +100,7 @@ export default function SignIn() {
             Compras Comunitarias
           </Typography>
 
-          <Box
-            component="form"
-            noValidate
-            sx={{ mt: 1 }}
-          >
+          <Box component="form" noValidate sx={{ mt: 1 }}>
             {Notification}
             <TextField
               margin="normal"
@@ -153,7 +149,7 @@ export default function SignIn() {
               <Typography variant="subtitle1" gutterBottom component="div">
                 ¿Todavía no sos parte?
               </Typography>
-              <Link href="#" variant="body2">
+              <Link onClick={() => navigate("/sign-up")} variant="body2">
                 {"Registrate acá"}
               </Link>
             </Grid>
