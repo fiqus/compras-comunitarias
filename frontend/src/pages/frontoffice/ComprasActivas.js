@@ -20,7 +20,6 @@ export default function ComprasActivas() {
   }
   useEffect(() => {
     getListings();
-    console.log("LISTINGS",listings);
   }, [userTokens])
   
   
