@@ -21,10 +21,16 @@ const ordersState = atom({
     default: [],
 });
 
+const listingsState = atom({
+    key: "listingsState",
+    default: [],
+});
+
 const listingIdState = atom({
     key: "listingIdState",
     default: ""
 });
+
 
 
 // frontoffice state
@@ -44,4 +50,4 @@ const notificationState = atom({
     default: ""
 });
 
-export { userTokensState, ordersState, listingIdState, usernameState, passwordState, notificationState};
+export { userTokensState, ordersState, listingIdState, usernameState, passwordState, notificationState, listingsState};
