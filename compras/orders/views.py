@@ -86,10 +86,15 @@ class get_listing_products(APIView):
                         product_image_queryset = Product.objects.filter(pk = product_id).values('image')
                         product_image_list = list(product_image_queryset)
                         product_image_str = str(product_image_list[0]['image'])
+                        #DESCRIPTION
+                        product_description_queryset = Product.objects.filter(pk = product_id).values('description')
+                        product_description_list = list(product_description_queryset)
+                        product_description_str = str(product_description_list[0]['description'])
                         #ADD FIELDS
                         field['product'] = product_name_str
                         field['product_id'] = product_id
                         field['image'] = product_image_str
+                        field['description'] = product_description_str
                         response.append(field)
 
         categories = {}
