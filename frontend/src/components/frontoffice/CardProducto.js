@@ -30,21 +30,21 @@ export const CardProducto = ({
   cost,
   presentation,
 }) => {
-  const [producto, setProducto] = useState(0);
+  const [quantity, setQuantity] = useState(0);
   const [CounterButtom, setCounterButtom] = useState("none");
   const [ButtomAgregar, setButtomAgregar] = useState("flex");
 
   const addButtomCounter = () => {
     setButtomAgregar("none");
     setCounterButtom("flex");
-    setProducto(producto + 1);
+    setQuantity(quantity + 1);
   };
   const addProducto = () => {
-    setProducto(producto + 1);
+    setQuantity(quantity + 1);
   };
   const deletProducto = () => {
-    setProducto(producto - 1);
-    if (producto < 2) {
+    setQuantity(quantity - 1);
+    if (quantity < 2) {
       setButtomAgregar("flex");
       setCounterButtom("none");
     }
@@ -154,7 +154,7 @@ export const CardProducto = ({
                 paddingRight: 1,
               }}
             >
-              {producto} en carrito
+              {quantity} en carrito
             </Typography>
             <SigInButton onClick={addProducto}>+</SigInButton>
           </ButtonGroup>
@@ -225,7 +225,7 @@ export const CardProducto = ({
                       paddingRight: 1,
                     }}
                   >
-                    {producto} en carrito
+                    {quantity} en carrito
                   </Typography>
                   <SigInButton onClick={addProducto}>+</SigInButton>
                 </ButtonGroup>
