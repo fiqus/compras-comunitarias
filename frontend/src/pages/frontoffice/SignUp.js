@@ -39,7 +39,6 @@ export default function SignUp() {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
     navigate("/sign-up-confirm");
   };
 
