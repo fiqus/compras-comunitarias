@@ -42,7 +42,6 @@ export default function SignUp() {
     navigate("/sign-up-confirm");
   };
 
-  console.log(isValid);
 
   return (
     <ThemeProvider theme={theme}>
