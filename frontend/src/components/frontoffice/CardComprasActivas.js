@@ -21,7 +21,7 @@ const SigInButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-export default function CardComprasActivas({name, description}) {
+export default function CardComprasActivas({id, name, description}) {
 
 
   return (

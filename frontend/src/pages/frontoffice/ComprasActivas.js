@@ -42,7 +42,7 @@ export default function ComprasActivas() {
 
         {/* Tarjeta de compras */}
         {listings.map((listing) => {
-           return <CardComprasActivas name={listing.name} description={listing.description}/>
+           return <CardComprasActivas id={listing.id} name={listing.name} description={listing.description}/>
         })}
         
         
