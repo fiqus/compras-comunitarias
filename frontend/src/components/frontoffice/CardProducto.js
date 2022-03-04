@@ -23,22 +23,28 @@ const Img = styled("img")({
   maxHeight: "100%",
 });
 
-export const CardProducto = () => {
-  const [producto, setProducto] = useState(0);
+export const CardProducto = ({
+  product,
+  img,
+  description,
+  cost,
+  presentation,
+}) => {
+  const [quantity, setQuantity] = useState(0);
   const [CounterButtom, setCounterButtom] = useState("none");
   const [ButtomAgregar, setButtomAgregar] = useState("flex");
 
   const addButtomCounter = () => {
     setButtomAgregar("none");
     setCounterButtom("flex");
-    setProducto(producto + 1);
+    setQuantity(quantity + 1);
   };
   const addProducto = () => {
-    setProducto(producto + 1);
+    setQuantity(quantity + 1);
   };
   const deletProducto = () => {
-    setProducto(producto - 1);
-    if (producto < 2) {
+    setQuantity(quantity - 1);
+    if (quantity < 2) {
       setButtomAgregar("flex");
       setCounterButtom("none");
     }
@@ -54,7 +60,7 @@ export const CardProducto = () => {
       >
         <Grid item>
           <Grid sx={{ width: 163, height: 108 }}>
-            <Img alt="complex" src="/src/img/compras.jpeg" sx={{ m: 0 }} />
+            <Img alt="complex" src={img} sx={{ m: 0 }} />
           </Grid>
         </Grid>
         <Grid item xs={12} sm container>
@@ -74,7 +80,7 @@ export const CardProducto = () => {
                 component="div"
                 sx={{ fontWeight: "bold", fontSize: { xs: 12, md: 16 } }}
               >
-                Harina de Garbanzo x1kg
+                {product}, {presentation}
               </Typography>
               {/* Descripcion */}
               <Typography
@@ -86,8 +92,7 @@ export const CardProducto = () => {
                   fontSize: { xs: 12, md: 16 },
                 }}
               >
-                Harina de Garbanzo de Granja las praderas, sin conservantes, en
-                envase de 1kg
+                {description}
               </Typography>
             </Grid>
           </Grid>
@@ -105,7 +110,7 @@ export const CardProducto = () => {
               display: { xs: "none", sm: "flex" },
             }}
           >
-            $ 400
+            {cost}
           </Typography>
 
           {/* Boton agregar al carrito */}
@@ -149,7 +154,7 @@ export const CardProducto = () => {
                 paddingRight: 1,
               }}
             >
-              {producto} en carrito
+              {quantity} en carrito
             </Typography>
             <SigInButton onClick={addProducto}>+</SigInButton>
           </ButtonGroup>
@@ -174,7 +179,7 @@ export const CardProducto = () => {
               component="div"
               sx={{ textAlign: "center", fontSize: 24, fontWeight: "bold" }}
             >
-              $400
+              {cost}
             </Typography>
           </Box>
         </Grid>
@@ -220,7 +225,7 @@ export const CardProducto = () => {
                       paddingRight: 1,
                     }}
                   >
-                    {producto} en carrito
+                    {quantity} en carrito
                   </Typography>
                   <SigInButton onClick={addProducto}>+</SigInButton>
                 </ButtonGroup>

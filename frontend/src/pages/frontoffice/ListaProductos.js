@@ -12,8 +12,37 @@ import {
 } from "@mui/material";
 import { CardProducto } from "../../components/frontoffice/CardProducto";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import { useRecoilState } from "recoil";
+import {
+  listingsProductState,
+  userTokensState,
+  listingIdState,
+  listingTitleState,
+} from "../../state";
+import { httpGet } from "../../apiClient";
+import { useEffect } from "react";
 
 export const ListaProductos = () => {
+  const [userTokens, _] = useRecoilState(userTokensState);
+  const [listingId, setListingId] = useRecoilState(listingIdState);
+  const [listingTitle, setListingTitle] = useRecoilState(listingTitleState);
+  const [listingsProduct, setListingsProduct] =
+    useRecoilState(listingsProductState);
+
+  const getListingsProduct = async () => {
+    const res = await httpGet(
+      `/listing_products/${listingId}`,
+      {},
+      { token: userTokens }
+    );
+    setListingsProduct(res.data);
+  };
+
+  useEffect(() => {
+    getListingsProduct();
+    console.log("LISTINGSPRODUCTS", listingsProduct);
+  }, [userTokens]);
+
   return (
     <>
       <Box display={{ xs: "none", sm: "block" }}>
@@ -72,21 +101,23 @@ export const ListaProductos = () => {
             paddingTop: 2,
           }}
         >
-          15va Compra comunitaria
+          {listingTitle}
         </Typography>
         {/* Ver si vamos a hacer por seccion o no */}
-        <Typography sx={{ fontSize: { md: 24, xs: 16 } }}>
+        {/* <Typography sx={{ fontSize: { md: 24, xs: 16 } }}>
           Sección 1/6 Almacén
-        </Typography>
+        </Typography> */}
 
         {/* Carta de producto */}
-        <CardProducto />
-        <CardProducto />
-        <CardProducto />
-        <CardProducto />
-        <CardProducto />
-        <CardProducto />
-        <CardProducto />
+        {listingsProduct.map((listingsProduct) => (
+          <CardProducto
+            product={listingsProduct.product}
+            description={listingsProduct.description}
+            cost={listingsProduct.cost}
+            presentation={listingsProduct.presentation}
+            img={listingsProduct.image}
+          />
+        ))}
       </Container>
       <Footer />
     </>

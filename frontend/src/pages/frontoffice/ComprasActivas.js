@@ -6,18 +6,18 @@ import { Container, Divider } from "@mui/material";
 import CardComprasActivas from "../../components/frontoffice/CardComprasActivas";
 import CardProximasCompras from "../../components/frontoffice/CardProximasCompras";
 import { useRecoilState } from 'recoil';
-import { listingsState, userTokensState } from '../../state';
-import { httpGet } from '../../apiClient';
-import { useEffect } from 'react';
+import { listingsState, userTokensState, listingIdState } from "../../state";
+import { httpGet } from "../../apiClient";
+import { useEffect } from "react";
 
 export default function ComprasActivas() {
   const [userTokens, _] = useRecoilState(userTokensState);
   const [listings, setListings] = useRecoilState(listingsState);
 
   const getListings = async () => {
-    const res = await httpGet(`/get_listings`, {}, {token: userTokens});
+    const res = await httpGet(`/get_listings`, {}, { token: userTokens });
     setListings(res.data);
-  }
+  };
   useEffect(() => {
     getListings();
   }, [userTokens])
@@ -41,10 +41,14 @@ export default function ComprasActivas() {
 
         {/* Tarjeta de compras */}
         {listings.map((listing) => {
-           return <CardComprasActivas id={listing.id} name={listing.name} description={listing.description}/>
+          return (
+            <CardComprasActivas
+              listingId={listing.id}
+              title={listing.name}
+              description={listing.description}
+            />
+          );
         })}
-        
-        
 
         {/* Próximas Compras */}
         <Grid
