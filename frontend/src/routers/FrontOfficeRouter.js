@@ -7,18 +7,20 @@ import { Resumen } from "../pages/frontoffice/Resumen";
 import SignIn from "../pages/frontoffice/SigIn";
 import {useRecoilState} from "recoil";
 import {userTokensState} from "../state";
+import SignUp from "../pages/frontoffice/SignUp";
+import SignUpConfirm from "../pages/frontoffice/SignUpConfirm";
 
 export const FrontOfficeRouter = () => {
-    const [userToken, _setUserToken] = useRecoilState(userTokensState)
-    const whereNavigate = () => {
-        if (!userToken) {
-            return <Navigate to="/sign-in" />
-        } else {
-            // TODO: acá deberiamos tener logica que sepa dependiendo
-            // que rol tenga (ADMIN o CONSUMIDOR) donde tiene que ir
-            return <Navigate to="/compras-activas" />
-        }
+  const [userToken, _setUserToken] = useRecoilState(userTokensState);
+  const whereNavigate = () => {
+    if (!userToken) {
+      return <Navigate to="/sign-in" />;
+    } else {
+      // TODO: acá deberiamos tener logica que sepa dependiendo
+      // que rol tenga (ADMIN o CONSUMIDOR) donde tiene que ir
+      return <Navigate to="/compras-activas" />;
     }
+  };
   return (
     <BrowserRouter>
       <Routes>
@@ -28,7 +30,8 @@ export const FrontOfficeRouter = () => {
         <Route path="lista-productos" element={<ListaProductos />} />
         <Route path="resumen" element={<Resumen />} />
         <Route path="compra-exitosa" element={<CompraExitosa />} />
-        {/* <Route path="*" element={<SignIn />} /> */}
+        <Route path="sign-up" element={<SignUp />} />
+        <Route path="sign-up-confirm" element={<SignUpConfirm />} />
       </Routes>
     </BrowserRouter>
   );
