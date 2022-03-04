@@ -23,7 +23,13 @@ const Img = styled("img")({
   maxHeight: "100%",
 });
 
-export const CardProducto = () => {
+export const CardProducto = ({
+  product,
+  img,
+  description,
+  cost,
+  presentation,
+}) => {
   const [producto, setProducto] = useState(0);
   const [CounterButtom, setCounterButtom] = useState("none");
   const [ButtomAgregar, setButtomAgregar] = useState("flex");
@@ -54,7 +60,7 @@ export const CardProducto = () => {
       >
         <Grid item>
           <Grid sx={{ width: 163, height: 108 }}>
-            <Img alt="complex" src="/src/img/compras.jpeg" sx={{ m: 0 }} />
+            <Img alt="complex" src={img} sx={{ m: 0 }} />
           </Grid>
         </Grid>
         <Grid item xs={12} sm container>
@@ -74,7 +80,7 @@ export const CardProducto = () => {
                 component="div"
                 sx={{ fontWeight: "bold", fontSize: { xs: 12, md: 16 } }}
               >
-                Harina de Garbanzo x1kg
+                {product}, {presentation}
               </Typography>
               {/* Descripcion */}
               <Typography
@@ -86,8 +92,7 @@ export const CardProducto = () => {
                   fontSize: { xs: 12, md: 16 },
                 }}
               >
-                Harina de Garbanzo de Granja las praderas, sin conservantes, en
-                envase de 1kg
+                {description}
               </Typography>
             </Grid>
           </Grid>
@@ -105,7 +110,7 @@ export const CardProducto = () => {
               display: { xs: "none", sm: "flex" },
             }}
           >
-            $ 400
+            {cost}
           </Typography>
 
           {/* Boton agregar al carrito */}
@@ -174,7 +179,7 @@ export const CardProducto = () => {
               component="div"
               sx={{ textAlign: "center", fontSize: 24, fontWeight: "bold" }}
             >
-              $400
+              {cost}
             </Typography>
           </Box>
         </Grid>

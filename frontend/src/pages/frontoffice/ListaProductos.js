@@ -13,6 +13,39 @@ import {
 import { CardProducto } from "../../components/frontoffice/CardProducto";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
+const productsList = [
+  {
+    listing: 3,
+    product: "sssssssssssss",
+    price: "1.00",
+    presentation: "1",
+    cost: "1.00",
+    product_id: 3,
+    image: "product_images/Screenshot_from_2021-11-25_12-10-01.png",
+    description: "sdsdsdsds",
+  },
+  {
+    listing: 3,
+    product: "sssssssssssss",
+    price: "2.00",
+    presentation: "2",
+    cost: "2.00",
+    product_id: 3,
+    image: "product_images/Screenshot_from_2021-11-25_12-10-01.png",
+    description: "sdsdsdsds",
+  },
+  {
+    listing: 3,
+    product: "Aloja",
+    price: "10000.00",
+    presentation: "4",
+    cost: "51.00",
+    product_id: 4,
+    image: "product_images/Screenshot_from_2021-11-16_18-12-46.png",
+    description: "adsfasd",
+  },
+];
+
 export const ListaProductos = () => {
   return (
     <>
@@ -80,13 +113,15 @@ export const ListaProductos = () => {
         </Typography>
 
         {/* Carta de producto */}
-        <CardProducto />
-        <CardProducto />
-        <CardProducto />
-        <CardProducto />
-        <CardProducto />
-        <CardProducto />
-        <CardProducto />
+        {productsList.map((productsList) => (
+          <CardProducto
+            product={productsList.product}
+            description={productsList.description}
+            cost={productsList.cost}
+            presentation={productsList.presentation}
+            img={productsList.image}
+          />
+        ))}
       </Container>
       <Footer />
     </>
