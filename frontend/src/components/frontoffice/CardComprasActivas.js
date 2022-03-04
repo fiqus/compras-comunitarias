@@ -3,6 +3,8 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { useRecoilState } from "recoil";
+import { listingsState } from "../../state";
 
 
 const Img = styled("img")({
@@ -19,7 +21,9 @@ const SigInButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-export default function CardComprasActivas() {
+export default function CardComprasActivas({name, description}) {
+
+
   return (
     <>
       {/* Tarjeta de compras */}
@@ -49,10 +53,10 @@ export default function CardComprasActivas() {
           >
             <Grid item xs>
               <Typography gutterBottom variant="subtitle1" component="div">
-                15va Compra Comunitaria
+               {name}
               </Typography>
               <Typography variant="body2" gutterBottom>
-                Descripción de la compra
+               {description}
               </Typography>
             </Grid>
           </Grid>

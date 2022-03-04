@@ -41,8 +41,11 @@ export default function ComprasActivas() {
         <Divider component="div" />
 
         {/* Tarjeta de compras */}
-        <CardComprasActivas />
-        <CardComprasActivas />
+        {listings.map((listing) => {
+           return <CardComprasActivas name={listing.name} description={listing.description}/>
+        })}
+        
+        
 
         {/* Próximas Compras */}
         <Grid
