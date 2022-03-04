@@ -50,7 +50,7 @@ class get_listings(APIView):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     def get(self, request):
-        listings_queryset = Listing.objects.filter(enabled=True).values('limit_date','name','description','delivery_place','delivery_date')
+        listings_queryset = Listing.objects.filter(enabled=True).values('id','limit_date','name','description','delivery_place','delivery_date')
         listing_list = list(listings_queryset)
 
         return Response(listing_list)
@@ -86,10 +86,15 @@ class get_listing_products(APIView):
                         product_image_queryset = Product.objects.filter(pk = product_id).values('image')
                         product_image_list = list(product_image_queryset)
                         product_image_str = str(product_image_list[0]['image'])
+                        #DESCRIPTION
+                        product_description_queryset = Product.objects.filter(pk = product_id).values('description')
+                        product_description_list = list(product_description_queryset)
+                        product_description_str = str(product_description_list[0]['description'])
                         #ADD FIELDS
                         field['product'] = product_name_str
                         field['product_id'] = product_id
                         field['image'] = product_image_str
+                        field['description'] = product_description_str
                         response.append(field)
 
         categories = {}

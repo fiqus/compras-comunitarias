@@ -5,8 +5,25 @@ import Typography from "@mui/material/Typography";
 import { Container, Divider } from "@mui/material";
 import CardComprasActivas from "../../components/frontoffice/CardComprasActivas";
 import CardProximasCompras from "../../components/frontoffice/CardProximasCompras";
+import { useRecoilState } from 'recoil';
+import { listingsState, userTokensState } from '../../state';
+import { httpGet } from '../../apiClient';
+import { useEffect } from 'react';
 
 export default function ComprasActivas() {
+  const [userTokens, _] = useRecoilState(userTokensState);
+  const [listings, setListings] = useRecoilState(listingsState);
+
+  const getListings = async () => {
+    const res = await httpGet(`/get_listings`, {}, {token: userTokens});
+    setListings(res.data);
+  }
+  useEffect(() => {
+    getListings();
+    console.log("LISTINGS",listings);
+  }, [userTokens])
+  
+  
   return (
     <>
       <NavBar />
@@ -24,8 +41,11 @@ export default function ComprasActivas() {
         <Divider component="div" />
 
         {/* Tarjeta de compras */}
-        <CardComprasActivas />
-        <CardComprasActivas />
+        {listings.map((listing) => {
+           return <CardComprasActivas id={listing.id} name={listing.name} description={listing.description}/>
+        })}
+        
+        
 
         {/* Próximas Compras */}
         <Grid

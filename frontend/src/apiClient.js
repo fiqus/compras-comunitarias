@@ -4,17 +4,20 @@ const axios = require("axios").create({baseURL: apiURL, timeout: 0, headers: {}}
 
 const buildHeaders = ({token}) => {
     if (token) {
-        return {"Authorization": `Token ${token}`}
+        return {"Authorization": `token ${token}`}
     } else {
-        return {}
     };
 };
 
 /* HTTP METHODS */
 
 export function httpGet(url, params = {}, headers={}) {
-    const constructedHeaders = buildHeaders(headers)
-    return axios.get(url, {builderedHeaders: constructedHeaders, params});
+    const config = {
+        headers:{
+            "Authorization": `token ${headers.token}`
+          }
+    }
+    return axios.get(url, config);
 };
 
 export function httpPost(url, data, headers={}) {
